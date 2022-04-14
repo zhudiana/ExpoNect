@@ -8,3 +8,5 @@ npm install @react-navigation/drawer
 
 expo install react-native-gesture-handler react-native-reanimated
 
+npm install @react-navigation/material-bottom-tabs react-native-paper react-native-vector-icons
+
