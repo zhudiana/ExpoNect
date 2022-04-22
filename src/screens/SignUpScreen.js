@@ -11,11 +11,12 @@ import {
   TouchableWithoutFeedback,
   StatusBar,
 } from "react-native";
+import React, { useState, useEffect } from "react";
+import CheckBox from "@react-native-community/checkbox";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from "react-native-animatable";
-import React from "react";
 
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -92,7 +93,7 @@ const SignInScreen = ({ navigation }) => {
           <View style={styles.action}>
             <FontAwesome name="user-o" color="#05375a" size={20} />
             <TextInput
-              placeholder="Your Email"
+              placeholder="Please enter your email"
               style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => textInputChange(val)}
@@ -118,7 +119,7 @@ const SignInScreen = ({ navigation }) => {
           <View style={styles.action}>
             <Feather name="lock" color="#05375a" size={20} />
             <TextInput
-              placeholder="Your Email"
+              placeholder="Please enter your password"
               secureTextEntry={data.secureTextEntry ? true : false}
               style={styles.textInput}
               autoCapitalize="none"
@@ -162,6 +163,23 @@ const SignInScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
+          {/* invitation code Field */}
+          <Text style={styles.text_footerr}>Invitation Code</Text>
+          <View style={styles.action}>
+            {/* <FontAwesome name="user-o" color="#05375a" size={20} /> */}
+            <TextInput
+              placeholder="Please enter your Invitation Code"
+              style={styles.textInputt}
+              autoCapitalize="none"
+              // onChangeText={(val) => textInputChange(val)}
+            />
+          </View>
+
+          <Text style={styles.wholeText}>
+            By registering, you comfirm that you accept our{" "}
+            <Text style={styles.coloredText}>Terms of Use</Text> and{" "}
+            <Text style={styles.coloredText}>Privacy Policy</Text>
+          </Text>
           {/* Sign up */}
           <View style={styles.button}>
             <LinearGradient
@@ -176,32 +194,14 @@ const SignInScreen = ({ navigation }) => {
                   },
                 ]}
               >
-                Sign up
+                Register
               </Text>
             </LinearGradient>
 
             {/* Sign in*/}
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={[
-                styles.signIn,
-                {
-                  borderColor: "#009387",
-                  borderWidth: 1,
-                  marginTop: 15,
-                },
-              ]}
-            >
-              <Text
-                style={[
-                  styles.textSign,
-                  {
-                    color: "#009387",
-                  },
-                ]}
-              >
-                Sign in
-              </Text>
+            <Text style={styles.alreadyAccount}>Already hava an account? </Text>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Text style={[styles.loginBack]}>Log in</Text>
             </TouchableOpacity>
           </View>
         </Animatable.View>
@@ -221,10 +221,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     paddingHorizontal: 20,
-    paddingBottom: 50,
+    paddingBottom: 0,
   },
   footer: {
-    flex: 3,
+    flex: 5,
     backgroundColor: "#fff",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -235,10 +235,17 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     fontSize: 30,
+    marginBottom: 20,
   },
   text_footer: {
     color: "#05375a",
     fontSize: 18,
+    marginTop: 20,
+  },
+  text_footerr: {
+    color: "#05375a",
+    fontSize: 18,
+    marginTop: 30,
   },
   action: {
     flexDirection: "row",
@@ -260,13 +267,18 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: "#05375a",
   },
+  textInputt: {
+    flex: 1,
+    marginTop: Platform.OS === "ios" ? 0 : -12,
+    color: "#05375a",
+  },
   errorMsg: {
     color: "#FF0000",
     fontSize: 14,
   },
   button: {
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 10,
   },
   signIn: {
     width: "100%",
@@ -278,5 +290,22 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 18,
     fontWeight: "bold",
+  },
+  loginBack: {
+    color: "#009387",
+    fontWeight: "bold",
+    marginLeft: 280,
+    marginTop: -17,
+  },
+  alreadyAccount: {
+    marginLeft: 70,
+    marginTop: 10,
+  },
+  coloredText: {
+    color: "#009387",
+  },
+  wholeText: {
+    marginTop: 40,
+    marginBottom: -5,
   },
 });
