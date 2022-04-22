@@ -16,6 +16,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from "react-native-animatable";
 import React from "react";
+import { color } from "react-native-reanimated";
 
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -67,7 +68,7 @@ const SignInScreen = ({ navigation }) => {
         <StatusBar backgroundColor="#009387" barstyle="light-content" />
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.text_header}>Welcome!</Text>
+          <Text style={styles.text_header}>Welcome to Login to ExpoNect!</Text>
         </View>
         {/* Footer */}
         <Animatable.View animation="fadeInUpBig" style={styles.footer}>
@@ -117,6 +118,9 @@ const SignInScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
+          {/* forget password */}
+          <Text style={styles.forgetPassword}>Forget Password?</Text>
+
           {/* Sign in */}
           <View style={styles.button}>
             <LinearGradient
@@ -131,31 +135,25 @@ const SignInScreen = ({ navigation }) => {
                   },
                 ]}
               >
-                Sign in
+                Login
               </Text>
             </LinearGradient>
 
             {/* Sign up*/}
+            <Text style={styles.freeRegisterTextQ}>Don't have an account?</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate("SignUpScreen")}
-              style={[
-                styles.signIn,
-                {
-                  borderColor: "#009387",
-                  borderWidth: 1,
-                  marginTop: 15,
-                },
-              ]}
             >
               <Text
                 style={[
-                  styles.textSign,
+                  styles.freeRegisterText,
                   {
                     color: "#009387",
+                    fontWeight: "bold",
                   },
                 ]}
               >
-                Sign up
+                Free Register Now!
               </Text>
             </TouchableOpacity>
           </View>
@@ -233,5 +231,18 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 18,
     fontWeight: "bold",
+  },
+  forgetPassword: {
+    color: "#009387",
+    marginTop: 15,
+    marginLeft: 220,
+  },
+  freeRegisterTextQ: {
+    marginLeft: -170,
+    marginTop: 10,
+  },
+  freeRegisterText: {
+    marginLeft: 120,
+    marginTop: -17,
   },
 });
