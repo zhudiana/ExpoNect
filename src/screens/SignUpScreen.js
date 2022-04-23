@@ -17,6 +17,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from "react-native-animatable";
+import { useTheme } from "@react-navigation/native";
 
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -25,6 +26,7 @@ const HideKeyboard = ({ children }) => (
 );
 
 const SignInScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   const [data, setData] = React.useState({
     email: "",
     password: "",
@@ -87,13 +89,19 @@ const SignInScreen = ({ navigation }) => {
           <Text style={styles.text_header}>Register Now!</Text>
         </View>
         {/* Footer */}
-        <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+        <Animatable.View
+          animation="fadeInUpBig"
+          style={[styles.footer, { backgroundColor: colors.background }]}
+        >
           {/* Email Field */}
-          <Text style={styles.text_footer}>Email</Text>
+          <Text style={[styles.text_footer, { color: colors.text }]}>
+            Email
+          </Text>
           <View style={styles.action}>
-            <FontAwesome name="user-o" color="#05375a" size={20} />
+            <FontAwesome name="user-o" color={colors.text} size={20} />
             <TextInput
               placeholder="Please enter your email"
+              placeholderTextColor="#666666"
               style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => textInputChange(val)}
@@ -112,14 +120,17 @@ const SignInScreen = ({ navigation }) => {
               {
                 marginTop: 35,
               },
+              ,
+              { color: colors.text },
             ]}
           >
             Password
           </Text>
           <View style={styles.action}>
-            <Feather name="lock" color="#05375a" size={20} />
+            <Feather name="lock" color={colors.text} size={20} />
             <TextInput
               placeholder="Please enter your password"
+              placeholderTextColor="#666666"
               secureTextEntry={data.secureTextEntry ? true : false}
               style={styles.textInput}
               autoCapitalize="none"
@@ -141,14 +152,17 @@ const SignInScreen = ({ navigation }) => {
               {
                 marginTop: 35,
               },
+              ,
+              { color: colors.text },
             ]}
           >
             Confirm Password
           </Text>
           <View style={styles.action}>
-            <Feather name="lock" color="#05375a" size={20} />
+            <Feather name="lock" color={colors.text} size={20} />
             <TextInput
               placeholder="Comfirm password"
+              placeholderTextColor="#666666"
               secureTextEntry={data.confirm_secureTextEntry ? true : false}
               style={styles.textInput}
               autoCapitalize="none"
@@ -164,18 +178,21 @@ const SignInScreen = ({ navigation }) => {
           </View>
 
           {/* invitation code Field */}
-          <Text style={styles.text_footerr}>Invitation Code</Text>
+          <Text style={[styles.text_footerr, { color: colors.text }]}>
+            Invitation Code
+          </Text>
           <View style={styles.action}>
             {/* <FontAwesome name="user-o" color="#05375a" size={20} /> */}
             <TextInput
               placeholder="Please enter your Invitation Code"
+              placeholderTextColor="#666666"
               style={styles.textInputt}
               autoCapitalize="none"
               // onChangeText={(val) => textInputChange(val)}
             />
           </View>
 
-          <Text style={styles.wholeText}>
+          <Text style={[styles.wholeText, { color: colors.text }]}>
             By registering, you comfirm that you accept our{" "}
             <Text style={styles.coloredText}>Terms of Use</Text> and{" "}
             <Text style={styles.coloredText}>Privacy Policy</Text>
@@ -199,7 +216,9 @@ const SignInScreen = ({ navigation }) => {
             </LinearGradient>
 
             {/* Sign in*/}
-            <Text style={styles.alreadyAccount}>Already hava an account? </Text>
+            <Text style={[styles.alreadyAccount, { color: colors.text }]}>
+              Already hava an account?{" "}
+            </Text>
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Text style={[styles.loginBack]}>Log in</Text>
             </TouchableOpacity>

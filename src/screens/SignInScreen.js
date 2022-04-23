@@ -18,6 +18,7 @@ import * as Animatable from "react-native-animatable";
 import React from "react";
 import { color } from "react-native-reanimated";
 import { AuthContext } from "../components/Context";
+import { useTheme } from "@react-navigation/native";
 
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -26,6 +27,7 @@ const HideKeyboard = ({ children }) => (
 );
 
 const SignInScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   const [data, setData] = React.useState({
     email: "",
     password: "",
@@ -65,6 +67,10 @@ const SignInScreen = ({ navigation }) => {
     });
   };
 
+  const loginHandle = (username, password) => {
+    signIn(username, password);
+  };
+
   return (
     <HideKeyboard>
       <View style={styles.container}>
@@ -74,14 +80,20 @@ const SignInScreen = ({ navigation }) => {
           <Text style={styles.text_header}>Welcome to Login to ExpoNect!</Text>
         </View>
         {/* Footer */}
-        <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+        <Animatable.View
+          animation="fadeInUpBig"
+          style={[styles.footer, { backgroundColor: colors.background }]}
+        >
           {/* Email Field */}
-          <Text style={styles.text_footer}>Email</Text>
+          <Text style={[styles.text_footer, { color: colors.text }]}>
+            Email
+          </Text>
           <View style={styles.action}>
-            <FontAwesome name="user-o" color="#05375a" size={20} />
+            <FontAwesome name="user-o" color={colors.text} size={20} />
             <TextInput
               placeholder="Please enter your email"
-              style={styles.textInput}
+              placeholderTextColor="#666666"
+              style={[styles.textInput, { color: colors.text }]}
               autoCapitalize="none"
               onChangeText={(val) => textInputChange(val)}
             />
@@ -99,16 +111,19 @@ const SignInScreen = ({ navigation }) => {
               {
                 marginTop: 35,
               },
+              ,
+              { color: colors.text },
             ]}
           >
             Password
           </Text>
           <View style={styles.action}>
-            <Feather name="lock" color="#05375a" size={20} />
+            <Feather name="lock" color={colors.text} size={20} />
             <TextInput
               placeholder="Please enter your password"
+              placeholderTextColor="#666666"
               secureTextEntry={data.secureTextEntry ? true : false}
-              style={styles.textInput}
+              style={[styles.textInput, { color: colors.text }]}
               autoCapitalize="none"
               onChangeText={(val) => handlePasswordChange(val)}
             />
@@ -133,7 +148,7 @@ const SignInScreen = ({ navigation }) => {
             <TouchableOpacity
               style={styles.signIn}
               onPress={() => {
-                signIn();
+                loginHandle(data.username, data.password);
               }}
             >
               <LinearGradient
@@ -154,7 +169,9 @@ const SignInScreen = ({ navigation }) => {
             </TouchableOpacity>
 
             {/* Sign up*/}
-            <Text style={styles.freeRegisterTextQ}>Don't have an account?</Text>
+            <Text style={[styles.freeRegisterTextQ, { color: colors.text }]}>
+              Don't have an account?
+            </Text>
             <TouchableOpacity
               onPress={() => navigation.navigate("SignUpScreen")}
             >

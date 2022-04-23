@@ -3,9 +3,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Icon from "react-native-vector-icons/Ionicons";
 import HomeScreen from "./HomeScreen";
-import DetailsScreen from "./DetailsScreen";
+import NotificationScreen from "./NotificationScreen.ls";
+import FavoriteScreen from "./FavoriteScreen";
 import ProfileScreen from "./ProfileScreen";
-import ExploreScreen from "./ExploreScreen";
+import MenuScreen from "./MenuScreen";
 
 const HomeStack = createNativeStackNavigator();
 const DetailsStack = createNativeStackNavigator();
@@ -30,13 +31,13 @@ const MainTabScreen = () => (
       }}
     />
     <Tab.Screen
-      name="Notifications"
-      component={DetailsStackScreen}
+      name="Favorite"
+      component={FavoriteScreen}
       options={{
-        tabBarLabel: "Updates",
+        tabBarLabel: "Favourite",
         tabBarColor: "#009387",
         tabBarIcon: ({ color }) => (
-          <Icon name="ios-notifications" color={color} size={26} />
+          <Icon name="ios-heart" color={color} size={26} />
         ),
       }}
     />
@@ -52,13 +53,25 @@ const MainTabScreen = () => (
       }}
     />
     <Tab.Screen
-      name="Explore"
-      component={ExploreScreen}
+      name="Notifications"
+      component={NotificationScreen}
       options={{
-        tabBarLabel: "Profile",
+        tabBarLabel: "Notification",
         tabBarColor: "#009387",
         tabBarIcon: ({ color }) => (
-          <Icon name="ios-aperture" color={color} size={26} />
+          <Icon name="ios-notifications" color={color} size={26} />
+        ),
+      }}
+    />
+
+    <Tab.Screen
+      name="Menu"
+      component={MenuScreen}
+      options={{
+        tabBarLabel: "Menu",
+        tabBarColor: "#009387",
+        tabBarIcon: ({ color }) => (
+          <Icon name="ios-menu" color={color} size={26} />
         ),
       }}
     />
@@ -83,16 +96,6 @@ const HomeStackScreen = ({ navigation }) => (
       component={HomeScreen}
       options={{
         title: "Overview",
-        // headerLeft: () => (
-        //   <Icon.Button
-        //     name="ios-menu"
-        //     size={25}
-        //     backgroundColor="#009387"
-        //     onPress={()=> {
-        //       navigation.openDrawer()}
-        //       }>
-        //   </Icon.Button>
-        // )
       }}
     />
   </HomeStack.Navigator>

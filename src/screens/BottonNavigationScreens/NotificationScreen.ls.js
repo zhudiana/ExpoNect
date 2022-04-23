@@ -1,9 +1,9 @@
 import { View, Text, Button, StyleSheet } from "react-native";
 
-const DetailsScreen = (navigation) => {
+const NotificationScreen = (navigation) => {
   return (
     <View style={styles.container}>
-      <Text>Details Screen</Text>
+      <Text>Notification Screen </Text>
       <Button
         title="Go to details screen...again"
         onPress={() => navigation.push("Details")}
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailsScreen;
+export default NotificationScreen;

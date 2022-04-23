@@ -10,8 +10,10 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import * as Animatable from "react-native-animatable";
+import { useTheme } from "@react-navigation/native";
 
 const SplashScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -23,8 +25,13 @@ const SplashScreen = ({ navigation }) => {
           resizeMode="stretch"
         />
       </View>
-      <Animatable.View style={styles.footer} animation="fadeInUpBig">
-        <Text style={styles.title}>Stay connected with everyone!</Text>
+      <Animatable.View
+        style={[styles.footer, { backgroundColor: colors.background }]}
+        animation="fadeInUpBig"
+      >
+        <Text style={[styles.title, { color: colors.text }]}>
+          Stay connected with everyone!
+        </Text>
         <View style={styles.button}>
           <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
             <LinearGradient
