@@ -16,9 +16,9 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from "react-native-animatable";
 import React from "react";
-import { color } from "react-native-reanimated";
 import { AuthContext } from "../../components/Context";
 import { useTheme } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 //API client
 import axios from "axios";
@@ -29,7 +29,7 @@ const HideKeyboard = ({ children }) => (
   </TouchableWithoutFeedback>
 );
 
-const LoginScreen = ({ navigation }) => {
+const ExSignInScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const [data, setData] = React.useState({
     email: "",
@@ -40,7 +40,7 @@ const LoginScreen = ({ navigation }) => {
     isValidPassword: true,
   });
 
-  const { signIn } = React.useContext(AuthContext);
+  // const { signIn } = React.useContext(AuthContext);
 
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
@@ -110,7 +110,10 @@ const LoginScreen = ({ navigation }) => {
         <StatusBar backgroundColor="#009387" barstyle="light-content" />
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.text_header}>Welcome ExpoNect Exporters!</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("SplashScreen")}>
+            <Icon name="arrow-back" style={styles.arrowIcon} size={26} />
+          </TouchableOpacity>
+          <Text style={styles.text_header}>Welcome Exporters!</Text>
         </View>
         {/* Footer */}
         <Animatable.View
@@ -184,19 +187,14 @@ const LoginScreen = ({ navigation }) => {
 
           {/* forget password */}
           <TouchableOpacity
-            onPress={() => navigation.navigate("ForgetPasswordScreen")}
+            onPress={() => navigation.navigate("ExForgetPassword")}
           >
             <Text style={styles.forgetPassword}>Forget Password?</Text>
           </TouchableOpacity>
 
           {/* Sign in */}
           <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.signIn}
-              onPress={() => {
-                loginHandle(data.username, data.password);
-              }}
-            >
+            <TouchableOpacity style={styles.signIn} onPress={() => {}}>
               <LinearGradient
                 colors={["#08d4c4", "#01ab9d"]}
                 style={styles.signIn}
@@ -218,9 +216,7 @@ const LoginScreen = ({ navigation }) => {
             <Text style={[styles.freeRegisterTextQ, { color: colors.text }]}>
               Don't have an account?
             </Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SignUpScreen")}
-            >
+            <TouchableOpacity onPress={() => navigation.navigate(" ")}>
               <Text
                 style={[
                   styles.freeRegisterText,
@@ -240,7 +236,7 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-export default LoginScreen;
+export default ExSignInScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -261,10 +257,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 30,
   },
+  arrowIcon: {
+    color: "#fff",
+  },
   text_header: {
     color: "#fff",
     fontWeight: "bold",
     fontSize: 30,
+    textAlign: "center",
   },
   text_footer: {
     color: "#05375a",

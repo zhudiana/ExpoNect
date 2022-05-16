@@ -5,7 +5,8 @@ import {
   DefaultTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import MainTabScreen from "./src/screens/BottonNavigationScreens/MainTabScreen";
+import MainTabScreen from "./src/screens/Importer screens/BottonNavigationScreens/MainTabScreen";
+//import ExMainTabScreen from "./src/screens/Exporter Screens/BottonNavigation/ExMainTabScreen";
 import RootStackScreen from "./src/screens/RootStackScreen";
 import {
   StyleSheet,
@@ -104,6 +105,20 @@ export default function App() {
         }
         dispatch({ type: "LOGIN", id: userName, token: userToken });
       },
+      // ExsignIn: async (userName, password) => {
+      //   let userToken;
+      //   // userToken = null;
+      //   if (userName == "user" && password == "pass") {
+      //     //use db here by checking user name from db
+      //     try {
+      //       userToken = "hello";
+      //       await AsyncStorage.setItem("userToken", userToken);
+      //     } catch (e) {
+      //       console.log(e);
+      //     }
+      //   }
+      //   dispatch({ type: "LOGIN", id: userName, token: userToken });
+      // },
       signOut: async () => {
         try {
           await AsyncStorage.removeItem("userToken");
