@@ -20,6 +20,9 @@ import { color } from "react-native-reanimated";
 import { AuthContext } from "../components/Context";
 import { useTheme } from "@react-navigation/native";
 
+//API client
+import axios from "axios";
+
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
