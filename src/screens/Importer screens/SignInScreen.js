@@ -17,8 +17,11 @@ import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from "react-native-animatable";
 import React from "react";
 import { color } from "react-native-reanimated";
-import { AuthContext } from "../components/Context";
+import { AuthContext } from "../../components/Context";
 import { useTheme } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/Ionicons";
+//API client
+import axios from "axios";
 
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -33,27 +36,44 @@ const SignInScreen = ({ navigation }) => {
     password: "",
     checkTextInputChange: false,
     secureTextEntry: true,
+    isValidEmail: true,
+    isValidPassword: true,
   });
 
   const { signIn } = React.useContext(AuthContext);
 
   const textInputChange = (val) => {
-    if (val.length !== 0) {
+    if (val.trim().length >= 4) {
       setData({
         ...data,
         email: val,
         check_textInputChange: true,
+        isValidEmail: true,
       });
     } else {
       setData({
         ...data,
         email: val,
         check_textInputChange: false,
+        isValidEmail: false,
       });
     }
   };
 
   const handlePasswordChange = (val) => {
+    if (val.trim().length >= 8) {
+      setData({
+        ...data,
+        password: val,
+        // isValidPassword: true,
+      });
+    } else {
+      setData({
+        ...data,
+        password: val,
+        isValidPassword: false,
+      });
+    }
     setData({
       ...data,
       password: val,
@@ -66,6 +86,19 @@ const SignInScreen = ({ navigation }) => {
       secureTextEntry: !data.secureTextEntry,
     });
   };
+  const handleValidEmail = (val) => {
+    if (val.trim().length >= 4) {
+      setData({
+        ...data,
+        isValidEmail: true,
+      });
+    } else {
+      setData({
+        ...data,
+        isValidEmail: false,
+      });
+    }
+  };
 
   const loginHandle = (username, password) => {
     signIn(username, password);
@@ -77,6 +110,9 @@ const SignInScreen = ({ navigation }) => {
         <StatusBar backgroundColor="#009387" barstyle="light-content" />
         {/* Header */}
         <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.navigate("SplashScreen")}>
+            <Icon name="arrow-back" style={styles.arrowIcon} size={26} />
+          </TouchableOpacity>
           <Text style={styles.text_header}>Welcome to Login to ExpoNect!</Text>
         </View>
         {/* Footer */}
@@ -96,6 +132,7 @@ const SignInScreen = ({ navigation }) => {
               style={[styles.textInput, { color: colors.text }]}
               autoCapitalize="none"
               onChangeText={(val) => textInputChange(val)}
+              onEndEditing={(e) => handleValidEmail(e.nativeEvent.text)}
             />
             {data.check_textInputChange ? (
               <Animatable.View animation="bounceIn">
@@ -103,6 +140,13 @@ const SignInScreen = ({ navigation }) => {
               </Animatable.View>
             ) : null}
           </View>
+          {data.isValidEmail ? null : (
+            <Animatable.View animation="fadeInLeft" duration={500}>
+              <Text style={styles.errorMsg}>
+                please enter valid email address
+              </Text>
+            </Animatable.View>
+          )}
 
           {/* Password Field */}
           <Text
@@ -135,6 +179,11 @@ const SignInScreen = ({ navigation }) => {
               )}
             </TouchableOpacity>
           </View>
+          {data.isValidPassword ? null : (
+            <Text style={styles.errorMsg}>
+              password must be at least 8 characters long
+            </Text>
+          )}
 
           {/* forget password */}
           <TouchableOpacity
@@ -200,6 +249,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#009387",
+  },
+  arrowIcon: {
+    color: "#fff",
   },
   header: {
     flex: 1,

@@ -18,6 +18,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from "react-native-animatable";
 import { useTheme } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -86,6 +87,9 @@ const SignInScreen = ({ navigation }) => {
         <StatusBar backgroundColor="#009387" barstyle="light-content" />
         {/* Header */}
         <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
+            <Icon name="arrow-back" style={styles.arrowIcon} size={26} />
+          </TouchableOpacity>
           <Text style={styles.text_header}>Register Now!</Text>
         </View>
         {/* Footer */}
@@ -250,11 +254,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 30,
   },
+  arrowIcon: {
+    color: "#fff",
+    top: 25,
+    left: 10,
+  },
   text_header: {
     color: "#fff",
     fontWeight: "bold",
     fontSize: 30,
     marginBottom: 20,
+    textAlign: "center",
   },
   text_footer: {
     color: "#05375a",

@@ -38,7 +38,18 @@ const SplashScreen = ({ navigation }) => {
               colors={["#08d4c4", "#01ab9d"]}
               style={styles.signIn}
             >
-              <Text style={styles.textSign}>Get Started</Text>
+              <Text style={styles.textSign}>ExpoNect Importer</Text>
+              <MaterialIcons name="navigate-next" color="#fff" size={20} />
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.button}>
+          <TouchableOpacity onPress={() => navigation.navigate("LoginScreen")}>
+            <LinearGradient
+              colors={["#08d4c4", "#01ab9d"]}
+              style={styles.signIn}
+            >
+              <Text style={styles.textSign}>ExpoNect Exporter</Text>
               <MaterialIcons name="navigate-next" color="#fff" size={20} />
             </LinearGradient>
           </TouchableOpacity>
@@ -93,7 +104,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   signIn: {
-    width: 150,
+    width: 180,
     height: 40,
     justifyContent: "center",
     alignItems: "center",

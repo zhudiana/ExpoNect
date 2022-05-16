@@ -18,7 +18,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from "react-native-animatable";
 import { useTheme } from "@react-navigation/native";
-
+import Icon from "react-native-vector-icons/Ionicons";
 //hide keyboard
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -94,6 +94,9 @@ const ForgetPasswordScreen = ({ navigation }) => {
         <StatusBar backgroundColor="#009387" barstyle="light-content" />
         {/* Header */}
         <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
+            <Icon name="arrow-back" style={styles.arrowIcon} size={26} />
+          </TouchableOpacity>
           <Text style={styles.text_header}>Password Recovery</Text>
         </View>
         {/* Footer */}
@@ -261,6 +264,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#009387",
   },
+  arrowIcon: {
+    color: "#fff",
+    top: 25,
+  },
   header: {
     flex: 1,
     justifyContent: "flex-end",
@@ -280,6 +287,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 30,
     marginBottom: 20,
+    left: 40,
   },
   text_footer: {
     color: "#05375a",
