@@ -20,6 +20,7 @@ import { ActivityIndicator } from "react-native-web";
 import { useEffect } from "react";
 import { AuthContext } from "./src/components/Context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ExMainTabScreen from "./src/screens/Exporter Screens/BottonNavigation/ExMainTabScreen";
 
 export default function App() {
   // const [isLoading, setIsLoading] = React.useState(true);
@@ -105,20 +106,7 @@ export default function App() {
         }
         dispatch({ type: "LOGIN", id: userName, token: userToken });
       },
-      // ExsignIn: async (userName, password) => {
-      //   let userToken;
-      //   // userToken = null;
-      //   if (userName == "user" && password == "pass") {
-      //     //use db here by checking user name from db
-      //     try {
-      //       userToken = "hello";
-      //       await AsyncStorage.setItem("userToken", userToken);
-      //     } catch (e) {
-      //       console.log(e);
-      //     }
-      //   }
-      //   dispatch({ type: "LOGIN", id: userName, token: userToken });
-      // },
+
       signOut: async () => {
         try {
           await AsyncStorage.removeItem("userToken");
@@ -165,6 +153,7 @@ export default function App() {
         ) : (
           <RootStackScreen />
         )}
+        {/* <ExMainTabScreen /> */}
       </NavigationContainer>
     </AuthContext.Provider>
   );

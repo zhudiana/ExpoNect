@@ -7,6 +7,7 @@ import ExSignInScreen from "./Exporter Screens/ExSignInScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ForgetPasswordScreen from "./Importer screens/ForgetPasswordScreen";
 import ExForgetPassword from "./Exporter Screens/ExForgetPassword";
+import ExMainTabScreen from "./Exporter Screens/BottonNavigation/ExMainTabScreen";
 
 const RootStack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ const RootStackScreen = ({ navigation }) => (
     <RootStack.Screen name="SignUpScreen" component={SignUpScreen} />
     <RootStack.Screen name="ExSignInScreen" component={ExSignInScreen} />
     <RootStack.Screen name="ExForgetPassword" component={ExForgetPassword} />
+    <RootStack.Screen name="ExMainTabScreen" component={ExMainTabScreen} />
     <RootStack.Screen
       name="ForgetPasswordScreen"
       component={ForgetPasswordScreen}

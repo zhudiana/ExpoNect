@@ -20,9 +20,6 @@ import { AuthContext } from "../../components/Context";
 import { useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-//API client
-import axios from "axios";
-
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
@@ -40,68 +37,11 @@ const ExSignInScreen = ({ navigation }) => {
     isValidPassword: true,
   });
 
-  // const { signIn } = React.useContext(AuthContext);
-
-  const textInputChange = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: true,
-        isValidEmail: true,
-      });
-    } else {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: false,
-        isValidEmail: false,
-      });
-    }
-  };
-
-  const handlePasswordChange = (val) => {
-    if (val.trim().length >= 8) {
-      setData({
-        ...data,
-        password: val,
-        // isValidPassword: true,
-      });
-    } else {
-      setData({
-        ...data,
-        password: val,
-        isValidPassword: false,
-      });
-    }
-    setData({
-      ...data,
-      password: val,
-    });
-  };
-
   const updateSecureTextEntry = () => {
     setData({
       ...data,
       secureTextEntry: !data.secureTextEntry,
     });
-  };
-  const handleValidEmail = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        isValidEmail: true,
-      });
-    } else {
-      setData({
-        ...data,
-        isValidEmail: false,
-      });
-    }
-  };
-
-  const loginHandle = (username, password) => {
-    signIn(username, password);
   };
 
   return (
@@ -131,8 +71,8 @@ const ExSignInScreen = ({ navigation }) => {
               placeholderTextColor="#666666"
               style={[styles.textInput, { color: colors.text }]}
               autoCapitalize="none"
-              onChangeText={(val) => textInputChange(val)}
-              onEndEditing={(e) => handleValidEmail(e.nativeEvent.text)}
+              // onChangeText={(val) => textInputChange(val)}
+              // onEndEditing={(e) => handleValidEmail(e.nativeEvent.text)}
             />
             {data.check_textInputChange ? (
               <Animatable.View animation="bounceIn">
@@ -166,10 +106,10 @@ const ExSignInScreen = ({ navigation }) => {
             <TextInput
               placeholder="Please enter your password"
               placeholderTextColor="#666666"
-              secureTextEntry={data.secureTextEntry ? true : false}
+              // secureTextEntry={data.secureTextEntry ? true : false}
               style={[styles.textInput, { color: colors.text }]}
               autoCapitalize="none"
-              onChangeText={(val) => handlePasswordChange(val)}
+              // onChangeText={(val) => handlePasswordChange(val)}
             />
             <TouchableOpacity onPress={updateSecureTextEntry}>
               {data.secureTextEntry ? (
@@ -194,7 +134,10 @@ const ExSignInScreen = ({ navigation }) => {
 
           {/* Sign in */}
           <View style={styles.button}>
-            <TouchableOpacity style={styles.signIn} onPress={() => {}}>
+            <TouchableOpacity
+              style={styles.signIn}
+              onPress={() => navigation.navigate("ExMainTabScreen")}
+            >
               <LinearGradient
                 colors={["#08d4c4", "#01ab9d"]}
                 style={styles.signIn}
