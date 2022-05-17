@@ -116,7 +116,6 @@ const SignInScreen = ({ navigation }) => {
               </Animatable.View>
             ) : null}
           </View>
-
           {/* Password Field */}
           <Text
             style={[
@@ -148,7 +147,6 @@ const SignInScreen = ({ navigation }) => {
               )}
             </TouchableOpacity>
           </View>
-
           {/* confirm Password Field */}
           <Text
             style={[
@@ -180,44 +178,35 @@ const SignInScreen = ({ navigation }) => {
               )}
             </TouchableOpacity>
           </View>
-
-          {/* invitation code Field */}
-          <Text style={[styles.text_footerr, { color: colors.text }]}>
-            Invitation Code
-          </Text>
-          <View style={styles.action}>
-            {/* <FontAwesome name="user-o" color="#05375a" size={20} /> */}
-            <TextInput
-              placeholder="Please enter your Invitation Code"
-              placeholderTextColor="#666666"
-              style={styles.textInputt}
-              autoCapitalize="none"
-              // onChangeText={(val) => textInputChange(val)}
-            />
-          </View>
-
           <Text style={[styles.wholeText, { color: colors.text }]}>
             By registering, you comfirm that you accept our{" "}
             <Text style={styles.coloredText}>Terms of Use</Text> and{" "}
             <Text style={styles.coloredText}>Privacy Policy</Text>
           </Text>
+
           {/* Sign up */}
           <View style={styles.button}>
-            <LinearGradient
+            <TouchableOpacity
               colors={["#08d4c4", "#01ab9d"]}
               style={styles.signIn}
+              onPress={() => navigation.navigate("EmailVerification")}
             >
-              <Text
-                style={[
-                  styles.textSign,
-                  {
-                    color: "#fff",
-                  },
-                ]}
+              <LinearGradient
+                colors={["#08d4c4", "#01ab9d"]}
+                style={styles.signIn}
               >
-                Register
-              </Text>
-            </LinearGradient>
+                <Text
+                  style={[
+                    styles.textSign,
+                    {
+                      color: "#fff",
+                    },
+                  ]}
+                >
+                  Register
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
 
             {/* Sign in*/}
             <Text style={[styles.alreadyAccount, { color: colors.text }]}>
