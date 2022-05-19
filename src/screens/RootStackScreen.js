@@ -9,6 +9,8 @@ import ForgetPasswordScreen from "./Importer screens/ForgetPasswordScreen";
 import ExForgetPassword from "./Exporter Screens/ExForgetPassword";
 import ExMainTabScreen from "./Exporter Screens/BottonNavigation/ExMainTabScreen";
 import EmailVerification from "./Importer screens/EmailVerification";
+import ExInfoScreen from "./Exporter Screens/ExInfoScreen";
+import ExEmailCodeScreen from "./Exporter Screens/ExEmailCodeScreen";
 
 const RootStack = createNativeStackNavigator();
 
@@ -22,10 +24,13 @@ const RootStackScreen = ({ navigation }) => (
     <RootStack.Screen name="SplashScreen" component={SplashScreen} />
     <RootStack.Screen name="SignInScreen" component={SignInScreen} />
     <RootStack.Screen name="SignUpScreen" component={SignUpScreen} />
+    <RootStack.Screen name="ExInfoScreen" component={ExInfoScreen} />
     <RootStack.Screen name="ExSignInScreen" component={ExSignInScreen} />
     <RootStack.Screen name="ExForgetPassword" component={ExForgetPassword} />
     <RootStack.Screen name="ExMainTabScreen" component={ExMainTabScreen} />
     <RootStack.Screen name="EmailVerification" component={EmailVerification} />
+    <RootStack.Screen name="ExEmailCodeScreen" component={ExEmailCodeScreen} />
+
     <RootStack.Screen
       name="ForgetPasswordScreen"
       component={ForgetPasswordScreen}
