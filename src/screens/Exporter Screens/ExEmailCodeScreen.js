@@ -19,6 +19,7 @@ import React from "react";
 import { AuthContext } from "../../components/Context";
 import { useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
+import OTPInputView from "@twotalltotems/react-native-otp-input";
 
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -60,13 +61,17 @@ const ExEmailCodeScreen = ({ navigation }) => {
           </Text>
           {/* email code Field */}
 
-          <View style={styles.action}>
-            <TextInput
-              placeholder="Email code"
-              placeholderTextColor="#999999"
-              style={[styles.textInput, { color: colors.text, width: 100 }]}
-              keyboardType="number-pad"
-              returnKeyType="done"
+          {/* OTP code */}
+          <View style={styles.otpInput}>
+            <OTPInputView
+              style={{ width: "80%", height: 200 }}
+              pinCount={4}
+              autoFocusOnLoad
+              codeInputFieldStyle={styles.underlineStyleBase}
+              codeInputHighlightStyle={styles.underlineStyleHighLighted}
+              onCodeFilled={(code) => {
+                console.log(`Code is ${code}, you are good to go!`);
+              }}
             />
           </View>
 
@@ -153,13 +158,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "#FF0000",
     paddingBottom: 5,
   },
-  textInput: {
-    flex: 1,
-    marginTop: Platform.OS === "ios" ? 0 : -12,
-    paddingLeft: 10,
-    color: "#05375a",
-    maxWidth: 100,
-  },
 
   button: {
     alignItems: "center",
@@ -188,5 +186,19 @@ const styles = StyleSheet.create({
   freeRegisterText: {
     marginLeft: 200,
     marginTop: -17,
+  },
+  otpInput: {
+    left: 30,
+  },
+  underlineStyleBase: {
+    width: 30,
+    height: 45,
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    color: "#999999",
+  },
+
+  underlineStyleHighLighted: {
+    borderColor: "#03DAC6",
   },
 });
