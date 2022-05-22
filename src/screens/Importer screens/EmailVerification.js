@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
   otpInput: {
     left: 30,
-    top: -50,
+    top: -70,
   },
   underlineStyleBase: {
     width: 30,

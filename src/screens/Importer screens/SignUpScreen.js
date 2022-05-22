@@ -180,8 +180,17 @@ const SignInScreen = ({ navigation }) => {
           </View>
           <Text style={[styles.wholeText, { color: colors.text }]}>
             By registering, you comfirm that you accept our{" "}
-            <Text style={styles.coloredText}>Terms of Use</Text> and{" "}
-            <Text style={styles.coloredText}>Privacy Policy</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("TermsOfUseScreen")}
+            >
+              <Text style={styles.coloredText}>Terms of Use </Text>
+            </TouchableOpacity>
+            and{" "}
+            <TouchableOpacity
+              onPress={() => navigation.navigate("PrivacyPolicyScreen")}
+            >
+              <Text style={styles.coloredText}>Privacy Policy</Text>
+            </TouchableOpacity>
           </Text>
 
           {/* Sign up */}
@@ -321,6 +330,7 @@ const styles = StyleSheet.create({
   },
   coloredText: {
     color: "#009387",
+    top: 3,
   },
   wholeText: {
     marginTop: 40,

@@ -11,6 +11,9 @@ import ExMainTabScreen from "./Exporter Screens/BottonNavigation/ExMainTabScreen
 import EmailVerification from "./Importer screens/EmailVerification";
 import ExInfoScreen from "./Exporter Screens/ExInfoScreen";
 import ExEmailCodeScreen from "./Exporter Screens/ExEmailCodeScreen";
+import EmailCodeSent from "./Importer screens/EmailCodeSent";
+import TermsOfUseScreen from "./TermsOfUseScreen";
+import PrivacyPolicyScreen from "./PrivacyPolicyScreen";
 
 const RootStack = createNativeStackNavigator();
 
@@ -30,6 +33,12 @@ const RootStackScreen = ({ navigation }) => (
     <RootStack.Screen name="ExMainTabScreen" component={ExMainTabScreen} />
     <RootStack.Screen name="EmailVerification" component={EmailVerification} />
     <RootStack.Screen name="ExEmailCodeScreen" component={ExEmailCodeScreen} />
+    <RootStack.Screen name="EmailCodeSent" component={EmailCodeSent} />
+    <RootStack.Screen name="TermsOfUseScreen" component={TermsOfUseScreen} />
+    <RootStack.Screen
+      name="PrivacyPolicyScreen"
+      component={PrivacyPolicyScreen}
+    />
 
     <RootStack.Screen
       name="ForgetPasswordScreen"
