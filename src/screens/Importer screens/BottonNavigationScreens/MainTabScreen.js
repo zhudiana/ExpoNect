@@ -8,6 +8,7 @@ import FavoriteScreen from "./FavoriteScreen";
 import ProfileScreen from "./ProfileScreen";
 import MenuScreen from "./MenuScreen";
 
+
 const HomeStack = createNativeStackNavigator();
 const DetailsStack = createNativeStackNavigator();
 
@@ -95,7 +96,7 @@ const HomeStackScreen = ({ navigation }) => (
       name="Home"
       component={HomeScreen}
       options={{
-        title: "Overview",
+         headerShown: false
       }}
     />
   </HomeStack.Navigator>
