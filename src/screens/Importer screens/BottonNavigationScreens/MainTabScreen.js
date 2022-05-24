@@ -7,6 +7,7 @@ import NotificationScreen from "./NotificationScreen.ls";
 import FavoriteScreen from "./FavoriteScreen";
 import ProfileScreen from "./ProfileScreen";
 import MenuScreen from "./MenuScreen";
+import DetailsScreen from "../../DetailsScreen";
 
 
 const HomeStack = createNativeStackNavigator();

@@ -1,19 +1,25 @@
 import React from 'react';
-import { TextInput, View, Text, Button, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  Dimensions,
+  SafeAreaView
+} from 'react-native';
+import products  from '../../../consts/products';
 import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import FavoriteScreen from "./FavoriteScreen";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import { Colors } from "react-native-paper";
 import COLORS from "../../../consts/colors";
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import products from '../../../consts/products';
-import { Dimensions } from 'react-native-web';
-import { Image } from 'react';
-import  {useState, Component, ImageBackground} from 'react';
+import { useState, Component, ImageBackground } from 'react';
 
-const width = Dimensions.get("screen").width / 2-30;
+
+const width = Dimensions.get('window').width / 2 - 30;
 const HomeScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const categories = ['Agricultural', 'Leather', 'Gold', 'Others']
@@ -37,7 +43,9 @@ const CategoryList = () => {
   
   const Card = ({ products }) => {
     return (
-      <View style={styles.card}>
+      <TouchableOpacity activeOpacity={0.8}
+        onPress={() => navigation.navigate('Details', products)}>
+        <View style={styles.card}>
         <View style={{
           alignItems: 'flex-end',
           position: 'absolute',
@@ -67,7 +75,39 @@ const CategoryList = () => {
             
        </View>
         </View>
+        <View style={{ height: 155, alignItems: 'center' }}>
+          <Image
+            source={products.img}
+            style={{ flex: 1, resizeMode: 'contain', height: 100, width: 150, alignItems: 'center', alignSelf: 'center' }}
+          />
         </View>
+        
+          <Text style={{ fontWeight: 'bold', fontSize: 14, marginTop:1, marginBottom:2 }}>
+          {products.name}
+          </Text>
+      
+       
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+           <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+              ${products.price}
+            </Text>
+       
+        <View style={{
+          height: 25,
+          width: 25,
+          backgroundColor: COLORS.white,
+          borderRadius: 5,
+          justifyContent: 'center',
+          alignItems: 'center',
+          }}>
+            <Icon name="chat" size={15}/>
+        </View>
+        </View>
+        </View>
+      </TouchableOpacity>
     );
   };
   return (
@@ -154,17 +194,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderColor: COLORS.green,
   },
-  card: {
-   height: 225,
+   card: {
+    height: 225,
     backgroundColor: COLORS.light,
     width,
-   marginHorizontal: 2,
+    marginHorizontal: 2,
     borderRadius: 10,
     marginBottom: 20,
-    marginRight: 2,
-    marginLeft: 2,
-    padding: 85,
-   
+    padding: 15,
   },
  
 });
