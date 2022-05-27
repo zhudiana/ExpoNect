@@ -44,31 +44,58 @@ router.post(`/`, async (req, res) => {
   return res.send(exporter);
 });
 
-// router.post("/login", async (req, res) => {
-//   const exporter = await Exporter.findOne({ email: req.body.email });
-//   const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+router.post("/login", async (req, res) => {
+  const exporter = await Exporter.findOne({ email: req.body.email });
+  const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 
-//   if (!exporter) {
-//     return res.status(400).send("exporter not found");
-//   }
+  if (!exporter) {
+    return res.status(400).send("exporter not found");
+  }
 
-//   if (
-//     exporter &&
-//     bcrypt.compareSync(req.body.password, exporter.passwordHash)
-//   ) {
-//     const token = jwt.sign(
-//       {
-//         exporterId: exporter.id,
-//         isAdmin: exporter.isAdmin,
-//         isImporter: exporter.isExporter,
-//       },
-//       ACCESS_TOKEN_SECRET,
-//       { expiresIn: "1w" }
-//     );
-//     res.status(200).send({ exporter: exporter.email, token: token });
-//   } else {
-//     res.status(400).send("password is wrong");
-//   }
-// });
+  if (
+    exporter &&
+    bcrypt.compareSync(req.body.password, exporter.passwordHash)
+  ) {
+    const token = jwt.sign(
+      {
+        exporterId: exporter.id,
+        isAdmin: exporter.isAdmin,
+        isImporter: exporter.isExporter,
+      },
+      ACCESS_TOKEN_SECRET,
+      { expiresIn: "1w" }
+    );
+    res.status(200).send({ exporter: exporter.email, token: token });
+  } else {
+    res.status(400).send("password is wrong");
+  }
+});
+
+router.get(`/get/count`, async (req, res) => {
+  const exporterCount = await Exporter.countDocuments();
+
+  if (!exporterCount) {
+    res.status(500).json({ success: false });
+  }
+  res.send({
+    exporterCount: exporterCount,
+  });
+});
+
+router.delete("/:id", (req, res) => {
+  Exporter.findByIdAndRemove(req.params.id)
+    .then((exporter) => {
+      if (exporter) {
+        return res.status(200).json({ success: true, message: "deleted" });
+      } else {
+        return res
+          .status(404)
+          .json({ success: false, message: "exporter not found" });
+      }
+    })
+    .catch((err) => {
+      return res.status(400).json({ success: false, error: err });
+    });
+});
 
 module.exports = router;

@@ -6,7 +6,7 @@
       "name": "Hadero coffee",
       "price": "20/kg",
       "like": true,
-      "image": "../../assets/coffee.png",
+      "image": "https://cdn.britannica.com/35/129635-050-A8A60DD8/footballs-American-pigskins-rubber-cowhide.jpg?w=690&h=388&c=crop",
       "category": {
         "$oid": "1"
       },
@@ -22,7 +22,7 @@
       "name": "Ethiopian Avocado",
       "price": "10/kg",
       "like": false,
-      "image":"../../assets/avocado.png ",
+     "image": "https://cdn.britannica.com/35/129635-050-A8A60DD8/footballs-American-pigskins-rubber-cowhide.jpg?w=690&h=388&c=crop",
       "category": {
         "$oid": "1"
       },
@@ -37,7 +37,7 @@
       "name": "Ethiopian cut flower",
       "price": "13/bucket",
       "like": false,
-      "image": "../../assets/flower.png",
+      "image": "https://cdn.britannica.com/35/129635-050-A8A60DD8/footballs-American-pigskins-rubber-cowhide.jpg?w=690&h=388&c=crop",
       "category": {
        " $oid": "1"
       },
@@ -52,7 +52,7 @@
       "name": "Pulses",
       "price": "15/kg",
       "like": false,
-      "image": "../../assets/pulses.png",
+      "image": "https://cdn.britannica.com/35/129635-050-A8A60DD8/footballs-American-pigskins-rubber-cowhide.jpg?w=690&h=388&c=crop",
       "category": {
         "$oid": "1"
       },
@@ -66,7 +66,7 @@
       "name": "Strawberries",
       "price": "18/kg",
       "like": false,
-      "image": "../../assets/straw.png",
+      "image": "https://cdn.britannica.com/35/129635-050-A8A60DD8/footballs-American-pigskins-rubber-cowhide.jpg?w=690&h=388&c=crop",
       "category": {
         "$oid": "1"
       },
@@ -80,7 +80,7 @@
       "name": "sesame",
       "price": "8/kg",
       "like": false,
-      "img": "../../assets/sesame.png",
+      "image": "https://cdn.britannica.com/35/129635-050-A8A60DD8/footballs-American-pigskins-rubber-cowhide.jpg?w=690&h=388&c=crop",
       "category": {
         "$oid": "1"
       },

@@ -70,4 +70,31 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get(`/get/count`, async (req, res) => {
+  const importerCount = await Importer.countDocuments();
+
+  if (!importerCount) {
+    res.status(500).json({ success: false });
+  }
+  res.send({
+    importerCount: importerCount,
+  });
+});
+
+router.delete("/:id", (req, res) => {
+  Importer.findByIdAndRemove(req.params.id)
+    .then((importer) => {
+      if (importer) {
+        return res.status(200).json({ success: true, message: "deleted" });
+      } else {
+        return res
+          .status(404)
+          .json({ success: false, message: "importer not found" });
+      }
+    })
+    .catch((err) => {
+      return res.status(400).json({ success: false, error: err });
+    });
+});
+
 module.exports = router;

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     height: width / 2 - 20 - 30,
     backgroundColor: "transparent",
     position: "absolute",
-    top: -45,
+    // top: -45,
   },
   card: {
     marginBottom: 10,
