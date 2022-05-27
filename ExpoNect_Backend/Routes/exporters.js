@@ -2,6 +2,7 @@ const { Exporter } = require("../models/exporter");
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 router.get(`/`, async (req, res) => {
   const exporterList = await Exporter.find();
@@ -42,5 +43,32 @@ router.post(`/`, async (req, res) => {
 
   return res.send(exporter);
 });
+
+// router.post("/login", async (req, res) => {
+//   const exporter = await Exporter.findOne({ email: req.body.email });
+//   const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+
+//   if (!exporter) {
+//     return res.status(400).send("exporter not found");
+//   }
+
+//   if (
+//     exporter &&
+//     bcrypt.compareSync(req.body.password, exporter.passwordHash)
+//   ) {
+//     const token = jwt.sign(
+//       {
+//         exporterId: exporter.id,
+//         isAdmin: exporter.isAdmin,
+//         isImporter: exporter.isExporter,
+//       },
+//       ACCESS_TOKEN_SECRET,
+//       { expiresIn: "1w" }
+//     );
+//     res.status(200).send({ exporter: exporter.email, token: token });
+//   } else {
+//     res.status(400).send("password is wrong");
+//   }
+// });
 
 module.exports = router;

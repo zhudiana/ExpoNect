@@ -35,10 +35,6 @@ const productSchema = mongoose.Schema({
     ref: "Category",
     require: true,
   },
-  isFeatured: {
-    type: Boolean,
-    default: false,
-  },
   location: {
     type: String,
     require: true,

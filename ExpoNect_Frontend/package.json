@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@ant-design/icons-react-native": "^2.3.2",
     "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-native-community/checkbox": "^0.5.12",
     "@react-native-community/clipboard": "^1.5.1",
@@ -26,6 +27,7 @@
     "expo-linear-gradient": "~11.0.3",
     "expo-status-bar": "~1.2.0",
     "formik": "^2.2.9",
+    "native-base": "^3.4.5",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",

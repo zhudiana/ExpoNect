@@ -7,7 +7,7 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainTabScreen from "./src/screens/Importer screens/BottonNavigationScreens/MainTabScreen";
 //import ExMainTabScreen from "./src/screens/Exporter Screens/BottonNavigation/ExMainTabScreen";
-import RootStackScreen from "./src/screens/RootStackScreen";
+import RootStackScreen from "./src/screens/Shared_screens/RootStackScreen";
 import {
   StyleSheet,
   Text,

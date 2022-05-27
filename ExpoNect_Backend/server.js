@@ -15,7 +15,12 @@ app.options("*", cors());
 //checking everything going to the server before it gets executed
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
-app.use(authJwt);
+// app.use(authJwt);
+app.use((err, req, res, next) => {
+  if (err) {
+    res.status(500).json({ message: "error in the server" });
+  }
+});
 
 //Routes
 const productsRoutes = require("./Routes/products");

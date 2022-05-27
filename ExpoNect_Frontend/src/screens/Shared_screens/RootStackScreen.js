@@ -1,17 +1,17 @@
 import { View, Text } from "react-native";
 import React from "react";
 import SplashScreen from "./SplashScreen";
-import SignInScreen from "./Importer screens/SignInScreen";
-import SignUpScreen from "./Importer screens/SignUpScreen";
-import ExSignInScreen from "./Exporter Screens/ExSignInScreen";
+import SignInScreen from "../Importer screens/SignInScreen";
+import SignUpScreen from "../Importer screens/SignUpScreen";
+import ExSignInScreen from "../Exporter Screens/ExSignInScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import ForgetPasswordScreen from "./Importer screens/ForgetPasswordScreen";
-import ExForgetPassword from "./Exporter Screens/ExForgetPassword";
-import ExMainTabScreen from "./Exporter Screens/BottonNavigation/ExMainTabScreen";
-import EmailVerification from "./Importer screens/EmailVerification";
-import ExInfoScreen from "./Exporter Screens/ExInfoScreen";
-import ExEmailCodeScreen from "./Exporter Screens/ExEmailCodeScreen";
-import EmailCodeSent from "./Importer screens/EmailCodeSent";
+import ForgetPasswordScreen from "../Importer screens/ForgetPasswordScreen";
+import ExForgetPassword from "../Exporter Screens/ExForgetPassword";
+import ExMainTabScreen from "../Exporter Screens/BottonNavigation/ExMainTabScreen";
+import EmailVerification from "../Importer screens/EmailVerification";
+import ExInfoScreen from "../Exporter Screens/ExInfoScreen";
+import ExEmailCodeScreen from "../Exporter Screens/ExEmailCodeScreen";
+import EmailCodeSent from "../Importer screens/EmailCodeSent";
 import TermsOfUseScreen from "./TermsOfUseScreen";
 import PrivacyPolicyScreen from "./PrivacyPolicyScreen";
 

@@ -2,7 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Icon from "react-native-vector-icons/Ionicons";
-import HomeScreen from "./HomeScreen";
+import HomeScreen from "./HomeScreen/HomeScreen";
 import NotificationScreen from "./NotificationScreen.ls";
 import FavoriteScreen from "./FavoriteScreen";
 import ProfileScreen from "./ProfileScreen";
@@ -53,13 +53,13 @@ const MainTabScreen = () => (
       }}
     />
     <Tab.Screen
-      name="Notifications"
+      name="Message"
       component={NotificationScreen}
       options={{
         tabBarLabel: "Notification",
         tabBarColor: "#009387",
         tabBarIcon: ({ color }) => (
-          <Icon name="ios-notifications" color={color} size={26} />
+          <Icon name="ios-chatbubble-ellipses-sharp" color={color} size={26} />
         ),
       }}
     />
@@ -81,45 +81,15 @@ const MainTabScreen = () => (
 const HomeStackScreen = ({ navigation }) => (
   <HomeStack.Navigator
     screenOptions={{
-      headerStyle: {
-        backgroundColor: "#009387",
-      },
       headerTintColor: "#fff",
       headerTintStyle: {
         fontWeight: "bold",
       },
-      // headerShown: false
+      headerShown: false,
     }}
   >
-    <HomeStack.Screen
-      name="Home"
-      component={HomeScreen}
-      options={{
-        title: "Overview",
-      }}
-    />
+    <HomeStack.Screen name="Home" component={HomeScreen} />
   </HomeStack.Navigator>
-);
-
-const DetailsStackScreen = ({ navigation }) => (
-  <DetailsStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: "#009387",
-      },
-      headerTintColor: "#fff",
-      headerTintStyle: {
-        fontWeight: "bold",
-      },
-      // headerShown: false
-    }}
-  >
-    <DetailsStack.Screen
-      name="Details"
-      component={DetailsScreen}
-      options={{}}
-    />
-  </DetailsStack.Navigator>
 );
 
 export default MainTabScreen;

@@ -3,8 +3,20 @@ const { Category } = require("../models/category");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
 router.get(`/`, async (req, res) => {
+  // jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, authData) => {
+  //   if (err) {
+  //     res.sendStatus(403); //forbidden
+  //   } else {
+  //     res.json({
+  //       message: "successfull",
+  //       authData,
+  //     });
+  //   }
+  // });
+
   let filter = {};
   if (req.query.categories) {
     filter = { category: req.query.categories.split(",") };
@@ -109,5 +121,16 @@ router.get(`/get/featured/:count`, async (req, res) => {
   }
   res.send(products);
 });
+
+function verifyToken(req, res, next) {
+  const bearerToken = req.headers["authorization"];
+  if (typeof bearerHeader !== "undefined") {
+    const bearerToken = bearerHeader.split(" ")[1];
+    req.token = bearerToken;
+    next();
+  } else {
+    res.sendStatus(403);
+  }
+}
 
 module.exports = router;
