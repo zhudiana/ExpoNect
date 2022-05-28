@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Switch } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
-import { AuthContext } from "../../../components/Context";
+import { AuthContext } from "../components/Context";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { TouchableRipple } from "react-native-paper";
 

@@ -8,13 +8,13 @@ import {
   Dimensions,
   SafeAreaView
 } from 'react-native';
-import products  from '../../../consts/products';
+import products  from '../consts/products';
 import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import FavoriteScreen from "./FavoriteScreen";
+import FavoriteScreen from "./Importer screens/BottonNavigationScreens/FavoriteScreen";
 import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import { Colors } from "react-native-paper";
-import COLORS from "../../../consts/colors";
+import COLORS from "../consts/colors";
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useState, Component, ImageBackground } from 'react';
 
