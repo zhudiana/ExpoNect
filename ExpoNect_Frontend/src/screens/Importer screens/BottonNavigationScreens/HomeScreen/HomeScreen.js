@@ -5,31 +5,55 @@ import {
   ActivityIndicator,
   FlatList,
   SafeAreaView,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Iconn from "react-native-vector-icons/Ionicons";
-import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import {
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
 
 import ProductList from "./ProductList";
 import SearchedProduct from "./SearchedProduct";
+import CategoryFilter from "./CategoryFilter";
 
 const data = require("../../../../../assets/data/products.json");
+const productsCategories = require("../../../../../assets/data/categories.json");
 
-const HomeScreen = () => {
+const HideKeyboard = ({ children }) => (
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+);
+
+const HomeScreen = (props) => {
   const [products, setProducts] = useState([]);
   const [productsFiltered, setProductsFiltered] = useState([]);
   const [focus, setFocus] = useState();
+  const [categories, setCategories] = useState([]);
+  const [productsCtg, setProductsCtg] = useState([]);
+  const [active, setActive] = useState();
+  const [initialState, setInitialState] = useState([]);
 
   useEffect(() => {
     setProducts(data);
     setProductsFiltered(data);
     setFocus(false);
+    setCategories(productsCategories);
+    setActive(-1);
+    setInitialState(data);
 
     return () => {
       setProducts([]);
       setProductsFiltered([]);
       setFocus();
+      setCategories([]);
+      setActive();
+      setInitialState();
     };
   });
 
@@ -47,18 +71,41 @@ const HomeScreen = () => {
     setFocus(false);
   };
 
+  //categories
+  const changeCtg = (ctg) => {
+    ctg === "all"
+      ? [setProductsCtg(initialState), setActive(true)]
+      : [
+          setProductsCtg(
+            products.filter((i) => i.category._id === ctg),
+            setActive(true)
+          ),
+        ];
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={{ fontSize: 30, fontWeight: "bold", color: "green" }}>
-          ExpoNect
-        </Text>
+        <HideKeyboard>
+          <Text
+            style={{
+              fontSize: 30,
+              fontWeight: "bold",
+              color: "green",
+              left: 10,
+            }}
+          >
+            ExpoNect
+          </Text>
+        </HideKeyboard>
 
-        <Iconn
-          name="ios-chatbubble-ellipses-sharp"
-          size={25}
-          style={styles.chat_icon}
-        />
+        <TouchableOpacity onPress={() => navigation.navigate("")}>
+          <Iconn
+            name="ios-chatbubble-ellipses-sharp"
+            size={25}
+            style={styles.chat_icon}
+          />
+        </TouchableOpacity>
 
         <View style={{ marginTop: 45 }}>
           <View style={styles.searchcontainer}>
@@ -77,14 +124,32 @@ const HomeScreen = () => {
       {focus == true ? (
         <SearchedProduct productFiltered={productsFiltered} />
       ) : (
-        <View styles={styles.listContainer}>
-          <FlatList
-            numColumns={2}
-            data={products}
-            renderItem={({ item }) => <ProductList key={item.id} item={item} />}
-            keyExtractor={(item) => item.price}
-          />
-        </View>
+        <ScrollView>
+          <View styles={styles.listContainer}>
+            <View>
+              <CategoryFilter
+                categories={categories}
+                CategoryFilter={changeCtg}
+                productsCtg={productsCtg}
+                active={active}
+                setActive={setActive}
+              />
+            </View>
+
+            <FlatList
+              numColumns={2}
+              data={products}
+              renderItem={({ item }) => (
+                <ProductList
+                  navigation={props.navigation}
+                  key={item._id}
+                  item={item}
+                />
+              )}
+              keyExtractor={(item) => item.price}
+            />
+          </View>
+        </ScrollView>
       )}
     </View>
   );
@@ -92,7 +157,7 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "gainsboro",
+    backgroundColor: "#fff",
   },
   listContainer: {
     width: "100%",
@@ -103,7 +168,6 @@ const styles = StyleSheet.create({
   header: {
     marginTop: 30,
     flexDirection: "row",
-    // justifyContent: "space-between",
     // marginLeft: -200,
     // marginRight: 10,
   },

@@ -27,7 +27,7 @@
     "expo-linear-gradient": "~11.0.3",
     "expo-status-bar": "~1.2.0",
     "formik": "^2.2.9",
-    "native-base": "^3.4.5",
+    "native-base": "2.13.8",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
@@ -43,7 +43,13 @@
     "react-native-svg": "^12.1.1",
     "react-native-vector-icons": "^9.1.0",
     "react-native-web": "0.17.1",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "undefined": "react-native-community/masked-view",
+    "node_modules/react-native-virtualized-view": {
+      "version": "0.1.5",
+      "resolved": "https://registry.npmjs.org/react-native-virtualized-view/-/react-native-virtualized-view-0.1.5.tgz",
+      "integrity": "sha512-GYKck4rYPpG0dg3WSv6aPPGfyArRMT98VTs6jVhD7C8MlSOsvfNuWKVjSrQmUMSdjpjLDpRc5LgJW8u1VDi44w=="
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

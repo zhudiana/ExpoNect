@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Icon from "react-native-vector-icons/Ionicons";
 import HomeScreen from "./HomeScreen/HomeScreen";
-import NotificationScreen from "./NotificationScreen.ls";
+import ChattingScreen from "./ChattingScreen";
 import FavoriteScreen from "./FavoriteScreen";
 import ProfileScreen from "./ProfileScreen";
 import MenuScreen from "./MenuScreen";
@@ -54,9 +54,9 @@ const MainTabScreen = () => (
     />
     <Tab.Screen
       name="Message"
-      component={NotificationScreen}
+      component={ChattingScreen}
       options={{
-        tabBarLabel: "Notification",
+        tabBarLabel: "Chat",
         tabBarColor: "#009387",
         tabBarIcon: ({ color }) => (
           <Icon name="ios-chatbubble-ellipses-sharp" color={color} size={26} />

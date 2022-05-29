@@ -1,0 +1,53 @@
+[{
+    
+        "_id": {
+          "$oid": 1
+        },
+        "name": "Agriculture",
+        "__v": 0
+      },
+      {
+        "_id": {
+            "$oid": 2
+          },
+          "name": "Leather",
+          "__v": 0
+      },
+      {
+        "_id": {
+            "$oid": 3
+          },
+          "name": "Other",
+          "__v": 0
+      },
+      {
+        "_id": {
+          "$oid": 4
+        },
+        "name": "Other",
+        "__v": 0
+      },
+      {
+        "_id": {
+          "$oid": 5
+        },
+        "name": "Other",
+        "__v": 0
+      },
+      {
+        "_id": {
+          "$oid": 6
+        },
+        "name": "Other",
+        "__v": 0
+      },
+      {
+        "_id": {
+          "$oid": 7
+        },
+        "name": "Other",
+        "__v": 0
+      },
+    ]
+
+   
