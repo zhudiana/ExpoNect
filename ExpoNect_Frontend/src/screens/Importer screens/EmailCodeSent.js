@@ -20,92 +20,121 @@ import { AuthContext } from "../../components/Context";
 import { useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 
+import { Formik } from "formik";
+import * as yup from "yup";
+
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
   </TouchableWithoutFeedback>
 );
 
+const initialValues = {
+  email: "",
+};
+
+const validationSchema = yup.object({
+  email: yup.string().email("Invalid Email!").required("email is missing"),
+});
+
 const EmailCodeSent = ({ navigation }) => {
   const { colors } = useTheme();
-  const [data, setData] = React.useState({
-    email: "",
-    password: "",
-    checkTextInputChange: false,
-    secureTextEntry: true,
-    isValidEmail: true,
-    isValidPassword: true,
-  });
 
-  const updateSecureTextEntry = () => {
-    setData({
-      ...data,
-      secureTextEntry: !data.secureTextEntry,
-    });
+  const handleRequestCode = (values, formikActions) => {
+    console.log(values, formikActions);
   };
+
+  const [text, onChangeText] = React.useState("");
 
   return (
     <HideKeyboard>
-      <View style={styles.container}>
-        <StatusBar backgroundColor="#009387" barstyle="light-content" />
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
-            <Icon name="arrow-back" style={styles.arrowIcon} size={26} />
-          </TouchableOpacity>
-          <Text style={styles.text_header}>Verify Email</Text>
-        </View>
-        {/* Footer */}
-        <Animatable.View
-          animation="fadeInUpBig"
-          style={[styles.footer, { backgroundColor: colors.background }]}
-        >
-          {/* Email Field */}
-          <Text style={[styles.text_footer, { color: colors.text }]}>
-            Email
-          </Text>
-          <View style={styles.action}>
-            <FontAwesome name="user-o" color={colors.text} size={20} />
-            <TextInput
-              placeholder="Please enter your email"
-              placeholderTextColor="#666666"
-              style={[styles.textInput, { color: colors.text }]}
-              autoCapitalize="none"
-              // onChangeText={(val) => textInputChange(val)}
-              // onEndEditing={(e) => handleValidEmail(e.nativeEvent.text)}
-            />
-            {data.check_textInputChange ? (
-              <Animatable.View animation="bounceIn">
-                <Feather name="check-circle" color="green" size={20} />
-              </Animatable.View>
-            ) : null}
-          </View>
-
-          {/* Request code */}
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.signIn}
-              onPress={() => navigation.navigate("EmailVerification")}
-            >
-              <LinearGradient
-                colors={["#08d4c4", "#01ab9d"]}
-                style={styles.signIn}
-              >
-                <Text
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleRequestCode}
+      >
+        {({
+          errors,
+          values,
+          touched,
+          handleSubmit,
+          handleBlur,
+          handleChange,
+        }) => {
+          console.log(errors, values);
+          return (
+            <>
+              <View style={styles.container}>
+                <StatusBar backgroundColor="#009387" barstyle="light-content" />
+                {/* Header */}
+                <View style={styles.header}>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("SignInScreen")}
+                  >
+                    <Icon
+                      name="arrow-back"
+                      style={styles.arrowIcon}
+                      size={26}
+                    />
+                  </TouchableOpacity>
+                  <Text style={styles.text_header}>Verify Email</Text>
+                </View>
+                {/* Footer */}
+                <Animatable.View
+                  animation="fadeInUpBig"
                   style={[
-                    styles.textSign,
-                    {
-                      color: "#fff",
-                    },
+                    styles.footer,
+                    { backgroundColor: colors.background },
                   ]}
                 >
-                  Request Code
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
-        </Animatable.View>
-      </View>
+                  {/* Email Field */}
+                  <Text style={[styles.text_footer, { color: colors.text }]}>
+                    Email
+                  </Text>
+                  <View style={styles.action}>
+                    <FontAwesome name="user-o" color={colors.text} size={20} />
+                    <TextInput
+                      placeholder="Please enter your email"
+                      placeholderTextColor="#666666"
+                      style={[styles.textInput, { color: colors.text }]}
+                      autoCapitalize="none"
+                      onChangeText={handleChange("email")}
+                      onBlur={handleBlur("email")}
+                    />
+                  </View>
+                  <Text style={{ color: "red" }}>
+                    {touched.email && errors.email ? errors.email : ""}{" "}
+                  </Text>
+
+                  {/* Request code */}
+                  <View style={styles.button}>
+                    <TouchableOpacity
+                      style={styles.signIn}
+                      onPress={handleSubmit}
+                    >
+                      <LinearGradient
+                        colors={["#08d4c4", "#01ab9d"]}
+                        style={styles.signIn}
+                      >
+                        <Text
+                          style={[
+                            styles.textSign,
+                            {
+                              color: "#fff",
+                            },
+                          ]}
+                        >
+                          Request Code
+                        </Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
+                  </View>
+                </Animatable.View>
+              </View>
+            </>
+          );
+        }}
+      </Formik>
     </HideKeyboard>
   );
 };

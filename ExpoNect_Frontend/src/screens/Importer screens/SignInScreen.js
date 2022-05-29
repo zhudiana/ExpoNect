@@ -23,6 +23,9 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 //API client
 import axios from "axios";
+import { Formik } from "formik";
+import * as yup from "yup";
+import { signin } from "../../../utils/auth";
 
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -30,56 +33,29 @@ const HideKeyboard = ({ children }) => (
   </TouchableWithoutFeedback>
 );
 
+const initialValues = {
+  email: "",
+  password: "",
+};
+
+const validationSchema = yup.object({
+  email: yup.string().email("Invalid Email!").required("email is missing"),
+  password: yup
+    .string()
+    .trim()
+    .min(8, "password is too short!")
+    .required("password is missing"),
+});
+
 const SignInScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const [data, setData] = React.useState({
     email: "",
     password: "",
-    checkTextInputChange: false,
     secureTextEntry: true,
-    isValidEmail: true,
-    isValidPassword: true,
   });
 
   const { signIn } = React.useContext(AuthContext);
-
-  const textInputChange = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: true,
-        isValidEmail: true,
-      });
-    } else {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: false,
-        isValidEmail: false,
-      });
-    }
-  };
-
-  const handlePasswordChange = (val) => {
-    if (val.trim().length >= 8) {
-      setData({
-        ...data,
-        password: val,
-        // isValidPassword: true,
-      });
-    } else {
-      setData({
-        ...data,
-        password: val,
-        isValidPassword: false,
-      });
-    }
-    setData({
-      ...data,
-      password: val,
-    });
-  };
 
   const updateSecureTextEntry = () => {
     setData({
@@ -87,159 +63,173 @@ const SignInScreen = ({ navigation }) => {
       secureTextEntry: !data.secureTextEntry,
     });
   };
-  const handleValidEmail = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        isValidEmail: true,
-      });
-    } else {
-      setData({
-        ...data,
-        isValidEmail: false,
-      });
-    }
+
+  const handleLogin = async (values, formikActions) => {
+    const res = await signin(values);
+
+    if (!res.success) return console.log(res.error);
+    console.log(res);
   };
 
-  const loginHandle = (username, password) => {
-    signIn(username, password);
-  };
+  const [text, onChangeText] = React.useState("");
 
   return (
     <HideKeyboard>
-      <View style={styles.container}>
-        <StatusBar backgroundColor="#009387" barstyle="light-content" />
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate("SplashScreen")}>
-            <Icon name="arrow-back" style={styles.arrowIcon} size={26} />
-          </TouchableOpacity>
-          <Text style={styles.text_header}>Welcome to Login to ExpoNect!</Text>
-        </View>
-        {/* Footer */}
-        <Animatable.View
-          animation="fadeInUpBig"
-          style={[styles.footer, { backgroundColor: colors.background }]}
-        >
-          {/* Email Field */}
-          <Text style={[styles.text_footer, { color: colors.text }]}>
-            Email
-          </Text>
-          <View style={styles.action}>
-            <FontAwesome name="user-o" color={colors.text} size={20} />
-            <TextInput
-              placeholder="Please enter your email"
-              placeholderTextColor="#666666"
-              style={[styles.textInput, { color: colors.text }]}
-              autoCapitalize="none"
-              onChangeText={(val) => textInputChange(val)}
-              onEndEditing={(e) => handleValidEmail(e.nativeEvent.text)}
-            />
-            {data.check_textInputChange ? (
-              <Animatable.View animation="bounceIn">
-                <Feather name="check-circle" color="green" size={20} />
-              </Animatable.View>
-            ) : null}
-          </View>
-          {data.isValidEmail ? null : (
-            <Animatable.View animation="fadeInLeft" duration={500}>
-              <Text style={styles.errorMsg}>
-                please enter valid email address
-              </Text>
-            </Animatable.View>
-          )}
-
-          {/* Password Field */}
-          <Text
-            style={[
-              styles.text_footer,
-              {
-                marginTop: 35,
-              },
-              ,
-              { color: colors.text },
-            ]}
-          >
-            Password
-          </Text>
-          <View style={styles.action}>
-            <Feather name="lock" color={colors.text} size={20} />
-            <TextInput
-              placeholder="Please enter your password"
-              placeholderTextColor="#666666"
-              secureTextEntry={data.secureTextEntry ? true : false}
-              style={[styles.textInput, { color: colors.text }]}
-              autoCapitalize="none"
-              onChangeText={(val) => handlePasswordChange(val)}
-            />
-            <TouchableOpacity onPress={updateSecureTextEntry}>
-              {data.secureTextEntry ? (
-                <Feather name="eye-off" color="grey" size={20} />
-              ) : (
-                <Feather name="eye" color="grey" size={20} />
-              )}
-            </TouchableOpacity>
-          </View>
-          {data.isValidPassword ? null : (
-            <Text style={styles.errorMsg}>
-              password must be at least 8 characters long
-            </Text>
-          )}
-
-          {/* forget password */}
-          <TouchableOpacity
-            onPress={() => navigation.navigate("EmailCodeSent")}
-          >
-            <Text style={styles.forgetPassword}>Forget Password?</Text>
-          </TouchableOpacity>
-
-          {/* Sign in */}
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.signIn}
-              onPress={() => {
-                loginHandle(data.username, data.password);
-              }}
-            >
-              <LinearGradient
-                colors={["#08d4c4", "#01ab9d"]}
-                style={styles.signIn}
-              >
-                <Text
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleLogin}
+      >
+        {({
+          errors,
+          values,
+          touched,
+          handleSubmit,
+          handleBlur,
+          handleChange,
+        }) => {
+          console.log(errors, values);
+          return (
+            <>
+              <View style={styles.container}>
+                <StatusBar backgroundColor="#009387" barstyle="light-content" />
+                {/* Header */}
+                <View style={styles.header}>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("SplashScreen")}
+                  >
+                    <Icon
+                      name="arrow-back"
+                      style={styles.arrowIcon}
+                      size={26}
+                    />
+                  </TouchableOpacity>
+                  <Text style={styles.text_header}>
+                    Welcome to Login to ExpoNect!
+                  </Text>
+                </View>
+                {/* Footer */}
+                <Animatable.View
+                  animation="fadeInUpBig"
                   style={[
-                    styles.textSign,
-                    {
-                      color: "#fff",
-                    },
+                    styles.footer,
+                    { backgroundColor: colors.background },
                   ]}
                 >
-                  Login
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
+                  {/* Email Field */}
+                  <Text style={[styles.text_footer, { color: colors.text }]}>
+                    Email
+                  </Text>
+                  <View style={styles.action}>
+                    <FontAwesome name="user-o" color={colors.text} size={20} />
+                    <TextInput
+                      placeholder="Please enter your email"
+                      placeholderTextColor="#666666"
+                      style={[styles.textInput, { color: colors.text }]}
+                      autoCapitalize="none"
+                      onChangeText={handleChange("email")}
+                      onBlur={handleBlur("email")}
+                    />
+                  </View>
+                  <Text style={{ color: "red" }}>
+                    {touched.email && errors.email ? errors.email : ""}{" "}
+                  </Text>
 
-            {/* Sign up*/}
-            <Text style={[styles.freeRegisterTextQ, { color: colors.text }]}>
-              Don't have an account?
-            </Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SignUpScreen")}
-            >
-              <Text
-                style={[
-                  styles.freeRegisterText,
-                  {
-                    color: "#009387",
-                    fontWeight: "bold",
-                  },
-                ]}
-              >
-                Free Register Now!
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </Animatable.View>
-      </View>
+                  {/* Password Field */}
+                  <Text
+                    style={[
+                      styles.text_footer,
+                      {
+                        marginTop: 35,
+                      },
+                      ,
+                      { color: colors.text },
+                    ]}
+                  >
+                    Password
+                  </Text>
+                  <View style={styles.action}>
+                    <Feather name="lock" color={colors.text} size={20} />
+                    <TextInput
+                      placeholder="Please enter your password"
+                      placeholderTextColor="#666666"
+                      secureTextEntry={data.secureTextEntry ? true : false}
+                      style={[styles.textInput, { color: colors.text }]}
+                      autoCapitalize="none"
+                      onChangeText={handleChange("password")}
+                      onBlur={handleBlur("password")}
+                    />
+
+                    <TouchableOpacity onPress={updateSecureTextEntry}>
+                      {data.secureTextEntry ? (
+                        <Feather name="eye-off" color="grey" size={20} />
+                      ) : (
+                        <Feather name="eye" color="grey" size={20} />
+                      )}
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={{ color: "red" }}>
+                    {touched.password && errors.password ? errors.password : ""}{" "}
+                  </Text>
+
+                  {/* forget password */}
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("EmailCodeSent")}
+                  >
+                    <Text style={styles.forgetPassword}>Forget Password?</Text>
+                  </TouchableOpacity>
+
+                  {/* Sign in */}
+                  <View style={styles.button}>
+                    <TouchableOpacity
+                      style={styles.signIn}
+                      onPress={handleSubmit}
+                    >
+                      <LinearGradient
+                        colors={["#08d4c4", "#01ab9d"]}
+                        style={styles.signIn}
+                      >
+                        <Text
+                          style={[
+                            styles.textSign,
+                            {
+                              color: "#fff",
+                            },
+                          ]}
+                        >
+                          Login
+                        </Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
+
+                    {/* Sign up*/}
+                    <Text
+                      style={[styles.freeRegisterTextQ, { color: colors.text }]}
+                    >
+                      Don't have an account?
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("SignUpScreen")}
+                    >
+                      <Text
+                        style={[
+                          styles.freeRegisterText,
+                          {
+                            color: "#009387",
+                            fontWeight: "bold",
+                          },
+                        ]}
+                      >
+                        Free Register Now!
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </Animatable.View>
+              </View>
+            </>
+          );
+        }}
+      </Formik>
     </HideKeyboard>
   );
 };

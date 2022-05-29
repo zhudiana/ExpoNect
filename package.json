@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-native-screens": "^3.13.1",
+    "yup": "^0.32.11"
+  }
+}

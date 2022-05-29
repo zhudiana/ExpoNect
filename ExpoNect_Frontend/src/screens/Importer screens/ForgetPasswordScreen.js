@@ -19,7 +19,10 @@ import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from "react-native-animatable";
 import { useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
-//hide keyboard
+
+import { Formik } from "formik";
+import * as yup from "yup";
+
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
@@ -32,7 +35,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
-//
+const initialValues = {
+  email: "",
+};
+
+const validationSchema = yup.object({
+  email: yup.string().email("Invalid Email!").required("email is missing"),
+});
+
 const ForgetPasswordScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const [data, setData] = React.useState({
@@ -87,6 +97,12 @@ const ForgetPasswordScreen = ({ navigation }) => {
       confirm_secureTextEntry: !data.confirm_secureTextEntry,
     });
   };
+
+  const handleForgetPw = (values, formikActions) => {
+    console.log(values, formikActions);
+  };
+
+  const [text, onChangeText] = React.useState("");
 
   return (
     <HideKeyboard>

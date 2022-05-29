@@ -44,7 +44,7 @@ const EmailVerification = ({ navigation }) => {
         <StatusBar backgroundColor="#009387" barstyle="light-content" />
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate("SignUpScreen")}>
+          <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
             <Icon name="arrow-back" style={styles.arrowIcon} size={26} />
           </TouchableOpacity>
           <View style={styles.header_icon}>
