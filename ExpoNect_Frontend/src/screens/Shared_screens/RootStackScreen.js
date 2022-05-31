@@ -11,7 +11,6 @@ import ExMainTabScreen from "../Exporter Screens/BottonNavigation/ExMainTabScree
 import EmailVerification from "../Importer screens/EmailVerification";
 import ExInfoScreen from "../Exporter Screens/ExInfoScreen";
 import ExEmailCodeScreen from "../Exporter Screens/ExEmailCodeScreen";
-import EmailCodeSent from "../Importer screens/EmailCodeSent";
 import TermsOfUseScreen from "./TermsOfUseScreen";
 import PrivacyPolicyScreen from "./PrivacyPolicyScreen";
 import ExNotificationScreen from "../Exporter Screens/BottonNavigation/ExNotificationScreen";
@@ -30,13 +29,16 @@ const RootStackScreen = ({ navigation }) => (
     <RootStack.Screen name="SplashScreen" component={SplashScreen} />
     <RootStack.Screen name="SignInScreen" component={SignInScreen} />
     <RootStack.Screen name="SignUpScreen" component={SignUpScreen} />
+    <RootStack.Screen
+      name="ForgetPasswordScreen"
+      component={ForgetPasswordScreen}
+    />
     <RootStack.Screen name="ExInfoScreen" component={ExInfoScreen} />
     <RootStack.Screen name="ExSignInScreen" component={ExSignInScreen} />
     <RootStack.Screen name="ExForgetPassword" component={ExForgetPassword} />
     <RootStack.Screen name="ExMainTabScreen" component={ExMainTabScreen} />
     <RootStack.Screen name="EmailVerification" component={EmailVerification} />
     <RootStack.Screen name="ExEmailCodeScreen" component={ExEmailCodeScreen} />
-    <RootStack.Screen name="EmailCodeSent" component={EmailCodeSent} />
     <RootStack.Screen name="TermsOfUseScreen" component={TermsOfUseScreen} />
     <RootStack.Screen name="ChattingScreen" component={ChattingScreen} />
     <RootStack.Screen name="SingleProduct" component={SingleProduct} />
@@ -47,11 +49,6 @@ const RootStackScreen = ({ navigation }) => (
     <RootStack.Screen
       name="PrivacyPolicyScreen"
       component={PrivacyPolicyScreen}
-    />
-
-    <RootStack.Screen
-      name="ForgetPasswordScreen"
-      component={ForgetPasswordScreen}
     />
   </RootStack.Navigator>
 );

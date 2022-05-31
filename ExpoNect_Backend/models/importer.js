@@ -8,6 +8,7 @@ const importerSchema = mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   passwordHash: {
     type: String,
@@ -15,7 +16,6 @@ const importerSchema = mongoose.Schema({
   },
   phone: {
     type: String,
-    required: true,
   },
   isAdmin: {
     type: Boolean,
@@ -28,6 +28,15 @@ const importerSchema = mongoose.Schema({
   country: {
     type: String,
     default: "",
+  },
+  avatar: {
+    type: String,
+    default: "",
+  },
+  verified: {
+    type: Boolean,
+    default: false,
+    required: true,
   },
 });
 

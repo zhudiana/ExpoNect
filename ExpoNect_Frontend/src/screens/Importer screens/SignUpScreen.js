@@ -23,6 +23,8 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import importer from "../../../api/importer";
 import signup from "../../../utils/auth";
+import axios from "axios";
+import AppNotification from "../../components/AppNotification";
 
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -48,10 +50,13 @@ const validationSchema = yup.object({
 
 const SignInScreen = ({ navigation }) => {
   const { colors } = useTheme();
+  const [message, setMessage] = useState({
+    text: "",
+    type: "",
+  });
   const [data, setData] = React.useState({
     email: "",
     password: "",
-
     secureTextEntry: true,
   });
 
@@ -63,184 +68,211 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const handleSignup = async (values, formikActions) => {
-    const res = await signup(values);
+    // const res = await signup(values);
 
-    if (!res.success) return console.log(res.error);
-    console.log(res);
+    // if (!res.success) return console.log(res.error);
+    // setMessage({ type: "error", text: res.error });
+    try {
+      const { data } = await axios.post(
+        "http://192.168.100.6:8000/api/v1/importers/create",
+        { ...values }
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error?.response?.data);
+    }
   };
 
   const [text, onChangeText] = React.useState("");
 
   return (
-    <HideKeyboard>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSignup}
-      >
-        {({
-          errors,
-          values,
-          touched,
-          handleSubmit,
-          handleBlur,
-          handleChange,
-        }) => {
-          console.log(errors, values);
-          return (
-            <>
-              <View style={styles.container}>
-                <StatusBar backgroundColor="#009387" barstyle="light-content" />
-                {/* Header */}
-                <View style={styles.header}>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("SignInScreen")}
-                  >
-                    <Icon
-                      name="arrow-back"
-                      style={styles.arrowIcon}
-                      size={26}
-                    />
-                  </TouchableOpacity>
-                  <Text style={styles.text_header}>Register Now!</Text>
-                </View>
-                {/* Footer */}
-                <Animatable.View
-                  animation="fadeInUpBig"
-                  style={[
-                    styles.footer,
-                    { backgroundColor: colors.background },
-                  ]}
-                >
-                  {/* name */}
-                  <Text style={[styles.text_footer, { color: colors.text }]}>
-                    Name
-                  </Text>
-                  <View style={styles.action}>
-                    <TextInput
-                      placeholder="Please enter your name"
-                      placeholderTextColor="#666666"
-                      style={styles.textInput}
-                      autoCapitalize="none"
-                      onChangeText={handleChange("name")}
-                      onBlur={handleBlur("name")}
-                    />
+    <>
+      {message.text ? (
+        <AppNotification type={message.type} text={message.text} />
+      ) : null}
+      <HideKeyboard>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSignup}
+        >
+          {({
+            errors,
+            values,
+            touched,
+            handleSubmit,
+            handleBlur,
+            handleChange,
+          }) => {
+            {
+              /* console.log(errors, values); */
+            }
+            return (
+              <>
+                <View style={styles.container}>
+                  <StatusBar
+                    backgroundColor="#009387"
+                    barstyle="light-content"
+                  />
+                  {/* Header */}
+                  <View style={styles.header}>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("SignInScreen")}
+                    >
+                      <Icon
+                        name="arrow-back"
+                        style={styles.arrowIcon}
+                        size={26}
+                      />
+                    </TouchableOpacity>
+                    <Text style={styles.text_header}>Register Now!</Text>
                   </View>
-                  <Text style={{ color: "red" }}>{errors.name}</Text>
-
-                  {/* Email Field */}
-
-                  <Text style={[styles.text_footer, { color: colors.text }]}>
-                    Email
-                  </Text>
-                  <View style={styles.action}>
-                    <FontAwesome name="user-o" color={colors.text} size={20} />
-
-                    <TextInput
-                      placeholder="Please enter your email"
-                      placeholderTextColor="#666666"
-                      style={styles.textInput}
-                      autoCapitalize="none"
-                      onChangeText={handleChange("email")}
-                      onBlur={handleBlur("email")}
-                    />
-                  </View>
-                  <Text style={{ color: "red" }}>
-                    {touched.email && errors.email ? errors.email : ""}{" "}
-                  </Text>
-                  {/* Password Field */}
-                  <Text
+                  {/* Footer */}
+                  <Animatable.View
+                    animation="fadeInUpBig"
                     style={[
-                      styles.text_footer,
-                      {
-                        marginTop: 35,
-                      },
-                      ,
-                      { color: colors.text },
+                      styles.footer,
+                      { backgroundColor: colors.background },
                     ]}
                   >
-                    Password
-                  </Text>
-                  <View style={styles.action}>
-                    <Feather name="lock" color={colors.text} size={20} />
+                    {/* name */}
+                    <Text style={[styles.text_footer, { color: colors.text }]}>
+                      Name
+                    </Text>
+                    <View style={styles.action}>
+                      <TextInput
+                        placeholder="Please enter your name"
+                        placeholderTextColor="#666666"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={handleChange("name")}
+                        onBlur={handleBlur("name")}
+                      />
+                    </View>
+                    <Text style={{ color: "red" }}>{errors.name}</Text>
 
-                    <TextInput
-                      placeholder="Please enter your password"
-                      placeholderTextColor="#666666"
-                      secureTextEntry={data.secureTextEntry ? true : false}
-                      style={styles.textInput}
-                      autoCapitalize="none"
-                      onChangeText={handleChange("password")}
-                      onBlur={handleBlur("password")}
-                    />
-                    <TouchableOpacity onPress={updateSecureTextEntry}>
-                      {data.secureTextEntry ? (
-                        <Feather name="eye-off" color="grey" size={20} />
-                      ) : (
-                        <Feather name="eye" color="grey" size={20} />
-                      )}
-                    </TouchableOpacity>
-                  </View>
-                  <Text style={{ color: "red" }}>
-                    {touched.password && errors.password ? errors.password : ""}{" "}
-                  </Text>
+                    {/* Email Field */}
 
-                  <Text style={[styles.wholeText, { color: colors.text }]}>
-                    By registering, you comfirm that you accept our{" "}
-                    <TouchableOpacity
-                      onPress={() => navigation.navigate("TermsOfUseScreen")}
-                    >
-                      <Text style={styles.coloredText}>Terms of Use </Text>
-                    </TouchableOpacity>
-                    and{" "}
-                    <TouchableOpacity
-                      onPress={() => navigation.navigate("PrivacyPolicyScreen")}
-                    >
-                      <Text style={styles.coloredText}>Privacy Policy</Text>
-                    </TouchableOpacity>
-                  </Text>
+                    <Text style={[styles.text_footer, { color: colors.text }]}>
+                      Email
+                    </Text>
+                    <View style={styles.action}>
+                      <FontAwesome
+                        name="user-o"
+                        color={colors.text}
+                        size={20}
+                      />
 
-                  {/* Sign up */}
-                  <View style={styles.button}>
-                    <TouchableOpacity
-                      colors={["#08d4c4", "#01ab9d"]}
-                      style={styles.signIn}
-                      onPress={handleSubmit}
+                      <TextInput
+                        placeholder="Please enter your email"
+                        placeholderTextColor="#666666"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={handleChange("email")}
+                        onBlur={handleBlur("email")}
+                      />
+                    </View>
+                    <Text style={{ color: "red" }}>
+                      {touched.email && errors.email ? errors.email : ""}{" "}
+                    </Text>
+                    {/* Password Field */}
+                    <Text
+                      style={[
+                        styles.text_footer,
+                        {
+                          marginTop: 35,
+                        },
+                        ,
+                        { color: colors.text },
+                      ]}
                     >
-                      <LinearGradient
+                      Password
+                    </Text>
+                    <View style={styles.action}>
+                      <Feather name="lock" color={colors.text} size={20} />
+
+                      <TextInput
+                        placeholder="Please enter your password"
+                        placeholderTextColor="#666666"
+                        secureTextEntry={data.secureTextEntry ? true : false}
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={handleChange("password")}
+                        onBlur={handleBlur("password")}
+                      />
+                      <TouchableOpacity onPress={updateSecureTextEntry}>
+                        {data.secureTextEntry ? (
+                          <Feather name="eye-off" color="grey" size={20} />
+                        ) : (
+                          <Feather name="eye" color="grey" size={20} />
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                    <Text style={{ color: "red" }}>
+                      {touched.password && errors.password
+                        ? errors.password
+                        : ""}{" "}
+                    </Text>
+
+                    <Text style={[styles.wholeText, { color: colors.text }]}>
+                      By registering, you comfirm that you accept our{" "}
+                      <TouchableOpacity
+                        onPress={() => navigation.navigate("TermsOfUseScreen")}
+                      >
+                        <Text style={styles.coloredText}>Terms of Use </Text>
+                      </TouchableOpacity>
+                      and{" "}
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate("PrivacyPolicyScreen")
+                        }
+                      >
+                        <Text style={styles.coloredText}>Privacy Policy</Text>
+                      </TouchableOpacity>
+                    </Text>
+
+                    {/* Sign up */}
+                    <View style={styles.button}>
+                      <TouchableOpacity
                         colors={["#08d4c4", "#01ab9d"]}
                         style={styles.signIn}
+                        onPress={handleSubmit}
                       >
-                        <Text
-                          style={[
-                            styles.textSign,
-                            {
-                              color: "#fff",
-                            },
-                          ]}
+                        <LinearGradient
+                          colors={["#08d4c4", "#01ab9d"]}
+                          style={styles.signIn}
                         >
-                          Register
-                        </Text>
-                      </LinearGradient>
-                    </TouchableOpacity>
+                          <Text
+                            style={[
+                              styles.textSign,
+                              {
+                                color: "#fff",
+                              },
+                            ]}
+                          >
+                            Register
+                          </Text>
+                        </LinearGradient>
+                      </TouchableOpacity>
 
-                    {/* Sign in*/}
-                    <Text
-                      style={[styles.alreadyAccount, { color: colors.text }]}
-                    >
-                      Already hava an account?{" "}
-                    </Text>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                      <Text style={[styles.loginBack]}>Log in</Text>
-                    </TouchableOpacity>
-                  </View>
-                </Animatable.View>
-              </View>
-            </>
-          );
-        }}
-      </Formik>
-    </HideKeyboard>
+                      {/* Sign in*/}
+                      <Text
+                        style={[styles.alreadyAccount, { color: colors.text }]}
+                      >
+                        Already hava an account?{" "}
+                      </Text>
+                      <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Text style={[styles.loginBack]}>Log in</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </Animatable.View>
+                </View>
+              </>
+            );
+          }}
+        </Formik>
+      </HideKeyboard>
+    </>
   );
 };
 

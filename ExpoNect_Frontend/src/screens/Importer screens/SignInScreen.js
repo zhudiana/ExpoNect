@@ -65,10 +65,15 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const handleLogin = async (values, formikActions) => {
-    const res = await signin(values);
-
-    if (!res.success) return console.log(res.error);
-    console.log(res);
+    try {
+      const { data } = await axios.post(
+        "http://192.168.100.6:8000/api/v1/importers/login",
+        { ...values }
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error?.response?.data);
+    }
   };
 
   const [text, onChangeText] = React.useState("");
@@ -88,7 +93,9 @@ const SignInScreen = ({ navigation }) => {
           handleBlur,
           handleChange,
         }) => {
-          console.log(errors, values);
+          {
+            /* console.log(errors, values); */
+          }
           return (
             <>
               <View style={styles.container}>
@@ -174,7 +181,7 @@ const SignInScreen = ({ navigation }) => {
 
                   {/* forget password */}
                   <TouchableOpacity
-                    onPress={() => navigation.navigate("EmailCodeSent")}
+                    onPress={() => navigation.navigate("ForgetPasswordScreen")}
                   >
                     <Text style={styles.forgetPassword}>Forget Password?</Text>
                   </TouchableOpacity>

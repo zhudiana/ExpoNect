@@ -15,6 +15,7 @@ app.options("*", cors());
 //checking everything going to the server before it gets executed
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
+
 // app.use(authJwt);
 app.use((err, req, res, next) => {
   if (err) {
@@ -52,6 +53,6 @@ mongoose
   });
 
 //Server
-app.listen(3000, () => {
+app.listen(8000, () => {
   console.log("server is running");
 });

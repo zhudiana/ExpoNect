@@ -7,7 +7,7 @@ const catchError = (error) => {
   return { success: false, error: error.message };
 };
 
-const signup = async (values) => {
+export const signup = async (values) => {
   try {
     const { data } = await importer.post("/importers/create", {
       ...values,
@@ -28,5 +28,15 @@ export const signin = async (values) => {
     return catchError(error);
   }
 };
+export const forgetPassword = async (email) => {
+  try {
+    const { data } = await importer.post("/importers/forgot-password", {
+      email,
+    });
+    return data;
+  } catch (error) {
+    return catchError(error);
+  }
+};
 
-export default signup;
+export default catchError;
