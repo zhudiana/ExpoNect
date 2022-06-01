@@ -5,7 +5,9 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
-const { generateOTP } = require("../utils/mail");
+const { generateOTP, mailTransport } = require("../utils/mail");
+const { sendError } = require("../utils/helper");
+const { isValidObjectId } = require("mongoose");
 
 router.get(`/`, async (req, res) => {
   const importerList = await Importer.find();
@@ -49,6 +51,8 @@ router.post(
   ],
   async (req, res) => {
     const error = validationResult(req).array();
+    const OTP = generateOTP();
+    const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
     if (error.length) {
       res.status(400).json({ success: false, error: error[0].msg });
     } else {
@@ -59,34 +63,66 @@ router.post(
         phone: req.body.phone,
         isAdmin: req.body.isAdmin,
         isExporter: req.body.isExporter,
+        owner: req.body.owner,
         country: req.body.country,
-      });
-
-      const OTP = generateOTP();
-      let verificationToken = new VerificationToken({
-        owner: importer._id,
+        verified: req.body.verified,
+        createdAt: req.body.createdAt,
         token: OTP,
       });
+      importer.owner = importer.id;
+      const user = await Importer.findOne({ email: req.body.email });
+      if (user)
+        res
+          .status(400)
+          .json({ success: false, error: "This email already exists" });
 
-      verificationToken = await verificationToken.save();
+      // verificationToken = await verificationToken.save();
+      // console.log(OTP);
 
       importer = await importer.save();
 
-      // mailTransport().sendMail({
-      //   from: "exponect@gmail.com",
-      //   to: importer.email,
-      //   subject: "verify your email account",
-      //   html: `<h1>${OTP}</h1>`,
-      // });
+      mailTransport().sendMail({
+        from: "exponect@gmail.com",
+        to: importer.email,
+        subject: "verify your email account",
+        html: `<h1>${OTP}</h1>`,
+      });
 
       if (!importer) return res.status(500).send("Importer cannot be created");
 
-      return res.json({ success: true, importer: importer });
+      return res.json({
+        success: true,
+        importer: importer,
+      });
     }
   }
 );
 
-router.post("/verify-email", async (req, res) => {});
+router.post("/verify-email", async (req, res) => {
+  const { importerId, otp } = req.body;
+  if (!importerId || !otp.trim())
+    return sendError(res, "Invalid request, missing parameters");
+  if (!isValidObjectId(importerId)) return sendError(res, "Invalid user id");
+
+  const importer = await Importer.findById(importerId);
+  if (!importer) return sendError(res, "sorry, importer id nor found");
+
+  if (importer.verified)
+    return sendError(res, "This account is already verified!");
+
+  const token = await Importer.findById(importerId);
+  if (!token) return sendError(res, "Sorry, importer not found");
+
+  const isMatched = await token.compareToken(otp);
+  if (!isMatched) return sendError(res, "Please provide a valid token!");
+
+  importer.verified = true;
+
+  // await Importer.findOneAndDelete(importer.token);
+  await importer.save();
+
+  res.json({ success: true, message: "your email is verified" });
+});
 
 router.post(
   "/login",
@@ -162,10 +198,3 @@ router.delete("/:id", (req, res) => {
 module.exports = router;
 
 // const user = await Importer.find({ email });
-
-// if (user)
-//   res
-//     .status(400)
-//     .json({ success: false, error: "This email already exists" });
-
-// importer = await verificationToken.save();

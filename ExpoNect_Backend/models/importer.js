@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const importerSchema = mongoose.Schema({
   name: {
@@ -38,7 +39,34 @@ const importerSchema = mongoose.Schema({
     default: false,
     required: true,
   },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Importer",
+    require: true,
+  },
+  token: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    expires: 3600,
+    default: Date.now(),
+  },
 });
+
+importerSchema.pre("save", async function (next) {
+  if (this.isModified("token")) {
+    const hash = await bcrypt.hash(this.token, 10);
+    this.token = hash;
+  }
+  next();
+});
+
+importerSchema.methods.compareToken = async function (token) {
+  const result = await bcrypt.compareSync(token, this.token);
+  return result;
+};
 
 importerSchema.virtual("id").get(function () {
   return this._id.toHexString();
