@@ -3,6 +3,7 @@ import React from "react";
 import SplashScreen from "./SplashScreen";
 import SignInScreen from "../Importer screens/SignInScreen";
 import SignUpScreen from "../Importer screens/SignUpScreen";
+import MainTabScreen from "../Importer screens/BottonNavigationScreens/MainTabScreen";
 import ExSignInScreen from "../Exporter Screens/ExSignInScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ForgetPasswordScreen from "../Importer screens/ForgetPasswordScreen";
@@ -33,6 +34,7 @@ const RootStackScreen = ({ navigation }) => (
       name="ForgetPasswordScreen"
       component={ForgetPasswordScreen}
     />
+    <RootStack.Screen name="MainTabScreen" component={MainTabScreen} />
     <RootStack.Screen name="ExInfoScreen" component={ExInfoScreen} />
     <RootStack.Screen name="ExSignInScreen" component={ExSignInScreen} />
     <RootStack.Screen name="ExForgetPassword" component={ExForgetPassword} />

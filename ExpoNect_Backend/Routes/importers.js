@@ -8,6 +8,7 @@ const { check, validationResult } = require("express-validator");
 const { generateOTP, mailTransport } = require("../utils/mail");
 const { sendError } = require("../utils/helper");
 const { isValidObjectId } = require("mongoose");
+// const ResetToken = require("../models/resetToken");
 
 router.get(`/`, async (req, res) => {
   const importerList = await Importer.find();
@@ -105,7 +106,7 @@ router.post("/verify-email", async (req, res) => {
   if (!isValidObjectId(importerId)) return sendError(res, "Invalid user id");
 
   const importer = await Importer.findById(importerId);
-  if (!importer) return sendError(res, "sorry, importer id nor found");
+  if (!importer) return sendError(res, "sorry, importer id not found");
 
   if (importer.verified)
     return sendError(res, "This account is already verified!");
@@ -118,10 +119,18 @@ router.post("/verify-email", async (req, res) => {
 
   importer.verified = true;
 
-  // await Importer.findOneAndDelete(importer.token);
+  await Importer.findOneAndDelete(importer.token);
   await importer.save();
 
   res.json({ success: true, message: "your email is verified" });
+});
+
+router.post("/forgot-Password", async (req, res) => {
+  const { email } = req.body;
+  if (!email) return sendError(res, "please provide a valid email");
+
+  const importer = await Importer.findOne({ email });
+  if (!importer) return sendError(res, "user not found, invalid request!");
 });
 
 router.post(

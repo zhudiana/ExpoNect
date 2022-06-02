@@ -17,7 +17,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from "react-native-animatable";
-import { useTheme } from "@react-navigation/native";
+import { StackActions, useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -25,6 +25,7 @@ import importer from "../../../api/importer";
 import signup from "../../../utils/auth";
 import axios from "axios";
 import AppNotification from "../../components/AppNotification";
+import { updateNotification } from "../../../utils/helper";
 
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -70,7 +71,7 @@ const SignInScreen = ({ navigation }) => {
   const handleSignup = async (values, formikActions) => {
     // const res = await signup(values);
 
-    // if (!res.success) return console.log(res.error);
+    // if (!res.success) return updateNotification(setMessage, res.error);
     // setMessage({ type: "error", text: res.error });
     try {
       const { data } = await axios.post(
@@ -78,9 +79,13 @@ const SignInScreen = ({ navigation }) => {
         { ...values }
       );
       console.log(data);
+      res;
     } catch (error) {
       console.log(error?.response?.data);
     }
+    navigation.dispatch(StackActions.replace("EmailVerification"), {
+      profile: data.importer,
+    });
   };
 
   const [text, onChangeText] = React.useState("");

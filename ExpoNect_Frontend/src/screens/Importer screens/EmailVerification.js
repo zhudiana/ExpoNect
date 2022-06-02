@@ -12,102 +12,138 @@ import {
   StatusBar,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from "react-native-animatable";
-import React, { useRef } from "react";
-import { color } from "react-native-reanimated";
-import { AuthContext } from "../../components/Context";
+import React, { useRef, useEffect, useState } from "react";
 import { useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
-import OTPInputView from "@twotalltotems/react-native-otp-input";
 
 //API client
 import axios from "axios";
-import { useState } from "react/cjs/react.production.min";
+import { verifyEmail } from "../../../utils/auth";
 
-const HideKeyboard = ({ children }) => (
-  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    {children}
-  </TouchableWithoutFeedback>
-);
+const inputs = Array(4).fill("");
+let newInputIndex = 0;
 
-const EmailVerification = ({ navigation }) => {
+const isObjValid = (obj) => {
+  return Object.values(obj).every((val) => val.trim());
+};
+
+const EmailVerification = ({ navigation, route }) => {
+  const { profile } = route.params;
+  const input = useRef();
   const { colors } = useTheme();
-  //   const [code, setCode] = useState("");
-  //   const [pinReady, setPinReady] = useState(False);
-  const MAX_CODE_LENGTH = 4;
+  const [OTP, setOTP] = useState({ 0: "", 1: "", 2: "", 3: "" });
+  const [nextInputIndex, setNextInputIndex] = useState(0);
+
+  const handleChangeText = (text, index) => {
+    const newOTP = { ...OTP };
+    newOTP[index] = text;
+    setOTP(newOTP);
+
+    const lastInputIndex = inputs.length - 1;
+    if (!text) newInputIndex = index === 0 ? 0 : index - 1;
+    else newInputIndex = index === lastInputIndex ? lastInputIndex : index + 1;
+    setNextInputIndex(newInputIndex);
+  };
+
+  useEffect(() => {
+    input.current.focus();
+  }, [nextInputIndex]);
+
+  const submitOTP = async () => {
+    Keyboard.dismiss();
+
+    if (isObjValid(OTP)) {
+      let val = "";
+
+      Object.values(OTP).forEach((v) => {
+        val += v;
+      });
+
+      const res = await verifyEmail(val, profile.id);
+      // console.log(res);
+
+      navigation.dispatch(StackActions.replace("MainTabScreen"), {
+        profile: data.importer,
+      });
+    }
+  };
 
   return (
-    <HideKeyboard>
-      <View style={styles.container}>
-        <StatusBar backgroundColor="#009387" barstyle="light-content" />
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
-            <Icon name="arrow-back" style={styles.arrowIcon} size={26} />
-          </TouchableOpacity>
-          <View style={styles.header_icon}>
-            <Icon name="md-lock-open" style={styles.keyIcon} size={60} />
-          </View>
-          <Text style={styles.text_header}>Account Verification</Text>
+    <View style={styles.container}>
+      <StatusBar backgroundColor="#009387" barstyle="light-content" />
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
+          <Icon name="arrow-back" style={styles.arrowIcon} size={26} />
+        </TouchableOpacity>
+        <View style={styles.header_icon}>
+          <Icon name="md-lock-open" style={styles.keyIcon} size={60} />
         </View>
+        <Text style={styles.text_header}>Account Verification</Text>
+      </View>
+      {/* Footer */}
+      <Animatable.View
+        animation="fadeInUpBig"
+        style={[styles.footer, { backgroundColor: colors.background }]}
+      >
         {/* Footer */}
         <Animatable.View
           animation="fadeInUpBig"
           style={[styles.footer, { backgroundColor: colors.background }]}
         >
-          {/* Footer */}
-          <Animatable.View
-            animation="fadeInUpBig"
-            style={[styles.footer, { backgroundColor: colors.background }]}
-          >
-            <Text style={styles.codeSent}>
-              We've sent you an email verification code to
-            </Text>
-            {/* email code Field */}
+          <Text style={styles.codeSent}>
+            We've sent you an email verification code to
+          </Text>
+          {/* email code Field */}
 
-            {/* OTP code */}
-            <View style={styles.otpInput}>
-              <OTPInputView
-                style={{ width: "80%", height: 200 }}
-                pinCount={4}
-                autoFocusOnLoad
-                codeInputFieldStyle={styles.underlineStyleBase}
-                codeInputHighlightStyle={styles.underlineStyleHighLighted}
-                onCodeFilled={(code) => {
-                  console.log(`Code is ${code}, you are good to go!`);
-                }}
-              />
-            </View>
-            {/* Sign in */}
-            <View style={styles.button}>
-              <TouchableOpacity style={styles.signIn}>
-                <LinearGradient
-                  colors={["#08d4c4", "#01ab9d"]}
-                  style={styles.signIn}
-                >
-                  <Text
-                    style={[
-                      styles.textSign,
-                      {
-                        color: "#fff",
-                      },
-                    ]}
-                  >
-                    Login
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </View>
-          </Animatable.View>
+          {/* OTP code */}
+          <View style={styles.otpContainer}>
+            {inputs.map((inp, index) => {
+              return (
+                <View key={index.toString()} style={styles.inputContainer}>
+                  <TextInput
+                    value={OTP[index]}
+                    onChangeText={(text) => handleChangeText(text, index)}
+                    placeholder="0"
+                    keyboardType="numeric"
+                    maxLength={1}
+                    ref={nextInputIndex === index ? input : null}
+                    style={styles.input}
+                  />
+                </View>
+              );
+            })}
+          </View>
+
+          {/* Sign in */}
+          <TouchableOpacity onPress={submitOTP} style={styles.button}>
+            <LinearGradient
+              colors={["#08d4c4", "#01ab9d"]}
+              style={styles.signIn}
+            >
+              <Text
+                style={[
+                  styles.textSign,
+                  {
+                    color: "#fff",
+                  },
+                ]}
+              >
+                Verify
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
         </Animatable.View>
-      </View>
-    </HideKeyboard>
+      </Animatable.View>
+    </View>
   );
 };
 
 export default EmailVerification;
+
+const { width } = Dimensions.get("window");
+const inputWidth = Math.round(width / 6);
 
 const styles = StyleSheet.create({
   container: {
@@ -116,7 +152,7 @@ const styles = StyleSheet.create({
   },
   arrowIcon: {
     color: "#fff",
-    top: 40,
+    top: 70,
   },
   keyIcon: {
     color: "#009387",
@@ -124,7 +160,7 @@ const styles = StyleSheet.create({
     top: 20,
   },
   header: {
-    flex: 2,
+    flex: 1,
     justifyContent: "flex-end",
     paddingHorizontal: 20,
     paddingBottom: 50,
@@ -181,9 +217,41 @@ const styles = StyleSheet.create({
     color: "#FF0000",
     fontSize: 14,
   },
-  button: {
+
+  codeSent: {
+    color: "grey",
+    fontSize: 20,
+    textAlign: "center",
+    top: -30,
+  },
+
+  underlineStyleBase: {
+    width: 30,
+    height: 45,
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    color: "#999999",
+  },
+
+  underlineStyleHighLighted: {
+    borderColor: "#03DAC6",
+  },
+  inputContainer: {
+    width: inputWidth,
+    height: inputWidth,
+    borderWidth: 2,
+    borderColor: "#009387",
+    justifyContent: "center",
     alignItems: "center",
-    marginTop: -50,
+  },
+  input: {
+    fontSize: 25,
+    paddingHorizontal: 22,
+    paddingVertical: 15,
+  },
+  otpContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   signIn: {
     width: "100%",
@@ -196,25 +264,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  codeSent: {
-    color: "grey",
-    fontSize: 20,
-    textAlign: "center",
-    top: -30,
-  },
-  otpInput: {
-    left: 30,
-    top: -70,
-  },
-  underlineStyleBase: {
-    width: 30,
-    height: 45,
-    borderWidth: 0,
-    borderBottomWidth: 1,
-    color: "#999999",
-  },
-
-  underlineStyleHighLighted: {
-    borderColor: "#03DAC6",
+  button: {
+    marginTop: 50,
   },
 });

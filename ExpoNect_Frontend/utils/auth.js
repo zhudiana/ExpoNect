@@ -39,4 +39,16 @@ export const forgetPassword = async (email) => {
   }
 };
 
+export const verifyEmail = async (otp, importerId) => {
+  try {
+    const { data } = await importer.post("/importers/verify-email", {
+      otp,
+      importerId,
+    });
+    return data;
+  } catch (error) {
+    return catchError(error);
+  }
+};
+
 export default catchError;
