@@ -11,7 +11,7 @@ import * as ImagePicker from 'expo-image-picker';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
-//import ImagePicker from 'react-native-image-crop-picker';
+
 
 
 const EditProfileScreen = () => {
