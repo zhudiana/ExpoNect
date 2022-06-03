@@ -3,11 +3,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Icon from "react-native-vector-icons/Ionicons";
 
-import HomeScreen from "./HomeScreen";
 
-import NotificationScreen from './NotificationScreen'
-import FavoriteScreen from "./Importer screens/BottonNavigationScreens/FavoriteScreen";
-//import FavoriteScreen from "../Importer screens/BottonNavigationScreens/FavoriteScreen";
+
+
 import AddItemScreen from './Exporter Screens/AddItemScreen'
 import MenuScreen from "./MenuScreen";
 import EditProfileScreen from "./Exporter Screens/EditProfileScreen";
@@ -16,14 +14,14 @@ import { useTheme } from "react-native-paper";
 import { View, Text, SafeAreaView, Button } from "react-native";
 import { color } from "react-native-reanimated";
 
+import HomeScreen from '../screens/HomeScreen'
 
-import HomeScreen from "../../HomeScreen";
-import NotificationScreen from "../../NotificationScreen.ls";
-import FavoriteScreen from "./FavoriteScreen";
+import NotificationScreen from "../screens/NotificationScreen.js";
+import FavoriteScreen from "../screens/Importer screens/BottonNavigationScreens/FavoriteScreen";
 
-import AddItemScreen from '../../Exporter Screens/AddItemScreen'
-import MenuScreen from "../../MenuScreen";
-import DetailsScreen from "../../DetailsScreen";
+
+
+
 
 
 
