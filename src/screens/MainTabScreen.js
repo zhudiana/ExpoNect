@@ -2,6 +2,8 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Icon from "react-native-vector-icons/Ionicons";
+<<<<<<< HEAD
+<<<<<<<< HEAD:src/screens/MainTabScreen.js
 import HomeScreen from "./HomeScreen";
 
 import NotificationScreen from './NotificationScreen'
@@ -15,12 +17,29 @@ import { useTheme } from "react-native-paper";
 import { View, Text, SafeAreaView, Button } from "react-native";
 import { color } from "react-native-reanimated";
 
+========
+=======
+>>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
+import HomeScreen from "../../HomeScreen";
+import NotificationScreen from "../../NotificationScreen.ls";
+import FavoriteScreen from "./FavoriteScreen";
+
+import AddItemScreen from '../../Exporter Screens/AddItemScreen'
+import MenuScreen from "../../MenuScreen";
+import DetailsScreen from "../../DetailsScreen";
+<<<<<<< HEAD
+>>>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f:src/screens/Importer screens/BottonNavigationScreens/MainTabScreen.js
+=======
+>>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
 
 
 const HomeStack = createNativeStackNavigator();
 const DetailsStack = createNativeStackNavigator();
+<<<<<<< HEAD
 const MenuStack = createNativeStackNavigator();
 
+=======
+>>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -77,7 +96,11 @@ const MainTabScreen = () => (
 
     <Tab.Screen
       name="Menu"
+<<<<<<< HEAD
       component={MenuStackScreen}
+=======
+      component={MenuScreen}
+>>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
       options={{
         tabBarLabel: "Menu",
         tabBarColor: "#009387",
@@ -132,6 +155,7 @@ const DetailsStackScreen = ({ navigation }) => (
     />
   </DetailsStack.Navigator>
 );
+<<<<<<< HEAD
 const MenuStackScreen = ({ navigation }) => {
 
   const { colors } = useTheme();
@@ -179,5 +203,7 @@ const MenuStackScreen = ({ navigation }) => {
       />
   </MenuStack.Navigator>
 )};
+=======
+>>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
 
 export default MainTabScreen;
