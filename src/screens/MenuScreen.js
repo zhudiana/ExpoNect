@@ -9,7 +9,7 @@ import { TouchableRipple, Avatar, Title, Caption } from "react-native-paper";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MainTabScreen from "./MainTabScreen";
-//import { createStackNavigator, createAppContainer } from 'react-navigation';
+
 
 const MenuScreen = () => {
   const { colors } = useTheme();
