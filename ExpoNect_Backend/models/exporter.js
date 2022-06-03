@@ -38,6 +38,29 @@ const exporterSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  avatar: {
+    type: String,
+    default: "",
+  },
+  verified: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Exporter",
+    require: true,
+  },
+  token: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    expires: 3600,
+    default: Date.now(),
+  },
 });
 
 exporterSchema.virtual("id").get(function () {

@@ -25,7 +25,7 @@ router.get(`/:id`, async (req, res) => {
   res.status(200).send(exporter);
 });
 
-router.post(`/`, async (req, res) => {
+router.post(`/create`, async (req, res) => {
   let exporter = new Exporter({
     name: req.body.name,
     email: req.body.email,

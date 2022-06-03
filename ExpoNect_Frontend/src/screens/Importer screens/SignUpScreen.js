@@ -69,10 +69,6 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const handleSignup = async (values, formikActions) => {
-    // const res = await signup(values);
-
-    // if (!res.success) return updateNotification(setMessage, res.error);
-    // setMessage({ type: "error", text: res.error });
     try {
       const { data } = await axios.post(
         "http://192.168.100.6:8000/api/v1/importers/create",
@@ -83,9 +79,9 @@ const SignInScreen = ({ navigation }) => {
     } catch (error) {
       console.log(error?.response?.data);
     }
-    navigation.dispatch(StackActions.replace("EmailVerification"), {
-      profile: data.importer,
-    });
+    navigation.dispatch(
+      StackActions.replace("EmailVerification", { profile: data.importer })
+    );
   };
 
   const [text, onChangeText] = React.useState("");

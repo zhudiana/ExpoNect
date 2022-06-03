@@ -1,12 +1,12 @@
 const { Importer } = require("../models/importer");
-const { VerificationToken } = require("../models/verificationToken");
+// const { VerificationToken } = require("../models/resetToken");
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 const { generateOTP, mailTransport } = require("../utils/mail");
-const { sendError } = require("../utils/helper");
+const { sendError, createRandomBytes } = require("../utils/helper");
 const { isValidObjectId } = require("mongoose");
 // const ResetToken = require("../models/resetToken");
 
@@ -77,9 +77,6 @@ router.post(
           .status(400)
           .json({ success: false, error: "This email already exists" });
 
-      // verificationToken = await verificationToken.save();
-      // console.log(OTP);
-
       importer = await importer.save();
 
       mailTransport().sendMail({
@@ -119,18 +116,37 @@ router.post("/verify-email", async (req, res) => {
 
   importer.verified = true;
 
-  await Importer.findOneAndDelete(importer.token);
+  // await Importer.findOneAndDelete(importer.token);
   await importer.save();
 
   res.json({ success: true, message: "your email is verified" });
 });
 
 router.post("/forgot-Password", async (req, res) => {
-  const { email } = req.body;
-  if (!email) return sendError(res, "please provide a valid email");
-
-  const importer = await Importer.findOne({ email });
-  if (!importer) return sendError(res, "user not found, invalid request!");
+  // const { email } = req.body;
+  // if (!email) return sendError(res, "please provide a valid email");
+  // const importer = await Importer.findOne({ email });
+  // if (!importer) return sendError(res, "user not found, invalid request!");
+  // await Importer.findOne({ owner: importer.id });
+  // const token = await ResetToken.findById({ owner: importer.id });
+  // if (token)
+  //   return sendError(
+  //     res,
+  //     "only after one hour, you can request for another token!"
+  //   );
+  // const RandonBytes = await createRandomBytes();
+  // const resetToken = new ResetToken({ owner: importer.id, token: RandonBytes });
+  // await resetToken.save();
+  // mailTransport().sendMail({
+  //   from: "exponectSecurity@gmail.com",
+  //   to: importer.email,
+  //   subject: "password reset",
+  //   html: `http://localhost:3000/reset-password?token=${RandonBytes}&id={importer.id}`,
+  // });
+  // res.json({
+  //   success: true,
+  //   message: "Password reset link is sent to your email",
+  // });
 });
 
 router.post(
@@ -147,14 +163,17 @@ router.post(
   ],
   async (req, res) => {
     const importer = await Importer.findOne({ email: req.body.email });
+
     const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
     const error = validationResult(req).array();
+
     if (error.length) {
       res.status(400).json({ success: false, error: error[0].msg });
     } else {
       if (!importer) {
         return res.status(400).send("importer not found");
       }
+      if (!importer.verified) return sendError(res, "please verify your email");
 
       if (
         importer &&

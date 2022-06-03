@@ -10,6 +10,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   StatusBar,
+  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -18,7 +19,7 @@ import * as Animatable from "react-native-animatable";
 import React, { useState } from "react";
 import { color } from "react-native-reanimated";
 import { AuthContext } from "../../components/Context";
-import { useTheme } from "@react-navigation/native";
+import { StackActions, useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 //API client
@@ -78,6 +79,7 @@ const SignInScreen = ({ navigation }) => {
         { ...values }
       );
       console.log(data);
+      navigation.dispatch(StackActions.replace("MainTabScreen"));
     } catch (error) {
       console.log(error?.response?.data);
     }

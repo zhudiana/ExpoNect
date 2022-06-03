@@ -17,8 +17,6 @@ import React, { useRef, useEffect, useState } from "react";
 import { useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-//API client
-import axios from "axios";
 import { verifyEmail } from "../../../utils/auth";
 
 const inputs = Array(4).fill("");
@@ -60,12 +58,10 @@ const EmailVerification = ({ navigation, route }) => {
         val += v;
       });
 
-      const res = await verifyEmail(val, profile.id);
-      // console.log(res);
+      const res = await verifyEmail(val, val);
+      console.log(res);
 
-      navigation.dispatch(StackActions.replace("MainTabScreen"), {
-        profile: data.importer,
-      });
+      // navigation.dispatch(StackActions.replace("MainTabScreen"));
     }
   };
 
@@ -93,7 +89,7 @@ const EmailVerification = ({ navigation, route }) => {
           style={[styles.footer, { backgroundColor: colors.background }]}
         >
           <Text style={styles.codeSent}>
-            We've sent you an email verification code to
+            We've sent you an email verification code to your email
           </Text>
           {/* email code Field */}
 
