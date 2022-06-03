@@ -1,37 +1,24 @@
-<<<<<<< HEAD
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { View, Text, StyleSheet, Switch, ScrollView, Image } from "react-native";
-=======
-import { View, Text, StyleSheet, Switch } from "react-native";
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
 import { useTheme } from "@react-navigation/native";
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AuthContext } from "../components/Context";
-<<<<<<< HEAD
 
 import { TouchableRipple, Avatar, Title, Caption } from "react-native-paper";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MainTabScreen from "./MainTabScreen";
 //import { createStackNavigator, createAppContainer } from 'react-navigation';
-=======
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { TouchableRipple } from "react-native-paper";
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
 
 const MenuScreen = () => {
   const { colors } = useTheme();
   const { signOut, toggleTheme } = React.useContext(AuthContext);
-<<<<<<< HEAD
   //const { params } = this.props.navigation.state;
-=======
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
 
   const navigationTheme = useTheme();
 
   return (
-<<<<<<< HEAD
     <ScrollView showsVerticalScrollIndicator={false}>
       <View>
         
@@ -135,16 +122,11 @@ const MenuScreen = () => {
         
      
          <TouchableOpacity
-=======
-    <View>
-      <TouchableOpacity
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
         onPress={() => {
           signOut();
         }}
       >
         <View style={styles.menuitem}>
-<<<<<<< HEAD
          
           <Text style={[styles.logoutText, { color: colors.text }]}>
            <Icon name="door" size={19} /> Log Out
@@ -154,39 +136,12 @@ const MenuScreen = () => {
     </View>
     </ScrollView>
    
-=======
-          {/* <MaterialIcons
-            name="logout"
-            style={[styles.logoutIcon, { color: colors.text }]}
-          /> */}
-          <Text style={[styles.logoutText, { color: colors.text }]}>
-            Log Out
-          </Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableRipple
-        onPress={() => {
-          toggleTheme();
-        }}
-      >
-        <View style={styles.preference}>
-          <Text style={[styles.darkThemeStyle, { color: colors.text }]}>
-            Dark Theme
-          </Text>
-          <View pointerEvents="none">
-            <Switch value={navigationTheme.dark} />
-          </View>
-        </View>
-      </TouchableRipple>
-    </View>
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
   );
 };
 
 export default MenuScreen;
 
 const styles = StyleSheet.create({
-<<<<<<< HEAD
   screen: {
   backgroundColor: '#d3d3d3' , 
   },
@@ -195,35 +150,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 12,
     paddingHorizontal: 16,
-=======
-  menuitem: {
-    marginTop: 100,
-    flexDirection: "row",
-    paddingVertical: 12,
-    paddingHorizontal: 56,
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
   },
   logoutIcon: {
     fontSize: 30,
     marginRight: 10,
   },
-<<<<<<< HEAD
    logoutText: {
      fontSize: 15,
      fontWeight: 'bold',
      marginLeft: 12,
    },
-=======
-  // logoutText: {
-  //   fontSize: 20,
-  // },
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
   preference: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 12,
     paddingHorizontal: 16,
-<<<<<<< HEAD
     marginTop: 15,
   },
    row: {
@@ -262,7 +203,5 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 16,
     lineHeight: 26,
-=======
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
   },
 });

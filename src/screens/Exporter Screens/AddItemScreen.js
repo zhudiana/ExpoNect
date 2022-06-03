@@ -6,22 +6,13 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import COLORS from '../../consts/colors';
 import { FloatingLabelInput } from 'react-native-floating-label-input';
 import DropDownPicker from 'react-native-dropdown-picker';
-<<<<<<< HEAD
-
-=======
-import CameraRollPicker from 'react-native-camera-roll-picker';
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
 
 
 //import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 
 
-<<<<<<< HEAD
 const AddItem = (navigation) => {
-=======
-const addItem = (navigation) => {
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [image, setImage] = useState(null);
   const [price, setPrice] = useState('');
@@ -32,12 +23,8 @@ const addItem = (navigation) => {
     {label: 'Agricultural', value: 'agricultural'},
     { label: 'Gold', value: 'gold' },
     { label: 'Flower', value: 'flower' },
-<<<<<<< HEAD
     { label: 'Leather', value: 'leather' },
     { label: 'Other', value: 'other' }
-=======
-    { label: 'Leather', value: 'leather' }
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
   ]);
   const [description, setDescription] = useState('');
   useEffect(() => {
@@ -65,19 +52,12 @@ const addItem = (navigation) => {
   }
 
   return (
-<<<<<<< HEAD
     <SafeAreaView >
       <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
           <TouchableOpacity>
           <Text style={{fontSize:17, color: 'blue'}}>Cancel</Text>
           </TouchableOpacity> 
-=======
-    <SafeAreaView>
-      <ScrollView>
-      <View style={styles.header}>
-        <Text style={{fontSize:17, color: 'blue'}}>Cancel</Text>
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
         <Text style={{fontSize:18, fontWeight: 'bold', alignItems: 'center'}}>New Listing</Text>
         <TouchableOpacity>
           <Text style={{fontSize:17,color: 'blue',marginLeft:2}}>Next</Text>
@@ -90,11 +70,7 @@ const addItem = (navigation) => {
       <View>
         <Text style={{ marginLeft: 35, marginTop: 1, fontSize: 12 }}>Listing on EXPONECT</Text>
         <View style={styles.addphotobtn}>
-<<<<<<< HEAD
           <Button title="Add Photo" onPress={() => pickImage()} />
-=======
-          <Button title="Add Photos" onPress={() => pickImage()} />
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
         </View>
         <View style={styles.imagestyle}>
           {image && <Image
@@ -146,11 +122,7 @@ const addItem = (navigation) => {
       setItems={setItems}
     />
         </View>
-<<<<<<< HEAD
         <View style={{marginTop: 200}}>
-=======
-        <View style={{marginTop: 30}}>
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
           <Text style={{ color: 'gray' }}>
             ExpoNect items are public and can be seen by everyone on ExpoNect.
           </Text>
@@ -202,19 +174,12 @@ const styles = StyleSheet.create({
   addphotobtn: {
     alignItems: 'center',
     elevation: 8,
-<<<<<<< HEAD
     backgroundColor: "#00a877",
-=======
-    backgroundColor: "#009688",
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
     borderRadius: 31,
     paddingVertical: 10,
     paddingHorizontal: 16,
     marginTop: 10,
-<<<<<<< HEAD
     
-=======
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
   },
   imagestyle: {
     marginTop: 5,
@@ -230,12 +195,6 @@ marginTop: 15,
   },
   hyperlink: {
 color: 'blue',
-<<<<<<< HEAD
   },
 });
 export default AddItem;
-=======
-  }
-});
-export default addItem;
->>>>>>> 28b47f6d1262d115d8729b0cfd6f0aae4b69957f
