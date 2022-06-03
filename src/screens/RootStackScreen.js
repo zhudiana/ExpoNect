@@ -1,12 +1,13 @@
 import { View, Text } from "react-native";
 import React from "react";
 import SplashScreen from "./SplashScreen";
-import SignInScreen from "./Importer screens/SignInScreen";
+import SignInScreen from "./SignInScreen";
 import SignUpScreen from "./Importer screens/SignUpScreen";
 import LoginScreen from "./Exporter Screens/LoginScreen";
+import HomeScreen from './HomeScreen';
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import ForgetPasswordScreen from "./Importer screens/ForgetPasswordScreen";
+import ForgetPasswordScreen from "./ForgetPasswordScreen";
 
 const RootStack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ const RootStackScreen = ({ navigation }) => (
       name="ForgetPasswordScreen"
       component={ForgetPasswordScreen}
     />
+
   </RootStack.Navigator>
 );
 

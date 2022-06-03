@@ -3,15 +3,24 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Icon from "react-native-vector-icons/Ionicons";
 import HomeScreen from "./HomeScreen";
-import NotificationScreen from "./NotificationScreen.ls";
-import FavoriteScreen from "./FavoriteScreen";
-import ProfileScreen from "./ProfileScreen";
+
+import NotificationScreen from './NotificationScreen'
+import FavoriteScreen from "./Importer screens/BottonNavigationScreens/FavoriteScreen";
+//import FavoriteScreen from "../Importer screens/BottonNavigationScreens/FavoriteScreen";
+import AddItemScreen from './Exporter Screens/AddItemScreen'
 import MenuScreen from "./MenuScreen";
-import DetailsScreen from "../../DetailsScreen";
+import EditProfileScreen from "./Exporter Screens/EditProfileScreen";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useTheme } from "react-native-paper";
+import { View, Text, SafeAreaView, Button } from "react-native";
+import { color } from "react-native-reanimated";
+
 
 
 const HomeStack = createNativeStackNavigator();
 const DetailsStack = createNativeStackNavigator();
+const MenuStack = createNativeStackNavigator();
+
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -44,13 +53,13 @@ const MainTabScreen = () => (
       }}
     />
     <Tab.Screen
-      name="Profile"
-      component={ProfileScreen}
+      name="Add item"
+      component={AddItemScreen}
       options={{
-        tabBarLabel: "Profile",
+        tabBarLabel: "Add item",
         tabBarColor: "#009387",
         tabBarIcon: ({ color }) => (
-          <Icon name="ios-person" color={color} size={26} />
+          <Icon name="add" color={color} size={26} />
         ),
       }}
     />
@@ -68,7 +77,7 @@ const MainTabScreen = () => (
 
     <Tab.Screen
       name="Menu"
-      component={MenuScreen}
+      component={MenuStackScreen}
       options={{
         tabBarLabel: "Menu",
         tabBarColor: "#009387",
@@ -123,5 +132,52 @@ const DetailsStackScreen = ({ navigation }) => (
     />
   </DetailsStack.Navigator>
 );
+const MenuStackScreen = ({ navigation }) => {
+
+  const { colors } = useTheme();
+  
+  return (
+  <MenuStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: colors.background,
+       elevation: 0,
+        shadowColor: colors.background,
+      },
+      headerTintColor: colors.text,
+   
+    //headerShown: false
+    }}
+  >
+    <MenuStack.Screen
+      name="Menu"
+      component={MenuScreen}
+      options={{
+         title: '',
+         headerRight: () => (
+            <View style={{marginLeft: 10}}>
+              <MaterialCommunityIcons.Button
+                name="account-edit"
+                size={29}
+                backgroundColor={colors.background}
+                color={colors.text}
+                onPress={() => navigation.navigate('EditProfile')}
+              />
+            </View>
+          ),
+        
+         
+      }}
+    />
+    <MenuStack.Screen
+      name="EditProfile"
+      component={EditProfileScreen}
+        options={{
+          title: 'Edit Profile',
+        }}
+        
+      />
+  </MenuStack.Navigator>
+)};
 
 export default MainTabScreen;

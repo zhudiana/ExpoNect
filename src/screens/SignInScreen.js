@@ -17,7 +17,7 @@ import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from "react-native-animatable";
 import React from "react";
 import { color } from "react-native-reanimated";
-import { AuthContext } from "../../components/Context";
+import { AuthContext } from "../components/Context";
 import { useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 //API client

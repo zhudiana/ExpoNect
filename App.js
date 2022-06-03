@@ -5,7 +5,8 @@ import {
   DefaultTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import MainTabScreen from "./src/screens/Importer screens/BottonNavigationScreens/MainTabScreen";
+import MainTabScreen from "./src/screens/MainTabScreen";
+
 import RootStackScreen from "./src/screens/RootStackScreen";
 import {
   StyleSheet,
