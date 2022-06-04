@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const exporterSchema = mongoose.Schema({
   name: {
+    type: String,
+    required: true,
+  },
+  companyName: {
     type: String,
     required: true,
   },
@@ -22,6 +27,10 @@ const exporterSchema = mongoose.Schema({
     default: false,
   },
   country: {
+    type: String,
+    default: "",
+  },
+  city: {
     type: String,
     default: "",
   },
@@ -62,6 +71,19 @@ const exporterSchema = mongoose.Schema({
     default: Date.now(),
   },
 });
+
+exporterSchema.pre("save", async function (next) {
+  if (this.isModified("token")) {
+    const hash = await bcrypt.hash(this.token, 10);
+    this.token = hash;
+  }
+  next();
+});
+
+exporterSchema.methods.compareToken = async function (token) {
+  const result = await bcrypt.compareSync(token, this.token);
+  return result;
+};
 
 exporterSchema.virtual("id").get(function () {
   return this._id.toHexString();
