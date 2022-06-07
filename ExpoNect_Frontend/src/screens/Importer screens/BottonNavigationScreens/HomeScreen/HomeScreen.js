@@ -77,7 +77,7 @@ const HomeScreen = (props) => {
       ? [setProductsCtg(initialState), setActive(true)]
       : [
           setProductsCtg(
-            products.filter((i) => i.category._id === ctg),
+            products.filter((i) => i.category.$oid === ctg),
             setActive(true)
           ),
         ];
@@ -99,7 +99,9 @@ const HomeScreen = (props) => {
           </Text>
         </HideKeyboard>
 
-        <TouchableOpacity onPress={() => navigation.navigate("")}>
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate("ChattingScreen")}
+        >
           <Iconn
             name="ios-chatbubble-ellipses-sharp"
             size={25}
@@ -122,7 +124,10 @@ const HomeScreen = (props) => {
         </View>
       </View>
       {focus == true ? (
-        <SearchedProduct productFiltered={productsFiltered} />
+        <SearchedProduct
+          navigation={props.navigation}
+          productFiltered={productsFiltered}
+        />
       ) : (
         <ScrollView>
           <View styles={styles.listContainer}>

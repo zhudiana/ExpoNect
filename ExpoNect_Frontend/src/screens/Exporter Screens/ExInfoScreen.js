@@ -141,7 +141,7 @@ const ExInfoScreen = ({ navigation }) => {
             </View>
           </SafeAreaView>
           <TouchableOpacity
-            onPress={() => navigation.navigate("ExSignInScreen")}
+            onPress={() => navigation.navigate("ExEmailCodeScreen")}
           >
             <LinearGradient
               colors={["#08d4c4", "#01ab9d"]}

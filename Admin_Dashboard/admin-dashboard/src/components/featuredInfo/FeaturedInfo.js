@@ -6,34 +6,28 @@ export default function FeaturedInfo() {
   return (
     <div className="featured">
       <div className="featuredItem">
-        <span className="featuredTitle">Revenue</span>
+        <span className="featuredTitle"></span>
         <div className="featuredMoneyContainer">
-          <span className="featureMoney">$3,434</span>
-          <span className="featureMoneyRate">
-            -11.4 <ArrowDownward className="featuredIcon negative" />
-          </span>
+          <span className="featureMoney"></span>
+          <span className="featureMoneyRate"></span>
         </div>
-        <span className="featureSub">Compared To last month</span>
+        <span className="featureSub"></span>
       </div>
       <div className="featuredItem">
-        <span className="featuredTitle">cost</span>
+        <span className="featuredTitle"></span>
         <div className="featuredMoneyContainer">
-          <span className="featureMoney">$3,434</span>
-          <span className="featureMoneyRate">
-            +11.4 <ArrowUpward className="featuredIcon positive" />
-          </span>
+          <span className="featureMoney"></span>
+          <span className="featureMoneyRate"></span>
         </div>
-        <span className="featureSub">Compared To last month</span>
+        <span className="featureSub"></span>
       </div>
       <div className="featuredItem">
-        <span className="featuredTitle">cost</span>
+        <span className="featuredTitle"></span>
         <div className="featuredMoneyContainer">
-          <span className="featureMoney">$3,434</span>
-          <span className="featureMoneyRate">
-            +11.4 <ArrowUpward className="featuredIcon " />
-          </span>
+          <span className="featureMoney"></span>
+          <span className="featureMoneyRate"></span>
         </div>
-        <span className="featureSub">Compared To last month</span>
+        <span className="featureSub"></span>
       </div>
     </div>
   );

@@ -8,19 +8,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainTabScreen from "./src/screens/Importer screens/BottonNavigationScreens/MainTabScreen";
 //import ExMainTabScreen from "./src/screens/Exporter Screens/BottonNavigation/ExMainTabScreen";
 import RootStackScreen from "./src/screens/Shared_screens/RootStackScreen";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  SafeAreaView,
-  Image,
-} from "react-native";
+import { StyleSheet, View, LogBox } from "react-native";
 import { ActivityIndicator } from "react-native-web";
 import { useEffect } from "react";
 import { AuthContext } from "./src/components/Context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ExMainTabScreen from "./src/screens/Exporter Screens/BottonNavigation/ExMainTabScreen";
+
+LogBox.ignoreAllLogs(true);
 
 export default function App() {
   // const [isLoading, setIsLoading] = React.useState(true);

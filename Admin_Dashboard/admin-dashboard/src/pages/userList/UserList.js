@@ -4,6 +4,7 @@ import "./userList.css";
 import { DeleteOutline } from "@material-ui/icons";
 import { rows } from "../../dummyData";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function UserList() {
   const [data, setData] = useState(rows);
@@ -45,6 +46,7 @@ export default function UserList() {
 
   return (
     <div className="userList">
+      <h1>List of users</h1>
       <DataGrid
         rows={rows}
         columns={columns}

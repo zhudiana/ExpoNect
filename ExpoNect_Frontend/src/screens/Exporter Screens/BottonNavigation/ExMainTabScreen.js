@@ -54,13 +54,13 @@ const ExMainTabScreen = () => {
         }}
       />
       <Tab.Screen
-        name="Notification"
+        name="Favourite"
         component={ExNotificationScreen}
         options={{
-          tabBarLabel: "Notification",
+          tabBarLabel: "Favourite",
           tabBarColor: "#009387",
           tabBarIcon: ({ color }) => (
-            <Icon name="ios-notifications" color={color} size={26} />
+            <Icon name="ios-heart" color={color} size={26} />
           ),
         }}
       />

@@ -10,7 +10,7 @@ export default function NewUser() {
     phone: "",
     country: "",
     city: "",
-    product: "",
+    // product: "",
     tinNumber: "",
     tradingLicenceNo: "",
   });
@@ -37,7 +37,7 @@ export default function NewUser() {
         phone: input.phone,
         country: input.country,
         city: input.city,
-        product: input.product,
+        // product: input.product,
         tinNumber: input.tinNumber,
         tradingLicenceNo: input.tradingLicenceNo,
       })
@@ -104,7 +104,7 @@ export default function NewUser() {
             value={input.city}
           />
         </div>
-        <div className="newUserItem">
+        {/* <div className="newUserItem">
           <label>Product</label>
           <input
             onChange={handleChange}
@@ -112,7 +112,7 @@ export default function NewUser() {
             name="product"
             value={input.product}
           />
-        </div>
+        </div> */}
         <div className="newUserItem">
           <label>Tin Number</label>
           <input

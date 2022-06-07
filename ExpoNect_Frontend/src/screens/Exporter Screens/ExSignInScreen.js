@@ -11,14 +11,21 @@ import {
   TouchableWithoutFeedback,
   StatusBar,
 } from "react-native";
+import React, { useState, useEffect } from "react";
+import CheckBox from "@react-native-community/checkbox";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from "react-native-animatable";
-import React from "react";
-import { AuthContext } from "../../components/Context";
-import { useTheme } from "@react-navigation/native";
+import { StackActions, useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { Formik } from "formik";
+import * as yup from "yup";
+import importer from "../../../api/importer";
+import signup from "../../../utils/auth";
+import axios from "axios";
+import AppNotification from "../../components/AppNotification";
+import { updateNotification } from "../../../utils/helper";
 
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -26,15 +33,26 @@ const HideKeyboard = ({ children }) => (
   </TouchableWithoutFeedback>
 );
 
+const initialValues = {
+  name: "",
+  email: "",
+  password: "",
+};
+
+const validationSchema = yup.object({
+  email: yup.string().email("Invalid Email!").required("email is missing"),
+});
+
 const ExSignInScreen = ({ navigation }) => {
   const { colors } = useTheme();
+  const [message, setMessage] = useState({
+    text: "",
+    type: "",
+  });
   const [data, setData] = React.useState({
     email: "",
     password: "",
-    checkTextInputChange: false,
     secureTextEntry: true,
-    isValidEmail: true,
-    isValidPassword: true,
   });
 
   const updateSecureTextEntry = () => {
@@ -44,69 +62,142 @@ const ExSignInScreen = ({ navigation }) => {
     });
   };
 
-  return (
-    <HideKeyboard>
-      <View style={styles.container}>
-        <StatusBar backgroundColor="#009387" barstyle="light-content" />
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate("ExInfoScreen")}>
-            <Icon name="arrow-back" style={styles.arrowIcon} size={26} />
-          </TouchableOpacity>
-          <Text style={styles.text_header}>Sign in</Text>
-        </View>
-        {/* Footer */}
-        <Animatable.View
-          animation="fadeInUpBig"
-          style={[styles.footer, { backgroundColor: colors.background }]}
-        >
-          {/* Email Field */}
-          <Text style={[styles.text_footer, { color: colors.text }]}>
-            Email
-          </Text>
-          <View style={styles.action}>
-            <FontAwesome name="user-o" color={colors.text} size={20} />
-            <TextInput
-              placeholder="Please enter your email"
-              placeholderTextColor="#666666"
-              style={[styles.textInput, { color: colors.text }]}
-              autoCapitalize="none"
-              // onChangeText={(val) => textInputChange(val)}
-              // onEndEditing={(e) => handleValidEmail(e.nativeEvent.text)}
-            />
-            {data.check_textInputChange ? (
-              <Animatable.View animation="bounceIn">
-                <Feather name="check-circle" color="green" size={20} />
-              </Animatable.View>
-            ) : null}
-          </View>
+  const handleSignup = async (values, formikActions) => {
+    try {
+      const { data } = await axios.post(
+        "http://192.168.100.6:8000/api/v1/exporters/create",
+        { ...values }
+      );
+      console.log(data);
+      res;
+    } catch (error) {
+      console.log(error?.response?.data);
+    }
+    // navigation.dispatch(
+    //   StackActions.replace("EmailVerification", { profile: data.importer })
+    // );
+  };
 
-          {/* Request code */}
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.signIn}
-              onPress={() => navigation.navigate("ExEmailCodeScreen")}
-            >
-              <LinearGradient
-                colors={["#08d4c4", "#01ab9d"]}
-                style={styles.signIn}
-              >
-                <Text
-                  style={[
-                    styles.textSign,
-                    {
-                      color: "#fff",
-                    },
-                  ]}
-                >
-                  Request Code
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
-        </Animatable.View>
-      </View>
-    </HideKeyboard>
+  const [text, onChangeText] = React.useState("");
+
+  return (
+    <>
+      {message.text ? (
+        <AppNotification type={message.type} text={message.text} />
+      ) : null}
+      <HideKeyboard>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSignup}
+        >
+          {({
+            errors,
+            values,
+            touched,
+            handleSubmit,
+            handleBlur,
+            handleChange,
+          }) => {
+            {
+              /* console.log(errors, values); */
+            }
+            return (
+              <>
+                <View style={styles.container}>
+                  <StatusBar
+                    backgroundColor="#009387"
+                    barstyle="light-content"
+                  />
+                  {/* Header */}
+                  <View style={styles.header}>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("ExInfoScreen")}
+                    >
+                      <Icon
+                        name="arrow-back"
+                        style={styles.arrowIcon}
+                        size={50}
+                      />
+                    </TouchableOpacity>
+                    <View style={styles.headerKey}>
+                      <View style={styles.header_icon}>
+                        <Icon
+                          name="md-lock-open"
+                          style={styles.keyIcon}
+                          size={60}
+                        />
+                      </View>
+                      <Text style={styles.text_header}>
+                        Account Verification
+                      </Text>
+                    </View>
+                  </View>
+                  {/* Footer */}
+                  <Animatable.View
+                    animation="fadeInUpBig"
+                    style={[
+                      styles.footer,
+                      { backgroundColor: colors.background },
+                    ]}
+                  >
+                    {/* Email Field */}
+
+                    <Text style={[styles.text_footer, { color: colors.text }]}>
+                      Email
+                    </Text>
+                    <View style={styles.action}>
+                      <FontAwesome
+                        name="user-o"
+                        color={colors.text}
+                        size={20}
+                      />
+
+                      <TextInput
+                        placeholder="Please enter your email"
+                        placeholderTextColor="#666666"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={handleChange("email")}
+                        onBlur={handleBlur("email")}
+                      />
+                    </View>
+                    <Text style={{ color: "red" }}>
+                      {touched.email && errors.email ? errors.email : ""}{" "}
+                    </Text>
+
+                    {/* Sign up */}
+                    <View style={styles.button}>
+                      <TouchableOpacity
+                        colors={["#08d4c4", "#01ab9d"]}
+                        style={styles.signIn}
+                        onPress={handleSubmit}
+                      >
+                        <LinearGradient
+                          colors={["#08d4c4", "#01ab9d"]}
+                          style={styles.signIn}
+                        >
+                          <Text
+                            style={[
+                              styles.textSign,
+                              {
+                                color: "#fff",
+                              },
+                            ]}
+                          >
+                            Verify
+                          </Text>
+                        </LinearGradient>
+                      </TouchableOpacity>
+                    </View>
+                  </Animatable.View>
+                </View>
+              </>
+            );
+          }}
+        </Formik>
+      </HideKeyboard>
+    </>
   );
 };
 
@@ -118,13 +209,32 @@ const styles = StyleSheet.create({
     backgroundColor: "#009387",
   },
   header: {
+    flex: 4,
+    justifyContent: "flex-end",
+    paddingHorizontal: 20,
+    paddingBottom: 0,
+  },
+  headerKey: {
     flex: 1,
     justifyContent: "flex-end",
     paddingHorizontal: 20,
-    paddingBottom: 50,
+    paddingBottom: 100,
+  },
+  header_icon: {
+    backgroundColor: "#fff",
+    width: 120,
+    height: 120,
+    left: 100,
+    top: 50,
+    borderRadius: 60,
+  },
+  keyIcon: {
+    color: "#009387",
+    left: 30,
+    top: 20,
   },
   footer: {
-    flex: 3,
+    flex: 5,
     backgroundColor: "#fff",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -133,21 +243,30 @@ const styles = StyleSheet.create({
   },
   arrowIcon: {
     color: "#fff",
+    top: 40,
+    left: 20,
   },
   text_header: {
     color: "#fff",
     fontWeight: "bold",
     fontSize: 30,
+    bottom: -70,
+
     textAlign: "center",
   },
   text_footer: {
     color: "#05375a",
     fontSize: 18,
-    top: 30,
+    marginTop: 20,
+  },
+  text_footerr: {
+    color: "#05375a",
+    fontSize: 18,
+    marginTop: 30,
   },
   action: {
     flexDirection: "row",
-    marginTop: 50,
+    marginTop: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#f2f2f2",
     paddingBottom: 5,
@@ -165,13 +284,18 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: "#05375a",
   },
+  textInputt: {
+    flex: 1,
+    marginTop: Platform.OS === "ios" ? 0 : -12,
+    color: "#05375a",
+  },
   errorMsg: {
     color: "#FF0000",
     fontSize: 14,
   },
   button: {
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 10,
   },
   signIn: {
     width: "100%",
@@ -184,17 +308,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  forgetPassword: {
+  loginBack: {
     color: "#009387",
-    marginTop: 15,
-    marginLeft: 220,
+    fontWeight: "bold",
+    marginLeft: 280,
+    marginTop: -17,
   },
-  freeRegisterTextQ: {
-    marginLeft: -90,
+  alreadyAccount: {
+    marginLeft: 70,
     marginTop: 10,
   },
-  freeRegisterText: {
-    marginLeft: 200,
-    marginTop: -17,
+  coloredText: {
+    color: "#009387",
+    top: 3,
+  },
+  wholeText: {
+    marginTop: 40,
+    marginBottom: -5,
   },
 });

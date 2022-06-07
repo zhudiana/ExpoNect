@@ -12,7 +12,7 @@ export default function WidgetLg() {
         <tr className="widgetLgTr">
           <th className="widgetLgTh">Customer</th>
           <th className="widgetLgTh">Date</th>
-          <th className="widgetLgTh">Amount</th>
+
           <th className="widgetLgTh">Status</th>
         </tr>
         <tr className="widgetLgTr">
@@ -20,7 +20,7 @@ export default function WidgetLg() {
             <span className="widgetLgName">Susan Carol</span>
           </td>
           <td className="widgetLgDate">2 June 2021</td>
-          <td className="widgetLgAmount">$736.00</td>
+
           <td className="widgetLgStatus">
             <Button type="Approved" />
           </td>
@@ -30,7 +30,7 @@ export default function WidgetLg() {
             <span className="widgetLgName">Susan Carol</span>
           </td>
           <td className="widgetLgDate">2 June 2021</td>
-          <td className="widgetLgAmount">$736.00</td>
+
           <td className="widgetLgStatus">
             <Button type="Declined" />
           </td>
@@ -40,7 +40,7 @@ export default function WidgetLg() {
             <span className="widgetLgName">Susan Carol</span>
           </td>
           <td className="widgetLgDate">2 June 2021</td>
-          <td className="widgetLgAmount">$736.00</td>
+
           <td className="widgetLgStatus">
             <Button type="Pending" />
           </td>
@@ -50,7 +50,7 @@ export default function WidgetLg() {
             <span className="widgetLgName">Susan Carol</span>
           </td>
           <td className="widgetLgDate">2 June 2021</td>
-          <td className="widgetLgAmount">$736.00</td>
+
           <td className="widgetLgStatus">
             <Button type="Approved" />
           </td>

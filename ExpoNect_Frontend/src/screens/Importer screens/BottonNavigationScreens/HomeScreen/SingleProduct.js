@@ -3,19 +3,27 @@ import {
   Image,
   View,
   StyleSheet,
+  TouchableOpacity,
   Text,
   ScrollView,
   Button,
 } from "react-native";
 import { Left, Right, Container, H1 } from "native-base";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const SingleProduct = (props) => {
   const [item, setItem] = useState(props.route.params.item);
-  const [availability, setAvailability] = useState("");
+
   return (
     <Container style={styles.container}>
       <ScrollView style={{ marginBottom: 80, padding: 5 }}>
         <View>
+          <TouchableOpacity
+            // onPress={() => navigation.navigate("MainTabScreen")}
+            onPress={() => props.navigation.navigate("MainTabScreen")}
+          >
+            <Icon name="arrow-back" style={styles.arrowIcon} size={26} />
+          </TouchableOpacity>
           <Image
             source={{
               uri: item.image
@@ -39,6 +47,9 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 250,
+  },
+  arrowIcon: {
+    color: "black",
   },
 });
 

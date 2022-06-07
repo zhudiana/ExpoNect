@@ -11,8 +11,10 @@ const SearchedProduct = (props) => {
       {productFiltered.length > 0 ? (
         productFiltered.map((item) => (
           <ListItem
-            // onPress={navigation}
-            key={item._id}
+            onPress={() => {
+              props.navigation.navigate("Product Detail", { item: item });
+            }}
+            key={item._id.$oid}
             avatar
           >
             <Left>
@@ -20,7 +22,7 @@ const SearchedProduct = (props) => {
                 source={{
                   uri: item.image
                     ? item.image
-                    : "../../../../../assets/avocado.png",
+                    : "https://cdn.britannica.com/35/129635-050-A8A60DD8/footballs-American-pigskins-rubber-cowhide.jpg?w=690&h=388&c=crop",
                 }}
               />
             </Left>

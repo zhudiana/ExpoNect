@@ -80,7 +80,7 @@ const SignInScreen = ({ navigation }) => {
       console.log(error?.response?.data);
     }
     navigation.dispatch(
-      StackActions.replace("EmailVerification", { profile: data.importer })
+      StackActions.replace("EmailVerification", { profile: data })
     );
   };
 

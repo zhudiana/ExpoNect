@@ -18,7 +18,7 @@ const ProductCard = (props) => {
   return (
     <View style={styles.container}>
       <View>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Icon
             name="favorite"
             size={18}
@@ -28,7 +28,7 @@ const ProductCard = (props) => {
               top: 5,
             }}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <Image
         style={styles.image}
@@ -41,11 +41,11 @@ const ProductCard = (props) => {
         {name.length > 15 ? name.substring(0, 15 - 3) + "..." : name}
       </Text>
       <Text style={styles.price}> ${price}</Text>
-      <Iconn
+      {/* <Iconn
         name="ios-chatbubble-ellipses-sharp"
         size={25}
         style={styles.sendMessage}
-      />
+      /> */}
     </View>
   );
 };

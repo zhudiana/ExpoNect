@@ -14,20 +14,28 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import * as Animatable from "react-native-animatable";
 import React, { useRef, useEffect, useState } from "react";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, StackActions } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
+import axios from "axios";
 
 import { verifyEmail } from "../../../utils/auth";
 
 const inputs = Array(4).fill("");
 let newInputIndex = 0;
 
+const catchError = (error) => {
+  if (error?.response?.data) {
+    return error.response.data;
+  }
+  return { success: false, error: error.message };
+};
+
 const isObjValid = (obj) => {
   return Object.values(obj).every((val) => val.trim());
 };
 
 const EmailVerification = ({ navigation, route }) => {
-  const { profile } = route.params;
+  const profile = route.params.profile;
   const input = useRef();
   const { colors } = useTheme();
   const [OTP, setOTP] = useState({ 0: "", 1: "", 2: "", 3: "" });
@@ -48,6 +56,28 @@ const EmailVerification = ({ navigation, route }) => {
     input.current.focus();
   }, [nextInputIndex]);
 
+  // const verifyEmail = async (otp, importerId) => {
+  //   Keyboard.dismiss();
+
+  //   try {
+  //     const { data } = await axios.post(
+  //       "http://192.168.100.6:8000/api/v1//importers/verify-email",
+  //       {
+  //         otp,
+  //         importerId,
+  //       }
+  //     );
+  //     return data;
+
+  //     console.log(data);
+  //   } catch (error) {
+  //     return catchError(error);
+  //     // console.log(error?.response?.data);
+
+  //     // navigation.dispatch(StackActions.replace("MainTabScreen"));
+  //   }
+  // };
+
   const submitOTP = async () => {
     Keyboard.dismiss();
 
@@ -58,10 +88,10 @@ const EmailVerification = ({ navigation, route }) => {
         val += v;
       });
 
-      const res = await verifyEmail(val, val);
-      console.log(res);
+      const res = await verifyEmail(val, profile);
+      // console.log(profile);
 
-      // navigation.dispatch(StackActions.replace("MainTabScreen"));
+      navigation.dispatch(StackActions.replace("MainTabScreen"));
     }
   };
 
