@@ -15,6 +15,10 @@ import { AuthContext } from "./src/components/Context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ExMainTabScreen from "./src/screens/Exporter Screens/BottonNavigation/ExMainTabScreen";
 
+// redux
+import { Provider } from "react-redux";
+import store from "./Redux/store";
+
 LogBox.ignoreAllLogs(true);
 
 export default function App() {
@@ -142,14 +146,16 @@ export default function App() {
   }
   return (
     <AuthContext.Provider value={authContext}>
-      <NavigationContainer theme={theme}>
-        {loginState.userToken !== null ? (
-          <MainTabScreen />
-        ) : (
-          <RootStackScreen />
-        )}
-        {/* <ExMainTabScreen /> */}
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer theme={theme}>
+          {loginState.userToken !== null ? (
+            <MainTabScreen />
+          ) : (
+            <RootStackScreen />
+          )}
+          {/* <ExMainTabScreen /> */}
+        </NavigationContainer>
+      </Provider>
     </AuthContext.Provider>
   );
 }

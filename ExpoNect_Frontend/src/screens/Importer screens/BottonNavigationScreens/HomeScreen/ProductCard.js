@@ -10,6 +10,8 @@ import React from "react";
 import Iconn from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { connect } from "react-redux";
+import * as actions from "../../../../../Redux/Actions/favoriteActions";
 
 var { width } = Dimensions.get("window");
 
@@ -41,6 +43,14 @@ const ProductCard = (props) => {
         {name.length > 15 ? name.substring(0, 15 - 3) + "..." : name}
       </Text>
       <Text style={styles.price}> ${price}</Text>
+      <View style={styles.fav}>
+        <Button
+          title={"Add to favorite"}
+          onPress={() => {
+            props.addItemToFavorite(props);
+          }}
+        />
+      </View>
       {/* <Iconn
         name="ios-chatbubble-ellipses-sharp"
         size={25}
@@ -48,6 +58,13 @@ const ProductCard = (props) => {
       /> */}
     </View>
   );
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addItemToFavorite: (product) =>
+      dispatch(actions.addToFavorite({ quantity: 1, product })),
+  };
 };
 
 const styles = StyleSheet.create({
@@ -68,7 +85,7 @@ const styles = StyleSheet.create({
     height: width / 2 - 20 - 30,
     backgroundColor: "transparent",
     position: "absolute",
-    top: 20,
+    top: 0,
     left: 5,
   },
   card: {
@@ -80,6 +97,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     fontSize: 14,
+    top: -50,
     // textAlign: "center",
   },
   price: {
@@ -87,12 +105,12 @@ const styles = StyleSheet.create({
     color: "black",
     marginTop: 10,
     fontWeight: "bold",
-    bottom: 10,
+    bottom: 50,
   },
-  sendMessage: {
-    top: -40,
-    left: 120,
+  fav: {
+    bottom: 40,
+    left: -15,
   },
 });
 
-export default ProductCard;
+export default connect(null, mapDispatchToProps)(ProductCard);

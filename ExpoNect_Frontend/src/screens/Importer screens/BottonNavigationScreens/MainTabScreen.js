@@ -7,6 +7,9 @@ import ChattingScreen from "./ChattingScreen";
 import FavoriteScreen from "./FavoriteScreen";
 import ProfileScreen from "./ProfileScreen";
 import MenuScreen from "./MenuScreen";
+import { View } from "react-native";
+
+import FavoriteIcon from "../FavoriteIcon";
 
 const HomeStack = createNativeStackNavigator();
 const DetailsStack = createNativeStackNavigator();
@@ -37,7 +40,10 @@ const MainTabScreen = () => (
         tabBarLabel: "Favourite",
         tabBarColor: "#009387",
         tabBarIcon: ({ color }) => (
-          <Icon name="ios-heart" color={color} size={26} />
+          <View>
+            <Icon name="ios-heart" color={color} size={26} />
+            <FavoriteIcon />
+          </View>
         ),
       }}
     />

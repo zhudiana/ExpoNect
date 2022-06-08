@@ -34,7 +34,21 @@ const SingleProduct = (props) => {
             style={styles.image}
           />
         </View>
+        <View style="{styles.contentContainer">
+          <H1 style={styles.contentHeader}>{item.name}</H1>
+          <Text style={styles.contentText}>{item.brand}</Text>
+        </View>
+        {/* ToDo: Description, rich Description */}
       </ScrollView>
+
+      <View style={styles.bottomContainer}>
+        <Left>
+          <Text style={styles.price}> $ {item.price}</Text>
+        </Left>
+        <Right>
+          <Button title="Add to Favourite" />
+        </Right>
+      </View>
     </Container>
   );
 };
@@ -50,6 +64,31 @@ const styles = StyleSheet.create({
   },
   arrowIcon: {
     color: "black",
+  },
+  contentContainer: {
+    marginTop: 20,
+    justifyContent: "center",
+  },
+  contentHeader: {
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  contentText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  bottomContainer: {
+    flexDirection: "row",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    backgroundColor: "white",
+  },
+  price: {
+    fontSize: 24,
+    margin: 20,
+    color: "red",
   },
 });
 
