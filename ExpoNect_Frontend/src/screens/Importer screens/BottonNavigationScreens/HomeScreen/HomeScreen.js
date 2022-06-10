@@ -21,6 +21,9 @@ import ProductList from "./ProductList";
 import SearchedProduct from "./SearchedProduct";
 import CategoryFilter from "./CategoryFilter";
 
+import baseURL from "../../../../../assets/common/baseURL";
+import axios from "axios";
+
 const data = require("../../../../../assets/data/products.json");
 const productsCategories = require("../../../../../assets/data/categories.json");
 
@@ -40,12 +43,20 @@ const HomeScreen = (props) => {
   const [initialState, setInitialState] = useState([]);
 
   useEffect(() => {
-    setProducts(data);
-    setProductsFiltered(data);
     setFocus(false);
     setCategories(productsCategories);
     setActive(-1);
+    setProducts(data);
+    setProductsFiltered(data);
+    setProductsCtg(data);
     setInitialState(data);
+
+    // axios.get(`${baseURL}products`).then((res) => {
+    //   setProducts(res.data);
+    //   setProductsFiltered(res.data);
+    //   setProductsCtg(res.data);
+    //   setInitialState(res.data);
+    // });
 
     return () => {
       setProducts([]);

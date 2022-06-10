@@ -16,8 +16,6 @@ import {
   Thumbnail,
   Body,
 } from "native-base";
-import { SwipeListView } from "react-native-swipe-list-view";
-import FavoriteItem from "../FavoriteItem";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -32,26 +30,41 @@ const FavoriteScreen = (props) => {
       {props.favoriteItems.length ? (
         <Container>
           <H1 style={{ alignSelf: "center" }}>Favorite</H1>
-          <SwipeListView
-            data={props.favoriteItems}
-            renderItem={(data) => {
-              <FavoriteItem item={data} />;
-            }}
-            renderHiddenItem={(data) => (
-              <View style={styles.hiddenContainer}>
-                <TouchableOpacity style={styles.hiddenButton}>
-                  <Icon name="trash" color={"white"} size={30} />
-                </TouchableOpacity>
-              </View>
-            )}
-            disableRightSwipe={true}
-            previewOpenDelay={3000}
-            friction={1000}
-            tension={40}
-            leftOpenValue={75}
-            stopLeftSwipe={75}
-            rightOpenValue={-75}
-          />
+          {props.favoriteItems.map((data) => {
+            return (
+              <ListItem style={styles.ListItems} key={Math.random()} avatar>
+                <Left>
+                  <Thumbnail
+                    source={{
+                      uri: data.product.image
+                        ? data.product.image
+                        : "../../../../../assets/avocado.png",
+                    }}
+                  />
+                </Left>
+                <Body style={styles.body}>
+                  <Left>
+                    <Text>{data.product.name}</Text>
+                  </Left>
+                  <Right>
+                    <Text>$ {data.product.price}</Text>
+                  </Right>
+                </Body>
+                <View>
+                  <TouchableOpacity
+                    onPress={() => props.removeFromFavorite(data)}
+                  >
+                    <Icon
+                      name="trash"
+                      color={"black"}
+                      size={25}
+                      style={styles.deleteIcon}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </ListItem>
+            );
+          })}
           <View style={styles.bottomContainer}>
             <Right>
               <Button title="Clear" onPress={() => props.clearFavorite()} />
@@ -78,6 +91,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     clearFavorite: () => dispatch(actions.clearFavorite()),
+    removeFromFavorite: (item) => dispatch(actions.removeFromFavorite(item)),
   };
 };
 
@@ -96,18 +110,24 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     elevation: 20,
   },
+  ss: {
+    alignItems: "center",
+    backgroundColor: "white",
+    justifyContent: "center",
+  },
+  body: {
+    margin: 10,
+    alignItems: "center",
+    flexDirection: "row",
+  },
   hiddenContainer: {
     flex: 1,
     justifyContent: "flex-end",
     flexDirection: "row",
   },
-  hiddenButton: {
-    backgroundColor: "red",
-    justifyContent: "center",
-    alignItems: "flex-end",
-    paddingRight: 25,
-    height: 70,
-    width: width / 1.2,
+
+  deleteIcon: {
+    marginRight: 10,
   },
 });
 
