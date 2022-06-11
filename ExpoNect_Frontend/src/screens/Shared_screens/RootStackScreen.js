@@ -14,7 +14,7 @@ import ExInfoScreen from "../Exporter Screens/ExInfoScreen";
 import ExEmailCodeScreen from "../Exporter Screens/ExEmailCodeScreen";
 import TermsOfUseScreen from "./TermsOfUseScreen";
 import PrivacyPolicyScreen from "./PrivacyPolicyScreen";
-import ExNotificationScreen from "../Exporter Screens/BottonNavigation/ExNotificationScreen";
+import ExProductScreen from "../Exporter Screens/BottonNavigation/ExProductScreen";
 import ChattingScreen from "../Importer screens/BottonNavigationScreens/ChattingScreen";
 import SingleProduct from "../Importer screens/BottonNavigationScreens/HomeScreen/SingleProduct";
 

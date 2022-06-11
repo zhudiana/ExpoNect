@@ -32,17 +32,6 @@ const storage = multer.diskStorage({
 const uploadOptions = multer({ storage: storage });
 
 router.get(`/`, async (req, res) => {
-  // jwt.verify(req.token, ACCESS_TOKEN_SECRET, (err, authData) => {
-  //   if (err) {
-  //     res.sendStatus(403); //forbidden
-  //   } else {
-  //     res.json({
-  //       message: "successfull",
-  //       authData,
-  //     });
-  //   }
-  // });
-
   let filter = {};
   if (req.query.categories) {
     filter = { category: req.query.categories.split(",") };

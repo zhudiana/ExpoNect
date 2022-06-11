@@ -19,13 +19,9 @@ export default function Sidebar() {
               <LineStyle className="sidebaricon" />
               <Link to={"/"}>Home</Link>
             </li>
-            <li className="sidebarListItem">
-              <Timeline className="sidebaricon" />
-              Analytics
-            </li>
-            <li className="sidebarListItem">
-              <TrendingUp className="sidebaricon" />
-              Sales
+            <li className="sidebarListItem ">
+              <PersonOutline className="sidebaricon" />
+              <Link to={"/users"}>Users</Link>
             </li>
           </ul>
         </div>
@@ -33,10 +29,6 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Quick Menu</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem ">
-              <PersonOutline className="sidebaricon" />
-              <Link to={"/users"}>Users</Link>
-            </li>
             <li className="sidebarListItem">
               <Timeline className="sidebaricon" />
               Analytics

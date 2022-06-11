@@ -19,19 +19,6 @@ const ProductCard = (props) => {
   const { name, price, image } = props;
   return (
     <View style={styles.container}>
-      <View>
-        {/* <TouchableOpacity>
-          <Icon
-            name="favorite"
-            size={18}
-            style={{
-              position: "absolute",
-              right: 5,
-              top: 5,
-            }}
-          />
-        </TouchableOpacity> */}
-      </View>
       <Image
         style={styles.image}
         resizeMode="contain"
@@ -76,7 +63,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 5,
     marginLeft: 10,
-    // alignItems: "center",
+    alignItems: "center",
     elevation: 8,
     backgroundColor: "gainsboro",
   },
@@ -109,7 +96,7 @@ const styles = StyleSheet.create({
   },
   fav: {
     bottom: 40,
-    left: -15,
+    alignItems: "center",
   },
 });
 

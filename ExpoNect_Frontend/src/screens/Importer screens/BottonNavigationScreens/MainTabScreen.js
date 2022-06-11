@@ -11,8 +11,8 @@ import { View } from "react-native";
 
 import FavoriteIcon from "../FavoriteIcon";
 
-const HomeStack = createNativeStackNavigator();
-const DetailsStack = createNativeStackNavigator();
+// const HomeStack = createNativeStackNavigator();
+// const DetailsStack = createNativeStackNavigator();
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -24,7 +24,7 @@ const MainTabScreen = () => (
   >
     <Tab.Screen
       name="Home"
-      component={HomeStackScreen}
+      component={HomeScreen}
       options={{
         tabBarLabel: "Home",
         tabBarColor: "#009387",
@@ -47,7 +47,7 @@ const MainTabScreen = () => (
         ),
       }}
     />
-    <Tab.Screen
+    {/* <Tab.Screen
       name="Profile"
       component={ProfileScreen}
       options={{
@@ -57,7 +57,7 @@ const MainTabScreen = () => (
           <Icon name="ios-person" color={color} size={26} />
         ),
       }}
-    />
+    /> */}
     <Tab.Screen
       name="Message"
       component={ChattingScreen}
@@ -84,18 +84,18 @@ const MainTabScreen = () => (
   </Tab.Navigator>
 );
 
-const HomeStackScreen = ({ navigation }) => (
-  <HomeStack.Navigator
-    screenOptions={{
-      headerTintColor: "#fff",
-      headerTintStyle: {
-        fontWeight: "bold",
-      },
-      headerShown: false,
-    }}
-  >
-    <HomeStack.Screen name="Home" component={HomeScreen} />
-  </HomeStack.Navigator>
-);
+// const HomeStackScreen = ({ navigation }) => (
+//   <HomeStack.Navigator
+//     screenOptions={{
+//       headerTintColor: "#fff",
+//       headerTintStyle: {
+//         fontWeight: "bold",
+//       },
+//       headerShown: false,
+//     }}
+//   >
+//     <HomeStack.Screen name="Home" component={HomeScreen} />
+//   </HomeStack.Navigator>
+// );
 
 export default MainTabScreen;

@@ -2,7 +2,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import ExHomeScreen from "./ExHomeScreen";
 import ExChatScreen from "./ExChatScreen";
 import ExMenuScreen from "./ExMenuScreen";
-import ExNotificationScreen from "./ExNotificationScreen";
+import ExProductScreen from "./ExProductScreen";
 import ExPostScreen from "./ExPostScreen";
 import { View } from "react-native-animatable";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -54,29 +54,6 @@ const ExMainTabScreen = () => {
         }}
       />
       <Tab.Screen
-        name="Favourite"
-        component={ExNotificationScreen}
-        options={{
-          tabBarLabel: "Favourite",
-          tabBarColor: "#009387",
-          tabBarIcon: ({ color }) => (
-            <Icon name="ios-heart" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Post"
-        component={ExPostScreen}
-        options={{
-          tabBarLabel: "Post",
-          tabBarColor: "#009387",
-          tabBarIcon: ({ color }) => (
-            <Icon name="ios-add" color={color} size={30} />
-          ),
-          tabBarButton: (props) => <customTabBarButton {...props} />,
-        }}
-      />
-      <Tab.Screen
         name="Chat"
         component={ExChatScreen}
         options={{
@@ -88,6 +65,28 @@ const ExMainTabScreen = () => {
               color={color}
               size={26}
             />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Post"
+        component={ExPostScreen}
+        options={{
+          tabBarLabel: "Post",
+          tabBarColor: "#009387",
+          tabBarIcon: ({ color }) => (
+            <Icon name="add-circle-outline" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Product"
+        component={ExProductScreen}
+        options={{
+          tabBarLabel: "Product",
+          tabBarColor: "#009387",
+          tabBarIcon: ({ color }) => (
+            <Icon name="logo-dropbox" color={color} size={26} />
           ),
         }}
       />

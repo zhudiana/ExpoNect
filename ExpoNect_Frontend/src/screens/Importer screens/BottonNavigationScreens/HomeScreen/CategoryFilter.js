@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import React from "react";
-import { ListItem, Badge, Text, NativeBaseProvider } from "native-base";
+import { ListItem, Badge, Text } from "native-base";
 
 const CategoryFilter = (props) => {
   return (
@@ -32,7 +32,7 @@ const CategoryFilter = (props) => {
           <TouchableOpacity
             key={item._id}
             onPress={() => {
-              props.CategoryFilter(item._id.$oid),
+              props.CategoryFilter(item._id),
                 props.setActive(props.categories.indexOf(item));
             }}
           >

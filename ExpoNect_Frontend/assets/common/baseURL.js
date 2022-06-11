@@ -1,3 +1,3 @@
-let baseURL = "http://10.0.2.2:8000/api/v1/";
+let baseURL = "http://192.168.100.6:8000/api/v1/";
 
 export default baseURL;
