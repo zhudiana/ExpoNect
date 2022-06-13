@@ -13,7 +13,12 @@ const ProductList = (props) => {
       style={{ width: "50%" }}
       onPress={() => props.navigation.navigate("SingleProduct", { item: item })}
     >
-      <View style={{ width: width / 2, backgroundColor: "#fff" }}>
+      <View
+        style={{
+          width: width,
+          backgroundColor: "#fff",
+        }}
+      >
         <ProductCard {...item} />
       </View>
     </TouchableOpacity>

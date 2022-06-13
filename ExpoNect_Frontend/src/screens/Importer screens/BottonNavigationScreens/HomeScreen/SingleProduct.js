@@ -27,7 +27,7 @@ const SingleProduct = (props) => {
           <Image
             source={{
               uri: item.image
-                ? item.image
+                ? "https://www.worldatlas.com/r/w1200/upload/12/f8/83/coffee-cup.jpg"
                 : "https://cdn.britannica.com/35/129635-050-A8A60DD8/footballs-American-pigskins-rubber-cowhide.jpg?w=690&h=388&c=crop",
             }}
             resizeMode="contain"
@@ -37,6 +37,8 @@ const SingleProduct = (props) => {
         <View style="{styles.contentContainer">
           <H1 style={styles.contentHeader}>{item.name}</H1>
           <Text style={styles.contentText}>{item.brand}</Text>
+          <Text style={styles.contentText}>{item.description}</Text>
+          <Text style={styles.contentText}>{item.richDescription}</Text>
         </View>
         {/* ToDo: Description, rich Description */}
       </ScrollView>
@@ -46,7 +48,15 @@ const SingleProduct = (props) => {
           <Text style={styles.price}> $ {item.price}</Text>
         </Left>
         <Right>
-          <Button title="Add to Favourite" />
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("ChattingScreen")}
+          >
+            <Icon
+              name="ios-chatbubble-ellipses-sharp"
+              size={25}
+              style={styles.chat_icon}
+            />
+          </TouchableOpacity>
         </Right>
       </View>
     </Container>
@@ -89,6 +99,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     margin: 20,
     color: "red",
+  },
+  chat_icon: {
+    right: 10,
   },
 });
 

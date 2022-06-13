@@ -27,7 +27,7 @@ const productSchema = mongoose.Schema({
     default: "",
   },
   price: {
-    type: String,
+    type: Number,
     default: 0,
   },
   category: {
@@ -35,6 +35,11 @@ const productSchema = mongoose.Schema({
     ref: "Category",
     require: true,
   },
+  // exporter: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "Exporter",
+  //   require: true,
+  // },
   location: {
     type: String,
     require: true,

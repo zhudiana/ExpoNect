@@ -15,6 +15,7 @@ app.options("*", cors());
 //checking everything going to the server before it gets executed
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
+app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 
 // app.use(authJwt);
 app.use((err, req, res, next) => {
@@ -43,7 +44,7 @@ mongoose
   .connect(process.env.CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: "exponect-real-database",
+    dbName: "project-database",
   })
   .then(() => {
     console.log("DB connection is ready");

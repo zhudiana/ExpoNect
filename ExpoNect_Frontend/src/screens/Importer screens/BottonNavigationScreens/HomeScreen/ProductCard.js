@@ -22,7 +22,11 @@ const ProductCard = (props) => {
       <Image
         style={styles.image}
         resizeMode="contain"
-        source={{ uri: image ? image : "../../../../../assets/avocado.png" }}
+        source={{
+          uri: image
+            ? "https://www.worldatlas.com/r/w1200/upload/12/f8/83/coffee-cup.jpg"
+            : "https://www.worldatlas.com/r/w1200/upload/12/f8/83/coffee-cup.jpg",
+        }}
       />
       <View style={styles.card} />
 
@@ -38,11 +42,6 @@ const ProductCard = (props) => {
           }}
         />
       </View>
-      {/* <Iconn
-        name="ios-chatbubble-ellipses-sharp"
-        size={25}
-        style={styles.sendMessage}
-      /> */}
     </View>
   );
 };

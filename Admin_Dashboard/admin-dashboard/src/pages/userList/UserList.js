@@ -46,7 +46,7 @@ export default function UserList() {
 
   return (
     <div className="userList">
-      <h1>List of users</h1>
+      <h1>List of Exporters</h1>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -54,6 +54,7 @@ export default function UserList() {
         rowsPerPageOptions={[5]}
         checkboxSelection
         disableSelectionOnClick
+        autoHeight
       />
     </div>
   );

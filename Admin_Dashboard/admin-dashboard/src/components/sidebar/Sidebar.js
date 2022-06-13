@@ -1,5 +1,7 @@
 import React from "react";
 import {
+  AddBox,
+  CheckBoxOutlineBlank,
   LineStyle,
   PersonOutline,
   Timeline,
@@ -17,61 +19,27 @@ export default function Sidebar() {
           <ul className="sidebarList">
             <li className="sidebarListItem active">
               <LineStyle className="sidebaricon" />
-              <Link to={"/"}>Home</Link>
+              <Link to={"/"} style={{ textDecoration: "none" }}>
+                Home
+              </Link>
             </li>
             <li className="sidebarListItem ">
               <PersonOutline className="sidebaricon" />
-              <Link to={"/users"}>Users</Link>
+              <Link to={"/users"} style={{ textDecoration: "none" }}>
+                Exporters
+              </Link>
             </li>
-          </ul>
-        </div>
-
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Quick Menu</h3>
-          <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <Timeline className="sidebaricon" />
-              Analytics
-            </li>
-            <li className="sidebarListItem">
-              <TrendingUp className="sidebaricon" />
-              Sales
-            </li>
-          </ul>
-        </div>
-
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Notifications</h3>
-          <ul className="sidebarList">
             <li className="sidebarListItem ">
-              <LineStyle className="sidebaricon" />
-              Home
+              <PersonOutline className="sidebaricon" />
+              <Link to={"/"} style={{ textDecoration: "none" }}>
+                Importers
+              </Link>
             </li>
-            <li className="sidebarListItem">
-              <Timeline className="sidebaricon" />
-              Analytics
-            </li>
-            <li className="sidebarListItem">
-              <TrendingUp className="sidebaricon" />
-              Sales
-            </li>
-          </ul>
-        </div>
-
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Staff</h3>
-          <ul className="sidebarList">
             <li className="sidebarListItem ">
-              <LineStyle className="sidebaricon" />
-              Home
-            </li>
-            <li className="sidebarListItem">
-              <Timeline className="sidebaricon" />
-              Analytics
-            </li>
-            <li className="sidebarListItem">
-              <TrendingUp className="sidebaricon" />
-              Sales
+              <AddBox className="sidebaricon" />
+              <Link to={"/"} style={{ textDecoration: "none" }}>
+                Products
+              </Link>
             </li>
           </ul>
         </div>

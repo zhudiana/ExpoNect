@@ -48,21 +48,6 @@ const ExEmailCodeScreen = ({ navigation }) => {
     input.current.focus();
   }, [nextInputIndex]);
 
-  // const verifyEmailExporter = async (otp, exporterId) => {
-  //   const exporter = axios.create({
-  //     baseURL: "http://192.168.100.6/:8000/api/v1",
-  //   });
-  //   try {
-  //     const { data } = await exporter.post("/exporters/verify-email", {
-  //       otp,
-  //       exporterId,
-  //     });
-  //     return data;
-  //   } catch (error) {
-  //     return catchError(error);
-  //   }
-  // };
-
   const submitOTP = async () => {
     Keyboard.dismiss();
 
@@ -72,18 +57,7 @@ const ExEmailCodeScreen = ({ navigation }) => {
       Object.values(OTP).forEach((v) => {
         val += v;
       });
-      // const verifyEmailExporter = async (values, formikActions) => {
-      //   try {
-      //     const { data } = await axios.post(
-      //       "http://192.168.100.6:8000/api/v1/exporters/verify-email",
-      //       { ...values }
-      //     );
-      //     console.log(data);
-      //     navigation.dispatch(StackActions.replace("MainTabScreen"));
-      //   } catch (error) {
-      //     console.log(error?.response?.data);
-      //   }
-      // };
+
       navigation.dispatch(StackActions.replace("ExMainTabScreen"));
     }
   };

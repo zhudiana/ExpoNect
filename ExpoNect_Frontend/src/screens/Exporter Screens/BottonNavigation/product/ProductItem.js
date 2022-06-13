@@ -11,6 +11,7 @@ import {
   Modal,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import EasyButton from "../../../Shared_screens/EasyButton";
 
 var { width } = Dimensions.get("window");
 
@@ -52,14 +53,14 @@ const ProductItem = (props) => {
             />
             <Button
               title="Delete"
-              //DELTE
+              //delete
             />
           </View>
         </View>
       </Modal>
       <TouchableOpacity
         onPress={() => {
-          props.navigation.navigate("SingleProduct", { item: props });
+          props.navigation.navigate("ProductDetail", { item: props });
         }}
         onLongPress={() => setModalVisible(true)}
         style={[
@@ -69,13 +70,6 @@ const ProductItem = (props) => {
           },
         ]}
       >
-        <Image
-          source={{
-            uri: props.image ? props.image : "../../../../../assets/icon.png",
-          }}
-          resizeMode="contain"
-          style={styles.image}
-        />
         <Text style={styles.item}>{props.brand}</Text>
         <Text style={styles.item} numberOfLines={1} ellipsizeMode="tail">
           {props.name}
@@ -84,6 +78,16 @@ const ProductItem = (props) => {
           {props.category.name}
         </Text>
         <Text style={styles.item}>${props.price}</Text>
+        <EasyButton
+          medium
+          danger
+          onPress={() => [
+            props.delete(props._id),
+            props.navigation.navigate("ExMainTabScreen"),
+          ]}
+        >
+          <Text style={styles.textStyle}>Delete</Text>
+        </EasyButton>
       </TouchableOpacity>
     </View>
   );
@@ -126,6 +130,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
 

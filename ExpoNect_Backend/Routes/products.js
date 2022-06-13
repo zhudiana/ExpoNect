@@ -1,5 +1,6 @@
 const { Product } = require("../models/product");
 const { Category } = require("../models/category");
+const { Exporter } = require("../models/exporter");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
@@ -58,11 +59,14 @@ router.post(`/`, uploadOptions.single("image"), async (req, res) => {
   const category = await Category.findById(req.body.category);
   if (!category) return res.status(400).send("Invalid category");
 
+  // const exporter = await Exporter.findById(req.body.exporter);
+  // if (!exporter) return res.status(400).send("Invalid exporter");
+
   const file = req.file;
   if (!file) return res.status(400).send("no image in the request");
 
   const fileName = req.file.filename;
-  const basePath = `${req.protocol}://${req.get("host")} /public/upload/`;
+  const basePath = `${req.protocol}://${req.get("host")} /public/uploads/`;
 
   let product = new Product({
     name: req.body.name,
@@ -72,6 +76,7 @@ router.post(`/`, uploadOptions.single("image"), async (req, res) => {
     brand: req.body.brand,
     price: req.body.price,
     category: req.body.category,
+    // exporter: req.body.exporter,
     isFeatured: req.body.isFeatured,
   });
 

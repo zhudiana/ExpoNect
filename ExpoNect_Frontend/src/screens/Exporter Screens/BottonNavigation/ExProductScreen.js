@@ -79,6 +79,16 @@ const ExProductScreen = (props) => {
     );
   };
 
+  const deleteProduct = (id) => {
+    axios
+      .delete(`${baseURL}products/${id}`)
+      .then((res) => {
+        const products = productFilter((item) => item.id !== id);
+        setProductFilter(products);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <View>
       <View>
@@ -106,6 +116,7 @@ const ExProductScreen = (props) => {
               {...item}
               navigation={props.navigation}
               index={index}
+              delete={deleteProduct}
             />
           )}
           keyExtractor={(item) => item.id}

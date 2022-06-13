@@ -88,8 +88,8 @@ const EmailVerification = ({ navigation, route }) => {
         val += v;
       });
 
-      const res = await verifyEmail(val, profile);
-      // console.log(profile);
+      const res = await verifyEmail(val, profile.id);
+      console.log(res);
 
       navigation.dispatch(StackActions.replace("MainTabScreen"));
     }

@@ -151,7 +151,7 @@ export default function App() {
           {loginState.userToken !== null ? (
             <MainTabScreen />
           ) : (
-            <ExMainTabScreen />
+            <RootStackScreen />
           )}
           {/* <ExMainTabScreen /> */}
         </NavigationContainer>

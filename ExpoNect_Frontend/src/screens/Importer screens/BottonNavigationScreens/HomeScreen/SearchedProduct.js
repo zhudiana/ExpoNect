@@ -33,7 +33,7 @@ const SearchedProduct = (props) => {
           </ListItem>
         ))
       ) : (
-        <View style={StyleSheet.center}>
+        <View style={styles.center}>
           <Text style={{ alignSelf: "center" }}>
             No products match the selected criteria
           </Text>

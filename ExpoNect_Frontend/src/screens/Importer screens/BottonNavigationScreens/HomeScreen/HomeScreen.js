@@ -208,10 +208,8 @@ const styles = StyleSheet.create({
     height: height,
   },
   listContainer: {
-    width: "100%",
     flex: 1,
     flexDirection: "row",
-    alignItems: "flex-start",
   },
   header: {
     marginTop: 30,
