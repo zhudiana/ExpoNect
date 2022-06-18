@@ -16,7 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import * as Animatable from "react-native-animatable";
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { color } from "react-native-reanimated";
 import { AuthContext } from "../../components/Context";
 import { StackActions, useTheme } from "@react-navigation/native";
@@ -29,6 +29,10 @@ import * as yup from "yup";
 import { signin } from "../../../utils/auth";
 import { updateNotification } from "../../../utils/helper";
 import AppNotification from "../../components/AppNotification";
+
+//context
+import AuthGlobal from "../../../Context/store/AuthGlobal";
+import { loginUser } from "../../../Context/actions/Auth.actions";
 
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -50,7 +54,8 @@ const validationSchema = yup.object({
     .required("password is missing"),
 });
 
-const SignInScreen = ({ navigation }) => {
+const SignInScreen = ({ navigation, props }) => {
+  const context = useContext(AuthGlobal);
   const { colors } = useTheme();
   const [data, setData] = React.useState({
     email: "",
@@ -62,7 +67,9 @@ const SignInScreen = ({ navigation }) => {
     type: "",
   });
 
-  const { signIn } = React.useContext(AuthContext);
+  // useEffect(() => {
+  //   props.navigation.navigate("MainTabScreen");
+  // }, []);
 
   const updateSecureTextEntry = () => {
     setData({
@@ -75,11 +82,13 @@ const SignInScreen = ({ navigation }) => {
     try {
       //  const res = await signup(values);
       const { data } = await axios.post(
-        "http://192.168.100.6:8000/api/v1/importers/login",
+        "http://172.20.10.10:8000/api/v1/importers/login",
         { ...values }
       );
       console.log(data);
       navigation.dispatch(StackActions.replace("MainTabScreen"));
+      // loginUser(data, context.dispatch);
+      console.log(data);
     } catch (error) {
       console.log(error?.response?.data);
     }

@@ -19,6 +19,9 @@ import ExMainTabScreen from "./src/screens/Exporter Screens/BottonNavigation/ExM
 import { Provider } from "react-redux";
 import store from "./Redux/store";
 
+//context api
+import Auth from "./Context/store/Auth";
+
 LogBox.ignoreAllLogs(true);
 
 export default function App() {
@@ -145,18 +148,16 @@ export default function App() {
     );
   }
   return (
-    <AuthContext.Provider value={authContext}>
+    // <AuthContext.Provider value={authContext}>
+    <Auth>
       <Provider store={store}>
         <NavigationContainer theme={theme}>
-          {loginState.userToken !== null ? (
-            <MainTabScreen />
-          ) : (
-            <RootStackScreen />
-          )}
-          {/* <ExMainTabScreen /> */}
+          <RootStackScreen />
         </NavigationContainer>
       </Provider>
-    </AuthContext.Provider>
+    </Auth>
+
+    // </AuthContext.Provider>
   );
 }
 

@@ -91,7 +91,7 @@ const EmailVerification = ({ navigation, route }) => {
       const res = await verifyEmail(val, profile.id);
       console.log(res);
 
-      navigation.dispatch(StackActions.replace("MainTabScreen"));
+      navigation.dispatch(StackActions.replace("SignInScreen"));
     }
   };
 
