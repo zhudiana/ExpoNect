@@ -1,11 +1,13 @@
-const expressJwt = require("express-jwt-token");
+var { expressjwt: jwt } = require("express-jwt");
 
-function authJwt() {
+const authJwt = () => {
   const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
-  return expressJwt({
+  return jwt({
     ACCESS_TOKEN_SECRET,
     algorithms: ["HS256"],
+  }).unless({
+    path: ["/api/v1/importers/login"],
   });
-}
+};
 
 module.exports = authJwt;

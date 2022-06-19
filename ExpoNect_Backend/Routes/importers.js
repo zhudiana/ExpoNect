@@ -182,13 +182,13 @@ router.post(
         const token = jwt.sign(
           {
             importerId: importer.id,
-            isAdmin: importer.isAdmin,
-            isExporter: importer.isExporter,
+            // isAdmin: importer.isAdmin,
+            // isExporter: importer.isExporter,
           },
           ACCESS_TOKEN_SECRET,
-          { expiresIn: "1w" }
+          { expiresIn: "1d" }
         );
-        res.status(200).send({ importer: importer.email, token: token });
+        res.status(200).send({ importer: importer.id, Token: token });
       } else {
         res.status(400).send("password is wrong");
       }

@@ -18,6 +18,7 @@ import {
 } from "native-base";
 
 import Icon from "react-native-vector-icons/FontAwesome";
+import Iconn from "react-native-vector-icons/Ionicons";
 
 import { connect } from "react-redux";
 import * as actions from "../../../../Redux/Actions/favoriteActions";
@@ -29,6 +30,11 @@ const FavoriteScreen = (props) => {
     <>
       {props.favoriteItems.length ? (
         <Container>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("MainTabScreen")}
+          >
+            <Iconn name="arrow-back" style={styles.arrowIcon} size={26} />
+          </TouchableOpacity>
           <H1 style={{ alignSelf: "center" }}>Favorite</H1>
           {props.favoriteItems.map((data) => {
             return (
@@ -73,6 +79,11 @@ const FavoriteScreen = (props) => {
         </Container>
       ) : (
         <Container style={styles.emptyContainer}>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("MainTabScreen")}
+          >
+            <Iconn name="arrow-back" style={styles.arrowIcon} size={36} />
+          </TouchableOpacity>
           <Text>No Favorites</Text>
           <Text>Add your favorite products here!</Text>
         </Container>
@@ -128,6 +139,10 @@ const styles = StyleSheet.create({
 
   deleteIcon: {
     marginRight: 10,
+  },
+  arrowIcon: {
+    top: -270,
+    left: -150,
   },
 });
 

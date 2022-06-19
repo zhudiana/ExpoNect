@@ -21,6 +21,7 @@ import store from "./Redux/store";
 
 //context api
 import Auth from "./Context/store/Auth";
+import Toast from "react-native-toast-message";
 
 LogBox.ignoreAllLogs(true);
 
@@ -148,16 +149,14 @@ export default function App() {
     );
   }
   return (
-    // <AuthContext.Provider value={authContext}>
     <Auth>
       <Provider store={store}>
         <NavigationContainer theme={theme}>
           <RootStackScreen />
+          <Toast ref={(ref) => Toast.setRef(ref)} />
         </NavigationContainer>
       </Provider>
     </Auth>
-
-    // </AuthContext.Provider>
   );
 }
 

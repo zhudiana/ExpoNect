@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Switch, ScrollView } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import { useLinkProps, useTheme } from "@react-navigation/native";
 import React, { useContext, useState, useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -12,33 +12,40 @@ import baseURL from "../../../../assets/common/baseURL";
 import AuthGlobal from "../../../../Context/store/AuthGlobal";
 import { logoutUser } from "../../../../Context/actions/Auth.actions";
 
-const MenuScreen = (props) => {
+const MenuScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const context = useContext(AuthGlobal);
   const [userProfile, setUserProfile] = useState();
 
   const navigationTheme = useTheme();
 
-  useEffect(() => {
-    if (
-      context.stateUser.isAuthenticated === false ||
-      context.stateUser.isAuthenticated === null
-    ) {
-      props.navigation.navigate("MainTabScreen");
-    }
-  }, [context.stateUser.isAuthenticated]);
+  // useEffect(() => {
+  // if (
+  //   context.stateUser.isAuthenticated === false ||
+  //   context.stateUser.isAuthenticated === null
+  // ) {
+  //   props.navigation.navigate("SignInScreen");
+  // }
 
-  AsyncStorage.getItem("jwt")
-    .then((res) => {
-      axios.get(`${baseURL}importers/${context.stateUser.uset.sub}`);
-    })
-    .then((user) => setUserProfile(user.data))
-    .catch((error) => console.log(error));
+  //   AsyncStorage.getItem("jwt")
+  //     .then((res) => {
+  //       axios
+  //         .get(`${baseURL}importers/${context.stateUser.user.sub}`, {
+  //           headers: { Authorization: `Bearer ${res}` },
+  //         })
+  //         .then((user) => setUserProfile(user.data));
+  //     })
+  //     .catch((error) => console.log(error));
+
+  //   return () => {
+  //     setUserProfile();
+  //   };
+  // }, [context.stateUser.isAuthenticated]);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View>
-        <TouchableRipple
+        {/* <TouchableRipple
           onPress={() => {
             toggleTheme();
           }}
@@ -51,7 +58,7 @@ const MenuScreen = (props) => {
               <Switch value={navigationTheme.dark} />
             </View>
           </View>
-        </TouchableRipple>
+        </TouchableRipple> */}
         <View style={{ flexDirection: "row", marginTop: 15 }}>
           <Avatar.Image
             source={require("../../../../assets/avocado.png")}
@@ -68,7 +75,7 @@ const MenuScreen = (props) => {
                 },
               ]}
             >
-              <Text>{userProfile ? userProfile.name : ""}</Text>
+              <Text>{userProfile ? userProfile.name : "Nani"}</Text>
             </Title>
             <Caption style={[styles.caption]}>@Sama_trading</Caption>
           </View>
@@ -97,7 +104,7 @@ const MenuScreen = (props) => {
 
         <View style={styles.menuWrapper}>
           <TouchableOpacity
-          // onPress={() => navigation.navigate("FavoriteScreen")}
+            onPress={() => navigation.navigate("FavoriteScreen")}
           >
             <View style={styles.menuItem}>
               <Icon name="heart-outline" color="#FF6347" size={25} />
@@ -116,28 +123,28 @@ const MenuScreen = (props) => {
               <Text style={styles.menuItemText}>Tell Your Friends</Text>
             </View>
           </TouchableRipple>
-          <TouchableRipple onPress={() => {}}>
+          <TouchableRipple
+            onPress={() => navigation.navigate("TermsOfUseScreen")}
+          >
             <View style={styles.menuItem}>
               <Icon name="account-check-outline" color="#625D5D" size={25} />
               <Text style={styles.menuItemText}>Support</Text>
             </View>
           </TouchableRipple>
-          <TouchableRipple onPress={() => {}}>
+          <TouchableRipple
+            onPress={() => navigation.navigate("PrivacyPolicyScreen")}
+          >
             <View style={styles.menuItem}>
               <Icon name="shield" color="#625D5D" size={25} />
-              <Text style={styles.menuItemText}>Privacy Polcy</Text>
+              <Text style={styles.menuItemText}>Privacy Policy</Text>
             </View>
           </TouchableRipple>
         </View>
 
-        <TouchableOpacity
-          onPress={() => {
-            signOut();
-          }}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
           <View style={styles.menuitem}>
             <Text style={[styles.logoutText, { color: colors.text }]}>
-              <Icon name="door" size={19} /> Log Out
+              Log Out
             </Text>
           </View>
         </TouchableOpacity>

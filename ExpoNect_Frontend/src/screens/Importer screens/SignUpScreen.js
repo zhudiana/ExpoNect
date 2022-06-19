@@ -71,7 +71,7 @@ const SignInScreen = ({ navigation }) => {
   const handleSignup = async (values, formikActions) => {
     try {
       const { data } = await axios.post(
-        "http://172.20.10.10:8000/api/v1/importers/create",
+        "http:/172.20.10.2:8000/api/v1/importers/create",
         { ...values }
       );
       console.log(data);

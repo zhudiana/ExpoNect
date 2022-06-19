@@ -67,9 +67,11 @@ const SignInScreen = ({ navigation, props }) => {
     type: "",
   });
 
-  // useEffect(() => {
-  //   props.navigation.navigate("MainTabScreen");
-  // }, []);
+  useEffect(() => {
+    if (context.stateUser.isAuthenticated === true) {
+      props.navigation.navigate("MainTabScreen");
+    }
+  }, [context.stateUser.isAuthenticated]);
 
   const updateSecureTextEntry = () => {
     setData({
@@ -79,20 +81,20 @@ const SignInScreen = ({ navigation, props }) => {
   };
 
   const handleLogin = async (values, formikActions) => {
+    // navigation.dispatch(StackActions.replace("MainTabScreen"));
+
     try {
       //  const res = await signup(values);
       const { data } = await axios.post(
-        "http://172.20.10.10:8000/api/v1/importers/login",
+        "http://172.20.10.2:8000/api/v1/importers/login",
         { ...values }
       );
       console.log(data);
       navigation.dispatch(StackActions.replace("MainTabScreen"));
       // loginUser(data, context.dispatch);
-      console.log(data);
     } catch (error) {
       console.log(error?.response?.data);
     }
-    // if (!data.response) return updateNotification(setMessage, error?.response?.data);
   };
 
   const [text, onChangeText] = React.useState("");

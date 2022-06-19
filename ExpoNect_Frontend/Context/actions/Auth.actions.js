@@ -4,8 +4,8 @@ import baseURL from "../../assets/common/baseURL";
 
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
-export const User = (user, dispatch) => {
-  fetch(`${baseURL}importers/`, {
+export const loginUser = (user, dispatch) => {
+  fetch(`${baseURL}importers/login`, {
     method: "POST",
     body: JSON.stringify(user),
     headers: {
@@ -19,7 +19,7 @@ export const User = (user, dispatch) => {
         const token = data.token;
         AsyncStorage.setItem("jwt", token);
         const decoded = jwt_decode(token);
-        dispatch(setCurrentUser(user));
+        dispatch(setCurrentUser(decoded, user));
       } else {
         logoutUser(dispatch);
       }
@@ -44,14 +44,14 @@ export const getImporterProfile = (id) => {
 };
 
 export const logoutUser = (dispatch) => {
-  // AsyncStorage.removeItem("jwt");
+  AsyncStorage.removeItem("jwt");
   dispatch(setCurrentUser({}));
 };
 
-export const setCurrentUser = (user) => {
+export const setCurrentUser = (decoded, user) => {
   return {
     type: SET_CURRENT_USER,
-    // payload: decoded,
+    payload: decoded,
     userProfile: user,
   };
 };

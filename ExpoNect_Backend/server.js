@@ -5,6 +5,10 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const authJwt = require("./Controller/jwt");
+const expressJwt = require("express-jwt-token");
+const jwt = require("jsonwebtoken");
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+const verifyJWT = require("./Controller/verifyJWT");
 
 require("dotenv/config");
 
@@ -18,6 +22,7 @@ app.use(morgan("tiny"));
 app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 
 // app.use(authJwt);
+
 app.use((err, req, res, next) => {
   if (err) {
     res.status(500).json({ message: "error in the server" });
@@ -33,10 +38,11 @@ const messagesRoute = require("./Routes/messages");
 
 const api = process.env.API_URL;
 
-app.use(`${api}/products`, productsRoutes);
-app.use(`${api}/categories`, categoriesRoute);
 app.use(`${api}/exporters`, exportersRoute);
 app.use(`${api}/importers`, importersRoute);
+app.use(verifyJWT);
+app.use(`${api}/products`, productsRoutes);
+app.use(`${api}/categories`, categoriesRoute);
 app.use(`${api}/messages`, messagesRoute);
 
 //Database
