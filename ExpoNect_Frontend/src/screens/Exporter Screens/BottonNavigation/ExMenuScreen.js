@@ -1,319 +1,176 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  ImageBackground,
-  TextInput,
-  StyleSheet,
-} from "react-native";
-import { useTheme } from "react-native-paper";
+import { View, Text, StyleSheet, Switch, ScrollView } from "react-native";
+import { useLinkProps, useTheme } from "@react-navigation/native";
+import React, { useContext, useState, useEffect } from "react";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Feather from "react-native-vector-icons/Feather";
-import Entypo from "react-native-vector-icons/Entypo";
-import * as ImagePicker from "expo-image-picker";
+import { TouchableRipple, Avatar, Title, Caption } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import BottomSheet from "reanimated-bottom-sheet";
-import Animated from "react-native-reanimated";
+import axios from "axios";
+import baseURL from "../../../../assets/common/baseURL";
 
-const ExMenuScreen = () => {
-  const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
-  const [image, setImage] = useState(null);
+import AuthGlobal from "../../../../Context/store/AuthGlobal";
+import { logoutUser } from "../../../../Context/actions/Auth.actions";
+
+const ExMenuScreen = ({ navigation, route }) => {
   const { colors } = useTheme();
-  useEffect(() => {
-    (async () => {
-      const galleryStatus =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      setHasGalleryPermission(galleryStatus.status === "granted");
-    })();
-  }, []);
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    console.log(result);
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
-
-  if (hasGalleryPermission === false) {
-    return <Text>No access to internal storage</Text>;
-  }
-
-  renderInner = () => (
-    <View style={styles.panel}>
-      <View style={{ alignItems: "center" }}>
-        <Text style={styles.panelTitle}>Upload Photo</Text>
-        <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
-      </View>
-      <TouchableOpacity style={styles.panelButton}>
-        <Text style={styles.panelButtonTitle}>Take Photo</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.panelButton} onPress={pickImage}>
-        <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.panelButton}
-        onPress={() => this.bs.current.snapTo(1)}
-      >
-        <Text style={styles.panelButtonTitle}>Cancel</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
-  renderHeader = () => (
-    <View style={styles.header}>
-      <View style={styles.panelHeader}>
-        <View style={styles.panelHandle} />
-      </View>
-    </View>
-  );
-
-  bs = React.createRef();
-  fall = new Animated.Value(1);
+  const context = useContext(AuthGlobal);
+  const navigationTheme = useTheme();
+  // const profile = route.params.profile;
 
   return (
-    <View style={styles.container}>
-      <BottomSheet
-        ref={this.bs}
-        snapPoints={[330, 0]}
-        renderContent={this.renderInner}
-        renderHeader={this.renderHeader}
-        initialSnap={1}
-        callbackNode={this.fall}
-        enabledGestureInteraction={true}
-      />
-      <Animated.View
-        style={{
-          margin: 20,
-          opacity: Animated.add(0.1, Animated.multiply(this.fall, 1.0)),
-        }}
-      >
-        <View style={{ alignItems: "center" }}>
-          <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
-            <View
-              style={{
-                height: 100,
-                width: 100,
-                borderRadius: 15,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View>
+        <View style={{ flexDirection: "row", marginTop: 15 }}>
+          <Avatar.Image
+            // source={require("../../../../assets/avocado.png")}
+            size={80}
+            backgroundColor={" "}
+          />
+          <View style={{ marginLeft: 20 }}>
+            <Title
+              style={[
+                styles.title,
+                ,
+                {
+                  marginTop: 15,
+                  marginBottom: 5,
+                },
+              ]}
             >
-              <ImageBackground
-                source={{
-                  uri: image,
-                }}
-                style={{ height: 100, width: 100 }}
-                imageStyle={{ borderRadius: 15 }}
-              >
-                <View
-                  style={{
-                    flex: 2,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: 65,
-                  }}
-                >
-                  <Icon
-                    name="camera"
-                    size={35}
-                    color="#000"
-                    style={{
-                      opacity: 0.7,
-                      alignItems: "flex-end",
-                      justifyContent: "flex-end",
-                      borderWidth: 1,
-                      borderColor: "#fff",
-                      borderRadius: 10,
-                    }}
-                  />
-                </View>
-              </ImageBackground>
+              {/* <Text>{profile.importer.name}</Text> */}
+            </Title>
+            <Caption style={[styles.caption]}>@Sama_trading</Caption>
+          </View>
+        </View>
+
+        <View style={styles.userInfoSection}>
+          <View style={styles.row}>
+            <Icon name="map-marker-radius" color="#777777" size={20} />
+            <Text style={{ color: "#777777", marginLeft: 20 }}>
+              Addis Ababa, ETHIOPIA
+            </Text>
+          </View>
+          <View style={styles.row}>
+            <Icon name="phone" color="#777777" size={20} />
+            <Text style={{ color: "#777777", marginLeft: 20 }}>
+              +251913667830
+            </Text>
+          </View>
+          <View style={styles.row}>
+            <Icon name="email" color="#777777" size={20} />
+            <Text style={{ color: "#777777", marginLeft: 20 }}>
+              sama_trading@gmail.com
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.menuWrapper}>
+          <TouchableRipple onPress={() => {}}>
+            <View style={styles.menuItem}>
+              <Icon name="credit-card" color="#625D5D" size={25} />
+              <Text style={styles.menuItemText}>Payment Terms</Text>
             </View>
-          </TouchableOpacity>
-          <Text
-            style={{
-              marginTop: 10,
-              fontSize: 18,
-              fontWeight: "bold",
-            }}
+          </TouchableRipple>
+          <TouchableRipple onPress={() => {}}>
+            <View style={styles.menuItem}>
+              <Icon name="share-outline" color="#625D5D" size={25} />
+              <Text style={styles.menuItemText}>Tell Your Friends</Text>
+            </View>
+          </TouchableRipple>
+          <TouchableRipple
+            onPress={() => navigation.navigate("TermsOfUseScreen")}
           >
-            Sama Trading
-          </Text>
+            <View style={styles.menuItem}>
+              <Icon name="account-check-outline" color="#625D5D" size={25} />
+              <Text style={styles.menuItemText}>Support</Text>
+            </View>
+          </TouchableRipple>
+          <TouchableRipple
+            onPress={() => navigation.navigate("PrivacyPolicyScreen")}
+          >
+            <View style={styles.menuItem}>
+              <Icon name="shield" color="#625D5D" size={25} />
+              <Text style={styles.menuItemText}>Privacy Policy</Text>
+            </View>
+          </TouchableRipple>
         </View>
-        <View style={styles.action}>
-          <FontAwesome name="user-o" color={colors.text} size={20} />
-          <TextInput
-            placeholder="Company Name"
-            placeholderTextColor="#666666"
-            autoCorrect={false}
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-              },
-            ]}
-          />
-        </View>
-        <View style={styles.action}>
-          <Feather name="phone" color={colors.text} size={20} />
-          <TextInput
-            placeholder="Phone"
-            placeholderTextColor="#666666"
-            keyboardType="number-pad"
-            autoCorrect={false}
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-              },
-            ]}
-          />
-        </View>
-        <View style={styles.action}>
-          <FontAwesome name="envelope-o" color={colors.text} size={20} />
-          <TextInput
-            placeholder="Email"
-            placeholderTextColor="#666666"
-            keyboardType="email-address"
-            autoCorrect={false}
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-              },
-            ]}
-          />
-        </View>
-        <View style={styles.action}>
-          <Icon name="map-marker-outline" color={colors.text} size={20} />
-          <TextInput
-            placeholder="City"
-            placeholderTextColor="#666666"
-            autoCorrect={false}
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-              },
-            ]}
-          />
-        </View>
-        <View style={styles.action}>
-          <FontAwesome name="globe" color={colors.text} size={20} />
-          <TextInput
-            placeholder="Website"
-            placeholderTextColor="#666666"
-            autoCorrect={false}
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-              },
-            ]}
-          />
-        </View>
-        <TouchableOpacity style={styles.commandButton} onPress={() => {}}>
-          <Text style={styles.panelButtonTitle}>Submit</Text>
+
+        <TouchableOpacity onPress={() => navigation.navigate("SplashScreen")}>
+          <View style={styles.menuitem}>
+            <Text style={[styles.logoutText, { color: colors.text }]}>
+              Log Out
+            </Text>
+          </View>
         </TouchableOpacity>
-      </Animated.View>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 
 export default ExMenuScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  screen: {
+    backgroundColor: "#d3d3d3",
   },
-  commandButton: {
-    padding: 15,
-    borderRadius: 10,
-    backgroundColor: "#2AAA8A",
-    alignItems: "center",
-    marginTop: 10,
+  menuitem: {
+    marginTop: 20,
+    flexDirection: "row",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
-  panel: {
-    padding: 20,
-    backgroundColor: "#FFFFFF",
-    paddingTop: 20,
-    // borderTopLeftRadius: 20,
-    // borderTopRightRadius: 20,
-    // shadowColor: '#000000',
-    // shadowOffset: {width: 0, height: 0},
-    // shadowRadius: 5,
-    // shadowOpacity: 0.4,
+  logoutIcon: {
+    fontSize: 30,
+    marginRight: 10,
   },
-  header: {
-    backgroundColor: "#FFFFFF",
-    shadowColor: "#333333",
-    shadowOffset: { width: -1, height: -3 },
-    shadowRadius: 2,
-    shadowOpacity: 0.4,
-    // elevation: 5,
-    paddingTop: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  panelHeader: {
-    alignItems: "center",
-  },
-  panelHandle: {
-    width: 40,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "#00000040",
-    marginBottom: 10,
-  },
-  panelTitle: {
-    fontSize: 27,
-    height: 35,
-  },
-  panelSubtitle: {
-    fontSize: 14,
-    color: "gray",
-    height: 30,
-    marginBottom: 10,
-  },
-  panelButton: {
-    padding: 13,
-    borderRadius: 10,
-    backgroundColor: "#2AAA8A",
-    alignItems: "center",
-    marginVertical: 7,
-  },
-  panelButtonTitle: {
-    fontSize: 17,
+  logoutText: {
+    fontSize: 15,
     fontWeight: "bold",
-    color: "white",
+    marginLeft: 12,
   },
-  action: {
+  preference: {
     flexDirection: "row",
-    marginTop: 10,
+    justifyContent: "space-between",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    marginTop: 15,
+  },
+  row: {
+    flexDirection: "row",
     marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f2f2f2",
-    paddingBottom: 5,
   },
-  actionError: {
+  userInfoSection: {
+    paddingHorizontal: 30,
+    marginBottom: 25,
+    marginTop: 30,
+  },
+  infoBoxWrapper: {
+    borderBottomColor: "#dddddd",
+    borderBottomWidth: 1,
+    borderTopColor: "#dddddd",
+    borderTopWidth: 1,
     flexDirection: "row",
-    marginTop: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#FF0000",
-    paddingBottom: 5,
+    height: 100,
   },
-  textInput: {
-    flex: 1,
-    marginTop: Platform.OS === "ios" ? 0 : -12,
-    paddingLeft: 10,
-    color: "#05375a",
+  infoBox: {
+    width: "50%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  menuItem: {
+    flexDirection: "row",
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+  },
+  menuWrapper: {
+    marginTop: 10,
+  },
+  menuItemText: {
+    color: "#777777",
+    marginLeft: 20,
+    fontWeight: "600",
+    fontSize: 16,
+    lineHeight: 26,
   },
 });

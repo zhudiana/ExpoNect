@@ -48,6 +48,18 @@ const ExEmailCodeScreen = ({ navigation }) => {
     input.current.focus();
   }, [nextInputIndex]);
 
+  // const handleLogin = () => {
+  //   axios
+  //     .get("http://172.20.10.2:8000/api/v1/exporters/")
+  //     .then((res) => {
+  //       const data = res.data;
+  //       console.log("data is retrieved");
+  //     })
+  //     .catch(() => {
+  //       console.log("error");
+  //     });
+  // };
+
   const submitOTP = async () => {
     Keyboard.dismiss();
 
@@ -57,6 +69,10 @@ const ExEmailCodeScreen = ({ navigation }) => {
       Object.values(OTP).forEach((v) => {
         val += v;
       });
+
+      // const res = await verifyEmailExporter(val, profile.importer.id);
+      // console.log(res);
+      // if (!res.success) return console.log(res.error);
 
       navigation.dispatch(StackActions.replace("ExMainTabScreen"));
     }

@@ -173,7 +173,7 @@ const HomeScreen = (props) => {
                 />
               </View>
               {productsCtg.length > 0 ? (
-                <View styles={styles.listContainer}>
+                <View style={styles.listContainer}>
                   {productsCtg.map((item) => {
                     return (
                       <ProductList
@@ -210,6 +210,7 @@ const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
     flexDirection: "row",
+    flexWrap: "wrap",
   },
   header: {
     marginTop: 30,

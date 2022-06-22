@@ -188,7 +188,7 @@ router.post(
           ACCESS_TOKEN_SECRET,
           { expiresIn: "1d" }
         );
-        res.status(200).send({ importer: importer.id, Token: token });
+        res.status(200).send({ importer: importer });
       } else {
         res.status(400).send("password is wrong");
       }

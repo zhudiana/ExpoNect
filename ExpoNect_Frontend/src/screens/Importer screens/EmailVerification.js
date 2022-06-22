@@ -56,28 +56,6 @@ const EmailVerification = ({ navigation, route }) => {
     input.current.focus();
   }, [nextInputIndex]);
 
-  // const verifyEmail = async (otp, importerId) => {
-  //   Keyboard.dismiss();
-
-  //   try {
-  //     const { data } = await axios.post(
-  //       "http://192.168.100.6:8000/api/v1//importers/verify-email",
-  //       {
-  //         otp,
-  //         importerId,
-  //       }
-  //     );
-  //     return data;
-
-  //     console.log(data);
-  //   } catch (error) {
-  //     return catchError(error);
-  //     // console.log(error?.response?.data);
-
-  //     // navigation.dispatch(StackActions.replace("MainTabScreen"));
-  //   }
-  // };
-
   const submitOTP = async () => {
     Keyboard.dismiss();
 
@@ -88,10 +66,11 @@ const EmailVerification = ({ navigation, route }) => {
         val += v;
       });
 
-      const res = await verifyEmail(val, profile.id);
+      const res = await verifyEmail(val, profile.importer.id);
       console.log(res);
+      if (!res.success) return console.log(res.error);
 
-      navigation.dispatch(StackActions.replace("SignInScreen"));
+      navigation.dispatch(StackActions.replace("SignInScreen", res.importers));
     }
   };
 

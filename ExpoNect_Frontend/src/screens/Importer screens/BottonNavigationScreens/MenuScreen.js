@@ -4,65 +4,21 @@ import React, { useContext, useState, useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { TouchableRipple, Avatar, Title, Caption } from "react-native-paper";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import axios from "axios";
-import baseURL from "../../../../assets/common/baseURL";
-
-import AuthGlobal from "../../../../Context/store/AuthGlobal";
-import { logoutUser } from "../../../../Context/actions/Auth.actions";
+import { useRoute } from "@react-navigation/native";
 
 const MenuScreen = ({ navigation }) => {
+  // const profile = route.params.profile;
   const { colors } = useTheme();
-  const context = useContext(AuthGlobal);
-  const [userProfile, setUserProfile] = useState();
-
-  const navigationTheme = useTheme();
-
-  // useEffect(() => {
-  // if (
-  //   context.stateUser.isAuthenticated === false ||
-  //   context.stateUser.isAuthenticated === null
-  // ) {
-  //   props.navigation.navigate("SignInScreen");
-  // }
-
-  //   AsyncStorage.getItem("jwt")
-  //     .then((res) => {
-  //       axios
-  //         .get(`${baseURL}importers/${context.stateUser.user.sub}`, {
-  //           headers: { Authorization: `Bearer ${res}` },
-  //         })
-  //         .then((user) => setUserProfile(user.data));
-  //     })
-  //     .catch((error) => console.log(error));
-
-  //   return () => {
-  //     setUserProfile();
-  //   };
-  // }, [context.stateUser.isAuthenticated]);
+  const route = useRoute();
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View>
-        {/* <TouchableRipple
-          onPress={() => {
-            toggleTheme();
-          }}
-        >
-          <View style={styles.preference}>
-            <Text>
-              Dark Theme <Icon name="moon-waning-crescent" size={19} />
-            </Text>
-            <View pointerEvents="none">
-              <Switch value={navigationTheme.dark} />
-            </View>
-          </View>
-        </TouchableRipple> */}
         <View style={{ flexDirection: "row", marginTop: 15 }}>
           <Avatar.Image
-            source={require("../../../../assets/avocado.png")}
+            // source={require("../../../../assets/avocado.png")}
             size={80}
+            backgroundColor={" "}
           />
           <View style={{ marginLeft: 20 }}>
             <Title
@@ -75,9 +31,12 @@ const MenuScreen = ({ navigation }) => {
                 },
               ]}
             >
-              <Text>{userProfile ? userProfile.name : "Nani"}</Text>
+              {/* <Text>{profile.importer.name}</Text> */}
+              <Text>{route.params.profile}</Text>
             </Title>
-            <Caption style={[styles.caption]}>@Sama_trading</Caption>
+            <Caption style={[styles.caption]}>
+              {/* {profile.importer.email} */}
+            </Caption>
           </View>
         </View>
 

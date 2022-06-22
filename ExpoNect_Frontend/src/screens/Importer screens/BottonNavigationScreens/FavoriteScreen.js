@@ -33,7 +33,7 @@ const FavoriteScreen = (props) => {
           <TouchableOpacity
             onPress={() => props.navigation.navigate("MainTabScreen")}
           >
-            <Iconn name="arrow-back" style={styles.arrowIcon} size={26} />
+            <Iconn name="arrow-back" style={styles.arrowIconn} size={26} />
           </TouchableOpacity>
           <H1 style={{ alignSelf: "center" }}>Favorite</H1>
           {props.favoriteItems.map((data) => {
@@ -43,7 +43,7 @@ const FavoriteScreen = (props) => {
                   <Thumbnail
                     source={{
                       uri: data.product.image
-                        ? data.product.image
+                        ? "https://www.worldatlas.com/r/w1200/upload/12/f8/83/coffee-cup.jpg"
                         : "../../../../../assets/avocado.png",
                     }}
                   />
@@ -141,8 +141,12 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   arrowIcon: {
-    top: -270,
+    top: -250,
     left: -150,
+  },
+  arrowIconn: {
+    top: 20,
+    left: 10,
   },
 });
 

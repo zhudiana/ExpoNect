@@ -35,57 +35,23 @@ const Stack = createNativeStackNavigator();
 //
 const ForgetPasswordScreen = ({ navigation }) => {
   const { colors } = useTheme();
-  const [data, setData] = React.useState({
-    email: "",
-    password: "",
-    confirm_password: "",
-    checkTextInputChange: false,
-    secureTextEntry: true,
-    confirm_secureTextEntry: true,
-  });
 
-  const textInputChange = (val) => {
-    if (val.length !== 0) {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: true,
-      });
-    } else {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: false,
-      });
+  const handleSignup = async (values, formikActions) => {
+    try {
+      const { data } = await axios.get(
+        "http:/172.20.10.2:8000/api/v1/exporters/",
+        { ...values }
+      );
+      console.log(data);
+      navigation.dispatch(
+        StackActions.replace("EmailVerification", { profile: data })
+      );
+      res;
+    } catch (error) {
+      console.log(error?.response?.data);
     }
-  };
 
-  const handlePasswordChange = (val) => {
-    setData({
-      ...data,
-      password: val,
-    });
-  };
-
-  const handleConfirmPasswordChange = (val) => {
-    setData({
-      ...data,
-      confirm_password: val,
-    });
-  };
-
-  const updateSecureTextEntry = () => {
-    setData({
-      ...data,
-      secureTextEntry: !data.secureTextEntry,
-    });
-  };
-
-  const updateConfirmSecureTextEntry = () => {
-    setData({
-      ...data,
-      confirm_secureTextEntry: !data.confirm_secureTextEntry,
-    });
+    // console.log(data);
   };
 
   return (
@@ -99,7 +65,7 @@ const ForgetPasswordScreen = ({ navigation }) => {
           >
             <Icon name="arrow-back" style={styles.arrowIcon} size={26} />
           </TouchableOpacity>
-          <Text style={styles.text_header}>Password Recovery</Text>
+          <Text style={styles.text_header}>Email</Text>
         </View>
         {/* Footer */}
         <Animatable.View
@@ -117,122 +83,7 @@ const ForgetPasswordScreen = ({ navigation }) => {
               placeholderTextColor="#666666"
               style={styles.textInput}
               autoCapitalize="none"
-              onChangeText={(val) => textInputChange(val)}
             />
-            {data.check_textInputChange ? (
-              <Animatable.View animation="bounceIn">
-                <Feather name="check-circle" color="green" size={20} />
-              </Animatable.View>
-            ) : null}
-          </View>
-
-          {/* send email button */}
-          <View style={styles.sendButton}>
-            <LinearGradient
-              colors={["#08d4c4", "#01ab9d"]}
-              style={styles.sendButtonn}
-            >
-              <Text
-                style={[
-                  styles.textSign,
-                  {
-                    color: "#fff",
-                  },
-                ]}
-              >
-                Send
-              </Text>
-            </LinearGradient>
-          </View>
-
-          <View
-            style={[
-              {
-                borderBottomColor: "#666666",
-                borderBottomWidth: 1,
-                marginTop: 10,
-              },
-              { color: colors.text },
-            ]}
-          />
-
-          {/* verification code */}
-          <Text style={[styles.text_footerr, { color: colors.text }]}>
-            Verification Code
-          </Text>
-          <View style={styles.action}>
-            {/* <FontAwesome name="user-o" color="#05375a" size={20} /> */}
-            <TextInput
-              placeholder="Please enter your verification Code"
-              placeholderTextColor="#666666"
-              style={styles.textInputt}
-              autoCapitalize="none"
-              // onChangeText={(val) => textInputChange(val)}
-            />
-          </View>
-
-          {/* Password Field */}
-          <Text
-            style={[
-              styles.text_footer,
-              {
-                marginTop: 35,
-              },
-              ,
-              { color: colors.text },
-            ]}
-          >
-            Password
-          </Text>
-          <View style={styles.action}>
-            <Feather name="lock" color={colors.text} size={20} />
-            <TextInput
-              placeholder="Please enter your password"
-              placeholderTextColor="#666666"
-              secureTextEntry={data.secureTextEntry ? true : false}
-              style={styles.textInput}
-              autoCapitalize="none"
-              onChangeText={(val) => handlePasswordChange(val)}
-            />
-            <TouchableOpacity onPress={updateSecureTextEntry}>
-              {data.secureTextEntry ? (
-                <Feather name="eye-off" color="grey" size={20} />
-              ) : (
-                <Feather name="eye" color="grey" size={20} />
-              )}
-            </TouchableOpacity>
-          </View>
-
-          {/* confirm Password Field */}
-          <Text
-            style={[
-              styles.text_footer,
-              {
-                marginTop: 35,
-              },
-              ,
-              { color: colors.text },
-            ]}
-          >
-            Confirm Password
-          </Text>
-          <View style={styles.action}>
-            <Feather name="lock" color={colors.text} size={20} />
-            <TextInput
-              placeholder="Comfirm password"
-              placeholderTextColor="#666666"
-              secureTextEntry={data.confirm_secureTextEntry ? true : false}
-              style={styles.textInput}
-              autoCapitalize="none"
-              onChangeText={(val) => handleConfirmPasswordChange(val)}
-            />
-            <TouchableOpacity onPress={updateConfirmSecureTextEntry}>
-              {data.confirm_secureTextEntry ? (
-                <Feather name="eye-off" color="grey" size={20} />
-              ) : (
-                <Feather name="eye" color="grey" size={20} />
-              )}
-            </TouchableOpacity>
           </View>
 
           {/* Sign up */}

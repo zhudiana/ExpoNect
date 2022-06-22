@@ -81,17 +81,17 @@ const SignInScreen = ({ navigation, props }) => {
   };
 
   const handleLogin = async (values, formikActions) => {
-    // navigation.dispatch(StackActions.replace("MainTabScreen"));
-
     try {
-      //  const res = await signup(values);
       const { data } = await axios.post(
         "http://172.20.10.2:8000/api/v1/importers/login",
         { ...values }
       );
       console.log(data);
-      navigation.dispatch(StackActions.replace("MainTabScreen"));
-      // loginUser(data, context.dispatch);
+      // navigation.dispatch(
+      //   StackActions.replace("MainTabScreen", { profile: data })
+      // );
+      navigation.navigate("MainTabScreen", { profile: data });
+      // console.log(profile);
     } catch (error) {
       console.log(error?.response?.data);
     }

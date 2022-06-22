@@ -9,6 +9,7 @@ const expressJwt = require("express-jwt-token");
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const verifyJWT = require("./Controller/verifyJWT");
+// const io = require("socket.io")(8000);
 
 require("dotenv/config");
 
@@ -35,17 +36,20 @@ const categoriesRoute = require("./Routes/categories");
 const exportersRoute = require("./Routes/exporters");
 const importersRoute = require("./Routes/importers");
 const messagesRoute = require("./Routes/messages");
+const chatroomRoute = require("./Routes/chatrooms");
 
 const api = process.env.API_URL;
 
 app.use(`${api}/exporters`, exportersRoute);
 app.use(`${api}/importers`, importersRoute);
-app.use(verifyJWT);
+
 app.use(`${api}/products`, productsRoutes);
 app.use(`${api}/categories`, categoriesRoute);
+// app.use(verifyJWT);`
 app.use(`${api}/messages`, messagesRoute);
+app.use(`${api}/chatrooms`, chatroomRoute);
 
-//Database
+//Database+++
 mongoose
   .connect(process.env.CONNECTION_STRING, {
     useNewUrlParser: true,

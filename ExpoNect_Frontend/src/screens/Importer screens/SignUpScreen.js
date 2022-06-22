@@ -74,14 +74,16 @@ const SignInScreen = ({ navigation }) => {
         "http:/172.20.10.2:8000/api/v1/importers/create",
         { ...values }
       );
-      console.log(data);
+      // console.log(data);
+      navigation.dispatch(
+        StackActions.replace("EmailVerification", { profile: data })
+      );
       res;
     } catch (error) {
       console.log(error?.response?.data);
     }
-    navigation.dispatch(
-      StackActions.replace("EmailVerification", { profile: data })
-    );
+
+    // console.log(data);
   };
 
   const [text, onChangeText] = React.useState("");

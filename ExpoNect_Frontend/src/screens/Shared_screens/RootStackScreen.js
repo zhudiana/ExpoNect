@@ -19,7 +19,6 @@ import ChattingScreen from "../Importer screens/BottonNavigationScreens/Chatting
 import SingleProduct from "../Importer screens/BottonNavigationScreens/HomeScreen/SingleProduct";
 import ProductDetail from "../Exporter Screens/BottonNavigation/product/ProductDetail";
 import FavoriteScreen from "../Importer screens/BottonNavigationScreens/FavoriteScreen";
-import Login from "../Importer screens/Login";
 
 const RootStack = createNativeStackNavigator();
 
@@ -50,7 +49,6 @@ const RootStackScreen = ({ navigation }) => (
     <RootStack.Screen name="ExProductScreen" component={ExProductScreen} />
     <RootStack.Screen name="ProductDetail" component={ProductDetail} />
     <RootStack.Screen name="FavoriteScreen" component={FavoriteScreen} />
-    <RootStack.Screen name="Login" component={Login} />
 
     <RootStack.Screen
       name="PrivacyPolicyScreen"

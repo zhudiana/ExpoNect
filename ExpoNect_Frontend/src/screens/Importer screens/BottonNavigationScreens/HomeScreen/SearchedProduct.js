@@ -21,7 +21,7 @@ const SearchedProduct = (props) => {
               <Thumbnail
                 source={{
                   uri: item.image
-                    ? item.image
+                    ? "https://cdn.britannica.com/35/129635-050-A8A60DD8/footballs-American-pigskins-rubber-cowhide.jpg?w=690&h=388&c=crop"
                     : "https://cdn.britannica.com/35/129635-050-A8A60DD8/footballs-American-pigskins-rubber-cowhide.jpg?w=690&h=388&c=crop",
                 }}
               />
