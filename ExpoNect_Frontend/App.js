@@ -21,7 +21,7 @@ import store from "./Redux/store";
 
 //context api
 import Auth from "./Context/store/Auth";
-import Toast from "react-native-toast-message";
+// import Toast from "react-native-toast-message";
 import MenuScreen from "./src/screens/Importer screens/BottonNavigationScreens/MenuScreen";
 import SignInScreen from "./src/screens/Importer screens/SignInScreen";
 

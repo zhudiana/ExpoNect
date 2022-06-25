@@ -54,7 +54,7 @@ mongoose
   .connect(process.env.CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: "ExpoNect",
+    dbName: "myProject",
   })
   .then(() => {
     console.log("DB connection is ready");

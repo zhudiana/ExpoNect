@@ -20,10 +20,12 @@ const SplashScreen = ({ navigation }) => {
         <Animatable.Image
           //   animation="bounceIn"
           //   duration="1500"
-          source={require("../../../assets/logo8.png")}
+          source={require("../../../assets/logo.png")}
           style={styles.logo}
           resizeMode="stretch"
         />
+       {/* <Text>ExpoNect</Text> */}
+        
       </View>
       <Animatable.View
         style={[styles.footer, { backgroundColor: colors.background }]}
