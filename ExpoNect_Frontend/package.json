@@ -43,8 +43,7 @@
     "react-native-svg": "^12.1.1",
     "react-native-vector-icons": "^9.1.0",
     "react-native-web": "0.17.1",
-    "styled-components": "^5.3.5",
-    "undefined": "react-native-community/masked-view"
+    "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
