@@ -7,7 +7,6 @@ import MainTabScreen from "../Importer screens/BottonNavigationScreens/MainTabSc
 // import ExSignInScreen from "../Exporter Screens/ExSignInScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ForgetPasswordScreen from "../Importer screens/ForgetPasswordScreen";
-import ExForgetPassword from "../Exporter Screens/ExForgetPassword";
 import ExMainTabScreen from "../Exporter Screens/BottonNavigation/ExMainTabScreen";
 import EmailVerification from "../Importer screens/EmailVerification";
 import ExInfoScreen from "../Exporter Screens/ExInfoScreen";
@@ -19,6 +18,11 @@ import ChattingScreen from "../Importer screens/BottonNavigationScreens/Chatting
 import SingleProduct from "../Importer screens/BottonNavigationScreens/HomeScreen/SingleProduct";
 import ProductDetail from "../Exporter Screens/BottonNavigation/product/ProductDetail";
 import FavoriteScreen from "../Importer screens/BottonNavigationScreens/FavoriteScreen";
+import Email from "../Exporter Screens/Email";
+import Login from "../Exporter Screens/Login";
+import Password from "../Exporter Screens/Password";
+import ProfileScreen from "../Exporter Screens/ProfileScreen";
+import EditProfileScreen from "./EditProfileScreen";
 
 const RootStack = createNativeStackNavigator();
 
@@ -39,7 +43,7 @@ const RootStackScreen = ({ navigation }) => (
     <RootStack.Screen name="MainTabScreen" component={MainTabScreen} />
     <RootStack.Screen name="ExInfoScreen" component={ExInfoScreen} />
     {/* <RootStack.Screen name="ExSignInScreen" component={ExSignInScreen} /> */}
-    <RootStack.Screen name="ExForgetPassword" component={ExForgetPassword} />
+    <RootStack.Screen name="Email" component={Email} />
     <RootStack.Screen name="ExMainTabScreen" component={ExMainTabScreen} />
     <RootStack.Screen name="EmailVerification" component={EmailVerification} />
     <RootStack.Screen name="ExEmailCodeScreen" component={ExEmailCodeScreen} />
@@ -49,6 +53,10 @@ const RootStackScreen = ({ navigation }) => (
     <RootStack.Screen name="ExProductScreen" component={ExProductScreen} />
     <RootStack.Screen name="ProductDetail" component={ProductDetail} />
     <RootStack.Screen name="FavoriteScreen" component={FavoriteScreen} />
+    <RootStack.Screen name="Login" component={Login} />
+    <RootStack.Screen name="Password" component={Password} />
+    <RootStack.Screen name="ProfileScreen" component={ProfileScreen} />
+    <RootStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
 
     <RootStack.Screen
       name="PrivacyPolicyScreen"

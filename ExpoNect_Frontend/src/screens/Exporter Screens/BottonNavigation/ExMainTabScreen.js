@@ -32,7 +32,8 @@ const customTabBarButton = ({ children, onPress }) => (
   </TouchableOpacity>
 );
 
-const ExMainTabScreen = () => {
+const ExMainTabScreen = ({ route }) => {
+  const profile = route.params.profile;
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -71,6 +72,7 @@ const ExMainTabScreen = () => {
       <Tab.Screen
         name="Post"
         component={ExPostScreen}
+        // initialParams={{ profile: profile }}
         options={{
           tabBarLabel: "Post",
           tabBarColor: "#009387",
@@ -93,6 +95,7 @@ const ExMainTabScreen = () => {
       <Tab.Screen
         name="Menu"
         component={ExMenuScreen}
+        initialParams={{ profile: profile }}
         options={{
           tabBarLabel: "Menu",
           tabBarColor: "#009387",

@@ -58,10 +58,28 @@ export const verifyEmail = async (otp, importerId) => {
 
 export const verifyEmailExporter = async (otp, exporterId) => {
   try {
-    const { data } = await exporter.post("/exporters/verify-email", {
-      otp,
-      exporterId,
-    });
+    const { data } = await axios.post(
+      "http://172.20.10.2:8000/api/v1/exporters/verify-email",
+      {
+        otp,
+        exporterId,
+      }
+    );
+    return data;
+  } catch (error) {
+    return catchError(error);
+  }
+};
+
+export const addPassword = async (password, exporterId) => {
+  try {
+    const { data } = await axios.post(
+      "http://172.20.10.2:8000/api/v1/exporters/password",
+      {
+        password,
+        exporterId,
+      }
+    );
     return data;
   } catch (error) {
     return catchError(error);

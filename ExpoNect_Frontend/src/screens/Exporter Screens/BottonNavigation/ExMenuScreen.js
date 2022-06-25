@@ -13,6 +13,7 @@ import AuthGlobal from "../../../../Context/store/AuthGlobal";
 import { logoutUser } from "../../../../Context/actions/Auth.actions";
 
 const ExMenuScreen = ({ navigation, route }) => {
+  const profile = route.params.profile;
   const { colors } = useTheme();
   const context = useContext(AuthGlobal);
   const navigationTheme = useTheme();
@@ -23,7 +24,7 @@ const ExMenuScreen = ({ navigation, route }) => {
       <View>
         <View style={{ flexDirection: "row", marginTop: 15 }}>
           <Avatar.Image
-            // source={require("../../../../assets/avocado.png")}
+            source={require("../../../../assets/profile.png")}
             size={80}
             backgroundColor={" "}
           />
@@ -38,9 +39,9 @@ const ExMenuScreen = ({ navigation, route }) => {
                 },
               ]}
             >
-              {/* <Text>{profile.importer.name}</Text> */}
+              <Text>{profile.exporter.name}</Text>
             </Title>
-            <Caption style={[styles.caption]}>@Sama_trading</Caption>
+            <Caption style={[styles.caption]}>@{profile.exporter.name}</Caption>
           </View>
         </View>
 
@@ -48,19 +49,19 @@ const ExMenuScreen = ({ navigation, route }) => {
           <View style={styles.row}>
             <Icon name="map-marker-radius" color="#777777" size={20} />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
-              Addis Ababa, ETHIOPIA
+              {profile.exporter.country}
             </Text>
           </View>
           <View style={styles.row}>
             <Icon name="phone" color="#777777" size={20} />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
-              +251913667830
+              {profile.exporter.phone}
             </Text>
           </View>
           <View style={styles.row}>
             <Icon name="email" color="#777777" size={20} />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
-              sama_trading@gmail.com
+              {profile.exporter.email}
             </Text>
           </View>
         </View>

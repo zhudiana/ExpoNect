@@ -4,21 +4,19 @@ import React, { useContext, useState, useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { TouchableRipple, Avatar, Title, Caption } from "react-native-paper";
-import { useRoute } from "@react-navigation/native";
 
-const MenuScreen = ({ navigation }) => {
-  // const profile = route.params.profile;
+const MenuScreen = ({ navigation, route }) => {
+  const profile = route.params.profile;
   const { colors } = useTheme();
-  const route = useRoute();
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View>
         <View style={{ flexDirection: "row", marginTop: 15 }}>
           <Avatar.Image
-            // source={require("../../../../assets/avocado.png")}
+            source={require("../../../../assets/profile.png")}
             size={80}
-            backgroundColor={" "}
+            // backgroundColor={"green"}
           />
           <View style={{ marginLeft: 20 }}>
             <Title
@@ -31,12 +29,9 @@ const MenuScreen = ({ navigation }) => {
                 },
               ]}
             >
-              {/* <Text>{profile.importer.name}</Text> */}
-              <Text>{route.params.profile}</Text>
+              <Text>{profile.importer.name}</Text>
             </Title>
-            <Caption style={[styles.caption]}>
-              {/* {profile.importer.email} */}
-            </Caption>
+            <Caption style={[styles.caption]}>@{profile.importer.name}</Caption>
           </View>
         </View>
 
@@ -44,19 +39,19 @@ const MenuScreen = ({ navigation }) => {
           <View style={styles.row}>
             <Icon name="map-marker-radius" color="#777777" size={20} />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
-              Addis Ababa, ETHIOPIA
+              {profile.importer.country}
             </Text>
           </View>
           <View style={styles.row}>
             <Icon name="phone" color="#777777" size={20} />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
-              +251913667830
+              {profile.importer.phone}
             </Text>
           </View>
           <View style={styles.row}>
             <Icon name="email" color="#777777" size={20} />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
-              sama_trading@gmail.com
+              {profile.importer.email}
             </Text>
           </View>
         </View>

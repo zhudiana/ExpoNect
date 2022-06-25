@@ -40,7 +40,7 @@ router.post(`/create`, async (req, res) => {
       name: req.body.name,
       companyName: req.body.companyName,
       email: req.body.email,
-      // passwordHash: bcrypt.hashSync(req.body.password, 10),
+      passwordHash: req.body.passwordHash,
       phone: req.body.phone,
       isAdmin: req.body.isAdmin,
       country: req.body.country,
@@ -76,14 +76,22 @@ router.post(`/create`, async (req, res) => {
   }
 });
 
-// router.post(`/validate-email`, async (req, res) => {
-//   const { exporterId, email } = req.body;
-//   if (!exporterId || !email)
-//     return sendError(res, "Invalid request, missing parameters");
-//   if (!isValidObjectId(exporterId)) return sendError(res, "Invalid user id");
-//   const exporter = await Exporter.findById(exporterId);
-//   if (!exporter) return sendError(res, "sorry, exporter id not found");
-// });
+router.post("/find-email", async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) return sendError(res, "missing parameter");
+
+  const exporter = await Exporter.findOne({ email: req.body.email });
+  if (!exporter) return sendError(res, "sorry, exporter email not found");
+
+  await exporter.save();
+
+  res.json({
+    success: true,
+    message: "your email is found",
+    exporterInfo: exporter,
+  });
+});
 
 router.post("/verify-email", async (req, res) => {
   const { exporterId, otp } = req.body;
@@ -107,7 +115,27 @@ router.post("/verify-email", async (req, res) => {
 
   await exporter.save();
 
-  res.json({ success: true, message: "your email is verified" });
+  res.json({ success: true, exporter: exporter });
+});
+
+router.post("/password", async (req, res) => {
+  const { password, exporterId } = req.body;
+
+  if (!exporterId || !password)
+    return sendError(res, "Invalid request, missing parameters");
+  if (!isValidObjectId(exporterId)) return sendError(res, "Invalid user id");
+
+  const exporter = await Exporter.findById(exporterId);
+  if (!exporter) return sendError(res, "sorry, exporter id not found");
+
+  if (!exporter.verified) return sendError(res, "your Email isnot verified");
+
+  (passwordHashed = bcrypt.hashSync(password, 10)),
+    (exporter.passwordHash = passwordHashed);
+
+  await exporter.save();
+
+  res.json({ success: true, exporter: exporter });
 });
 
 router.post("/login", async (req, res) => {

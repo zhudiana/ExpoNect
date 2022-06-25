@@ -7,6 +7,7 @@ import {
   Text,
   ScrollView,
   Button,
+  Dimensions,
 } from "react-native";
 import { Left, Right, Container, H1 } from "native-base";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -36,19 +37,29 @@ const SingleProduct = (props) => {
         </View>
         <View style="{styles.contentContainer">
           <H1 style={styles.contentHeader}>{item.name}</H1>
+          <Text style={styles.label}>Brand: </Text>
           <Text style={styles.contentText}>{item.brand}</Text>
-          <Text style={styles.contentText}>{item.description}</Text>
-          <Text style={styles.contentText}>{item.richDescription}</Text>
+          <Text style={styles.label}>Description: </Text>
+          <Text style={styles.description}>{item.description}</Text>
+          <Text style={styles.labelP}>Price: </Text>
+          <Text style={styles.price}> ${item.price} per 5 kilograms</Text>
+        </View>
+        <View style={styles.profile}>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("ProfileScreen")}
+          >
+            <Text style={styles.proText}>View Exporter Profile</Text>
+          </TouchableOpacity>
         </View>
         {/* ToDo: Description, rich Description */}
       </ScrollView>
 
       <View style={styles.bottomContainer}>
-        <Left>
-          <Text style={styles.price}> $ {item.price}</Text>
-        </Left>
+        {/* <Left> */}
+
+        {/* </Left> */}
         <Right>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => props.navigation.navigate("ChattingScreen")}
           >
             <Icon
@@ -56,7 +67,7 @@ const SingleProduct = (props) => {
               size={25}
               style={styles.chat_icon}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </Right>
       </View>
     </Container>
@@ -84,9 +95,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   contentText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 20,
+    fontSize: 15,
+    left: 50,
+    top: -12,
+  },
+  description: {
+    width: 360,
+    left: 10,
+    fontSize: 15,
+    top: 10,
   },
   bottomContainer: {
     flexDirection: "row",
@@ -96,12 +113,32 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   price: {
-    fontSize: 24,
-    margin: 20,
-    color: "red",
+    top: -1,
+    left: 40,
   },
   chat_icon: {
     right: 10,
+  },
+  label: {
+    fontWeight: "bold",
+    top: 5,
+  },
+  labelP: {
+    fontWeight: "bold",
+    top: 15,
+  },
+  profile: {
+    top: 20,
+    backgroundColor: "#009387",
+    width: 105,
+    height: 50,
+    borderRadius: 10,
+  },
+  proText: {
+    color: "#fff",
+    fontWeight: "bold",
+    textAlign: "center",
+    top: 10,
   },
 });
 

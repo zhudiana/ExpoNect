@@ -26,8 +26,8 @@ const isObjValid = (obj) => {
   return Object.values(obj).every((val) => val.trim());
 };
 
-const ExEmailCodeScreen = ({ navigation }) => {
-  // const profile = route.params.profile;
+const ExEmailCodeScreen = ({ navigation, route }) => {
+  const profile = route.params.profile;
   const input = useRef();
   const { colors } = useTheme();
   const [OTP, setOTP] = useState({ 0: "", 1: "", 2: "", 3: "" });
@@ -48,18 +48,6 @@ const ExEmailCodeScreen = ({ navigation }) => {
     input.current.focus();
   }, [nextInputIndex]);
 
-  // const handleLogin = () => {
-  //   axios
-  //     .get("http://172.20.10.2:8000/api/v1/exporters/")
-  //     .then((res) => {
-  //       const data = res.data;
-  //       console.log("data is retrieved");
-  //     })
-  //     .catch(() => {
-  //       console.log("error");
-  //     });
-  // };
-
   const submitOTP = async () => {
     Keyboard.dismiss();
 
@@ -70,11 +58,16 @@ const ExEmailCodeScreen = ({ navigation }) => {
         val += v;
       });
 
-      // const res = await verifyEmailExporter(val, profile.importer.id);
-      // console.log(res);
-      // if (!res.success) return console.log(res.error);
+      const res = await verifyEmailExporter(val, profile.exporterInfo.id);
+      console.log(res);
+      if (!res.success) return console.log(res.error);
 
-      navigation.dispatch(StackActions.replace("ExMainTabScreen"));
+      navigation.dispatch(
+        StackActions.replace("Password", {
+          profile: res,
+        })
+      );
+      console.log(res);
     }
   };
 

@@ -37,22 +37,19 @@ const CONTENT = [
   {
     title: "Step 1",
     content:
-      ' fTheollowing terms and conditions, together with any referenced documents (collectively, "Terms of Use") form a legal agreement between you and your employer, employees, agents, contractors and any other entity on whose behalf you accept these terms (collectively, “you” and “your”), and ServiceNow, Inc. (“ServiceNow,” “we,” “us” and “our”).',
+      "Collect all legal required documntation such as Export License, Quality testing and certification... ",
   },
   {
     title: "Step 2",
-    content:
-      "A Privacy Policy agreement is the agreement where you specify if you collect personal data from your users, what kind of personal data you collect and what you do with that data.",
+    content: "Bring the documents to our office in person",
   },
   {
     title: "Step 3",
-    content:
-      "Our Return & Refund Policy template lets you get started with a Return and Refund Policy agreement. This template is free to download and use.According to TrueShip study, over 60% of customers review a Return/Refund Policy before they make a purchasing decision.",
+    content: "After the admin registered you to the system  verify your email",
   },
   {
     title: "Step 4",
-    content:
-      "Our Return & Refund Policy template lets you get started with a Return and Refund Policy agreement. This template is free to download and use.According to TrueShip study, over 60% of customers review a Return/Refund Policy before they make a purchasing decision.",
+    content: "you can now login to your account and post products",
   },
 ];
 
@@ -140,9 +137,7 @@ const ExInfoScreen = ({ navigation }) => {
               </ScrollView>
             </View>
           </SafeAreaView>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("ExEmailCodeScreen")}
-          >
+          <TouchableOpacity onPress={() => navigation.navigate("Email")}>
             <LinearGradient
               colors={["#08d4c4", "#01ab9d"]}
               style={styles.signIn}

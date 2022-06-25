@@ -11,4 +11,13 @@ router.get(`/`, async (req, res) => {
   res.send(messageList);
 });
 
+router.get(`/send`, async (req, res) => {
+  const messageList = await Message.find();
+
+  if (!messageList) {
+    res.status(500).json({ success: false });
+  }
+  res.send(messageList);
+});
+
 module.exports = router;

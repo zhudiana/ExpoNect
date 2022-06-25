@@ -138,7 +138,7 @@ const ExPostScreen = (props) => {
         </TouchableOpacity>
       </View>
       <View style={styles.label}>
-        <Text style={{ textDecorationLine: "underline" }}>Brand</Text>
+        <Text>Brand</Text>
       </View>
       <Input
         placeholder="Brand"
@@ -148,7 +148,7 @@ const ExPostScreen = (props) => {
         onChangeText={(text) => setBrand(text)}
       />
       <View style={styles.label}>
-        <Text style={{ textDecorationLine: "underline" }}>Name</Text>
+        <Text>Name</Text>
       </View>
       <Input
         placeholder="Name"
@@ -158,7 +158,7 @@ const ExPostScreen = (props) => {
         onChangeText={(text) => setName(text)}
       />
       <View style={styles.label}>
-        <Text style={{ textDecorationLine: "underline" }}>Price</Text>
+        <Text>Price</Text>
       </View>
       <Input
         placeholder="Price"
@@ -169,7 +169,7 @@ const ExPostScreen = (props) => {
         onChangeText={(text) => setPrice(text)}
       />
       <View style={styles.label}>
-        <Text style={{ textDecorationLine: "underline" }}>Description</Text>
+        <Text>Description</Text>
       </View>
       <Input
         placeholder="Description"
@@ -197,7 +197,7 @@ const ExPostScreen = (props) => {
       {error ? <Error message={error} /> : null}
       <View style={styles.buttonContainer}>
         <EasyButton large primary onPress={() => addProduct()}>
-          <Text style={styles.buttonText}>Confirm</Text>
+          <Text style={styles.buttonText}>Post</Text>
         </EasyButton>
       </View>
     </FormContainer>

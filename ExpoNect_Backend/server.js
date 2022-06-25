@@ -1,15 +1,15 @@
 const express = require("express");
 const app = express();
+// const server = require("http").createServer(app);
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const authJwt = require("./Controller/jwt");
-const expressJwt = require("express-jwt-token");
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const verifyJWT = require("./Controller/verifyJWT");
-// const io = require("socket.io")(8000);
+// const io = require("socket.io")(server);
 
 require("dotenv/config");
 
@@ -54,7 +54,7 @@ mongoose
   .connect(process.env.CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: "project-database",
+    dbName: "ExpoNect",
   })
   .then(() => {
     console.log("DB connection is ready");
@@ -63,7 +63,19 @@ mongoose
     console.log(err);
   });
 
+// socket;
+// io.on("connection", (socket) => {
+//   console.log("connected");
+//   socket.on({ chatMessage: "" });
+// });
+
 //Server
 app.listen(8000, () => {
   console.log("server is running");
 });
+
+// const io = require("socket.io")(server)
+
+// io.use((socket, next)=> {
+//   const token = socket.handshake.query.t
+// })

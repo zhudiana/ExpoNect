@@ -54,7 +54,8 @@ const validationSchema = yup.object({
     .required("password is missing"),
 });
 
-const SignInScreen = ({ navigation, props }) => {
+const Login = ({ navigation, route }) => {
+  const profile = route.params.profile;
   const context = useContext(AuthGlobal);
   const { colors } = useTheme();
   const [data, setData] = React.useState({
@@ -77,17 +78,15 @@ const SignInScreen = ({ navigation, props }) => {
   const handleLogin = async (values, formikActions) => {
     try {
       const { data } = await axios.post(
-        "http://172.20.10.2:8000/api/v1/importers/login",
+        "http://172.20.10.2:8000/api/v1/exporters/login",
         { ...values }
       );
-      console.log(data);
+      console.log(profile);
       navigation.dispatch(
-        StackActions.replace("MainTabScreen", {
-          profile: data,
-        })
+        StackActions.replace("ExMainTabScreen", { profile: profile })
       );
 
-      // console.log(profile);
+      console.log(profile);
     } catch (error) {
       console.log(error?.response?.data);
     }
@@ -206,17 +205,6 @@ const SignInScreen = ({ navigation, props }) => {
                         : ""}{" "}
                     </Text>
 
-                    {/* forget password */}
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate("ForgetPasswordScreen")
-                      }
-                    >
-                      <Text style={styles.forgetPassword}>
-                        Forget Password?
-                      </Text>
-                    </TouchableOpacity>
-
                     {/* Sign in */}
                     <View style={styles.button}>
                       <TouchableOpacity
@@ -239,31 +227,6 @@ const SignInScreen = ({ navigation, props }) => {
                           </Text>
                         </LinearGradient>
                       </TouchableOpacity>
-
-                      {/* Sign up*/}
-                      <Text
-                        style={[
-                          styles.freeRegisterTextQ,
-                          { color: colors.text },
-                        ]}
-                      >
-                        Don't have an account?
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => navigation.navigate("SignUpScreen")}
-                      >
-                        <Text
-                          style={[
-                            styles.freeRegisterText,
-                            {
-                              color: "#009387",
-                              fontWeight: "bold",
-                            },
-                          ]}
-                        >
-                          Free Register Now!
-                        </Text>
-                      </TouchableOpacity>
                     </View>
                   </Animatable.View>
                 </View>
@@ -276,7 +239,7 @@ const SignInScreen = ({ navigation, props }) => {
   );
 };
 
-export default SignInScreen;
+export default Login;
 
 const styles = StyleSheet.create({
   container: {
