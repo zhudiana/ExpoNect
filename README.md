@@ -13,11 +13,11 @@
 
 ## 🚀 Tech Stack
 
-- **React Native** (TypeScript)
+- **React Native** 
 - **Expo** (for fast development & testing)
 - **MongoDB** (database)
 - **Express.js** (backend API)
-- **Firebase** (optional: for Auth or image storage)
+- **Firebase** 
 - **React Navigation**
 - **Tailwind CSS (via Nativewind)** (for styling)
 
